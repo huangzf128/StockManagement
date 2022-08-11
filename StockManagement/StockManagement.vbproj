@@ -6,13 +6,13 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectGuid>{A281D9BB-0B07-4257-B838-E1154FE83C18}</ProjectGuid>
     <OutputType>WinExe</OutputType>
-    <StartupObject>StockManagement.My.MyApplication</StartupObject>
+    <StartupObject>StockManagement.frmLogin</StartupObject>
     <RootNamespace>StockManagement</RootNamespace>
     <AssemblyName>StockManagement</AssemblyName>
     <FileAlignment>512</FileAlignment>
-    <MyType>WindowsForms</MyType>
+    <MyType>WindowsFormsWithCustomSubMain</MyType>
     <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
-    <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
+    <AutoGenerateBindingRedirects>false</AutoGenerateBindingRedirects>
     <Deterministic>true</Deterministic>
     <IsWebBootstrapper>false</IsWebBootstrapper>
     <PublishUrl>publish\</PublishUrl>
@@ -76,7 +76,7 @@
     <GenerateManifests>false</GenerateManifests>
   </PropertyGroup>
   <PropertyGroup>
-    <SignManifests>true</SignManifests>
+    <SignManifests>false</SignManifests>
   </PropertyGroup>
   <PropertyGroup>
     <TargetZone>LocalIntranet</TargetZone>
@@ -116,6 +116,43 @@
     <Compile Include="common\control\Base.vb">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="Cm.vb" />
+    <Compile Include="frmDairiImport.Designer.vb">
+      <DependentUpon>frmDairiImport.vb</DependentUpon>
+    </Compile>
+    <Compile Include="frmDairiImport.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmErrorAlertTbl.Designer.vb">
+      <DependentUpon>frmErrorAlertTbl.vb</DependentUpon>
+    </Compile>
+    <Compile Include="frmErrorAlertTbl.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmItemSearch.Designer.vb">
+      <DependentUpon>frmItemSearch.vb</DependentUpon>
+    </Compile>
+    <Compile Include="frmItemSearch.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmStockOut.Designer.vb">
+      <DependentUpon>frmStockOut.vb</DependentUpon>
+    </Compile>
+    <Compile Include="frmStockOut.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmStockOutTbl.Designer.vb">
+      <DependentUpon>frmStockOutTbl.vb</DependentUpon>
+    </Compile>
+    <Compile Include="frmStockOutTbl.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmLogin.Designer.vb">
+      <DependentUpon>frmLogin.vb</DependentUpon>
+    </Compile>
+    <Compile Include="frmLogin.vb">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="Menu.vb">
       <SubType>Form</SubType>
     </Compile>
@@ -127,6 +164,7 @@
     <Compile Include="My Project\Application.Designer.vb">
       <AutoGen>True</AutoGen>
       <DependentUpon>Application.myapp</DependentUpon>
+      <DesignTime>True</DesignTime>
     </Compile>
     <Compile Include="My Project\Resources.Designer.vb">
       <AutoGen>True</AutoGen>
@@ -148,6 +186,18 @@
   <ItemGroup>
     <EmbeddedResource Include="common\control\Base.resx">
       <DependentUpon>Base.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmDairiImport.resx">
+      <DependentUpon>frmDairiImport.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmItemSearch.resx">
+      <DependentUpon>frmItemSearch.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmStockOut.resx">
+      <DependentUpon>frmStockOut.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmLogin.resx">
+      <DependentUpon>frmLogin.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Menu.resx">
       <DependentUpon>Menu.vb</DependentUpon>
@@ -174,7 +224,6 @@
       <LastGenOutput>Settings.Designer.vb</LastGenOutput>
     </None>
     <None Include="App.config" />
-    <None Include="StockManagement_TemporaryKey.pfx" />
   </ItemGroup>
   <ItemGroup>
     <BootstrapperPackage Include=".NETFramework,Version=v4.7.2">
