@@ -5,6 +5,9 @@
     '商品CD（商品検索の画面遷移時用）
     Public Shared StrSearchItemCd As String = ""
 
+    '商品画面（商品検索の画面遷移時用）
+    Public Shared StrSearchItemFormName As String = ""
+
     'NULL→空文字列変換処理
     Public Shared Function Nz(strOri As String, strAlt As String)
         Dim rtn As String = strOri
@@ -65,5 +68,15 @@
         Return rtn
 
     End Function
+
+    'CSV→テーブル取込処理
+    Public Shared Sub ImportDBFromFile(tableName As String, fileName As String)
+        Dim Cmd As New OleDb.OleDbCommand
+        Dim Dta As New OleDb.OleDbDataAdapter
+
+        Cmd.Connection = Conn
+        Cmd.CommandText = "BULK INSERT " & tableName & " FROM '" & fileName & "' With (FIELDTERMINATOR = ',', ROWTERMINATOR = '\n');"
+        Cmd.ExecuteNonQuery()
+    End Sub
 
 End Class

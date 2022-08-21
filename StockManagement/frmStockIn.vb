@@ -1,4 +1,4 @@
-﻿Public Class frmStockOut
+﻿Public Class frmStockIn
 
     ' 商品検索ボタン押下時イベント
     Private Sub cmdSearch_Click(sender As Object, e As EventArgs) Handles cmdSearch.Click
@@ -11,9 +11,9 @@
         If Cm.Nz(txtItemCd.Text, "") <> "" And Cm.Nz(txtQty.Text, "") <> "" And Cm.Nz(cboLocation.SelectedValue, "") <> "" Then
             Dim Cmd As New OleDb.OleDbCommand
             Cmd.Connection = Cm.Conn
-            Cmd.CommandText = "Insert Into T_StockOut(ITEMCD, LOCATIONCD, QTY, REMARKS, UPDDT) Values('" & txtItemCd.Text & "','" & cboLocation.SelectedValue & "'," & txtQty.Text & ",'" & Cm.Nz(txtRemarks.Text, "") & "', Now())"
+            Cmd.CommandText = "Insert Into T_StockIn(ITEMCD, LOCATIONCD, QTY, REMARKS, UPDDT) Values('" & txtItemCd.Text & "','" & cboLocation.SelectedValue & "'," & txtQty.Text & ",'" & Cm.Nz(txtRemarks.Text, "") & "', Now())"
             Cmd.ExecuteNonQuery()
-            dgStockOut.Refresh()
+            dgStockIn.Refresh()
             txtItemCd.Text = ""
             txtQty.Text = ""
             txtRemarks.Text = ""
@@ -28,12 +28,12 @@
     Private Sub cmdDelete_Click(sender As Object, e As EventArgs) Handles cmdDelete.Click
         Dim Cmd As New OleDb.OleDbCommand
         Cmd.Connection = Cm.Conn
-        Cmd.CommandText = "Delete From T_StockOut Where TARGETFLG = True"
+        Cmd.CommandText = "Delete From T_StockIn Where TARGETFLG = True"
         Cmd.ExecuteNonQuery()
-        dgStockOut.Refresh()
+        dgStockIn.Refresh()
     End Sub
 
-    ' 出庫処理ボタン押下時イベント
+    ' 入庫処理ボタン押下時イベント
     Private Sub cmdExec_Click(sender As Object, e As EventArgs) Handles cmdExec.Click
         Dim varIpAddress As String = ""
 
@@ -44,7 +44,7 @@
         Cmd.Connection = Cm.Conn
         varIpAddress = Cm.DLookup("VALUE1", "M_CODE_CL", "CATEGORY = 'PREVUSER'")
         If Cm.DLookup("LOCKST", "T_Lock", "") <> 0 Then
-            MessageBox.Show("サーバーで定時処理が稼働中です。暫く経ってから実行してください。", "出庫処理", MessageBoxButtons.OK, MessageBoxIcon.Error)
+            MessageBox.Show("サーバーで定時処理が稼働中です。暫く経ってから実行してください。", "入庫処理", MessageBoxButtons.OK, MessageBoxIcon.Error)
             Exit Sub
         End If
 
@@ -52,13 +52,13 @@
         Cmd.CommandText = "Delete From T_ErrorAlert_CL"
         Cmd.ExecuteNonQuery()
         Cmd.CommandText = "Insert Into T_ErrorAlert_CL(KEYCODE, MESSAGE, CRTDT) " &
-                 "Select T_StockOut.ITEMCD, '変更商品名がマスタに登録されていません。出庫前に登録して下さい。', Now() From T_StockOut Left Join M_Item " &
-                 "On T_StockOut.ITEMCD = M_Item.ITEMCD Where M_Item.ITEMCD Is Null"
+                 "Select T_StockIn.ITEMCD, '変更商品名がマスタに登録されていません。入庫前に登録して下さい。', Now() From T_StockIn Left Join M_Item " &
+                 "On T_StockIn.ITEMCD = M_Item.ITEMCD Where M_Item.ITEMCD Is Null"
         Cmd.ExecuteNonQuery()
         Cmd.CommandText = "Insert Into T_ErrorAlert_CL(KEYCODE, MESSAGE, CRTDT) " &
-                 "Select T_StockOut.ITEMCD, 'ロケーションがマスタに登録されていません。確認して下さい。', Now() " &
-                 "From T_StockOut Left Join (Select * From M_Code Where CATEGORY = 'LOCATIONCD') As CODE " &
-                 "On T_StockOut.LOCATIONCD = CODE.CODE Where CODE.VALUE1 Is Null"
+                 "Select T_StockIn.ITEMCD, 'ロケーションがマスタに登録されていません。確認して下さい。', Now() " &
+                 "From T_StockIn Left Join (Select * From M_Code Where CATEGORY = 'LOCATIONCD') As CODE " &
+                 "On T_StockIn.LOCATIONCD = CODE.CODE Where CODE.VALUE1 Is Null"
         Cmd.ExecuteNonQuery()
 
         If Cm.DCount("KEYCODE", "T_ErrorAlert_CL", "") > 0 Then
@@ -66,22 +66,22 @@
         Else
             ' サーバーテーブルに更新
             Cmd.CommandText = "Insert Into T_StockHistory(CRTDT, ITEMCD, LOCATIONCD, IOKBN, QTY, REMARKS, UPDIP) " &
-                     "Select Now(), ITEMCD, LOCATIONCD, 'O', QTY, REMARKS, '" & Cm.Nz(varIpAddress, "") & "' " &
-                     "From T_StockOut"
+                     "Select Now(), ITEMCD, LOCATIONCD, 'I', QTY, REMARKS, '" & Cm.Nz(varIpAddress, "") & "' " &
+                     "From T_StockIn"
             Cmd.ExecuteNonQuery()
             Cmd.CommandText = "Update T_ActStock " &
-                     "Inner Join T_StockOut On T_ActStock.ITEMCD = T_StockOut.ITEMCD And T_ActStock.LOCATIONCD = T_StockOut.LOCATIONCD " &
-                     "Set T_ActStock.ACTQTY = T_ActStock.ACTQTY - T_StockOut.QTY, T_ActStock.UPDDT = Now()"
+                     "Inner Join T_StockIn On T_ActStock.ITEMCD = T_StockIn.ITEMCD And T_ActStock.LOCATIONCD = T_StockIn.LOCATIONCD " &
+                     "Set T_ActStock.ACTQTY = T_ActStock.ACTQTY + T_StockIn.QTY, T_ActStock.UPDDT = Now()"
             Cmd.ExecuteNonQuery()
             Cmd.CommandText = "Insert Into T_ActStock(ITEMCD, LOCATIONCD, ACTQTY, UPDDT) " &
                      "Select T1.ITEMCD, T1.LOCATIONCD, T1.QTY * -1, Now() " &
-                     "From T_StockOut As T1 Left Join T_ActStock As T2 On T1.ITEMCD = T2.ITEMCD And T1.LOCATIONCD = T2.LOCATIONCD " &
+                     "From T_StockIn As T1 Left Join T_ActStock As T2 On T1.ITEMCD = T2.ITEMCD And T1.LOCATIONCD = T2.LOCATIONCD " &
                      "Where T2.ITEMCD Is Null"
             Cmd.ExecuteNonQuery()
-            Cmd.CommandText = "Delete From T_StockOut"
+            Cmd.CommandText = "Delete From T_StockIn"
             Cmd.ExecuteNonQuery()
-            MessageBox.Show("サーバーへの出庫処理が完了しました。", "出庫処理", MessageBoxButtons.OK, MessageBoxIcon.Information)
-            dgStockOut.Refresh()
+            MessageBox.Show("サーバーへの入庫処理が完了しました。", "入庫処理", MessageBoxButtons.OK, MessageBoxIcon.Information)
+            dgStockIn.Refresh()
         End If
     End Sub
 
@@ -100,11 +100,11 @@
 
     ' 一括メンテンスボタン押下時イベント
     Private Sub cmdAll_Click(sender As Object, e As EventArgs) Handles cmdAll.Click
-        frmStockOutTbl.ShowDialog()
+        frmStockInTbl.ShowDialog()
     End Sub
 
 
-    Private Sub frmStockOut_Load(sender As Object, e As EventArgs) Handles MyBase.Load
+    Private Sub frmStockIn_Load(sender As Object, e As EventArgs) Handles MyBase.Load
 
     End Sub
 

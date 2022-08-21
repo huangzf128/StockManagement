@@ -1,8 +1,8 @@
 ﻿<Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()> _
-Partial Class frmStockHistory
-    Inherits frmBase
+Partial Class frmStockInTbl
+    Inherits System.Windows.Forms.Form
 
-    'Form 重写 Dispose，以清理组件列表。
+    'フォームがコンポーネントの一覧をクリーンアップするために dispose をオーバーライドします。
     <System.Diagnostics.DebuggerNonUserCode()> _
     Protected Overrides Sub Dispose(ByVal disposing As Boolean)
         Try
@@ -14,24 +14,17 @@ Partial Class frmStockHistory
         End Try
     End Sub
 
-    'Windows 窗体设计器所必需的
+    'Windows フォーム デザイナーで必要です。
     Private components As System.ComponentModel.IContainer
 
-    '注意: 以下过程是 Windows 窗体设计器所必需的
-    '可以使用 Windows 窗体设计器修改它。  
-    '不要使用代码编辑器修改它。
+    'メモ: 以下のプロシージャは Windows フォーム デザイナーで必要です。
+    'Windows フォーム デザイナーを使用して変更できます。  
+    'コード エディターを使って変更しないでください。
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
-        Me.SuspendLayout()
-        '
-        'frmStockHistory
-        '
-        Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 12.0!)
+        components = New System.ComponentModel.Container
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.ClientSize = New System.Drawing.Size(800, 450)
-        Me.Name = "frmStockHistory"
-        Me.Text = "StockHistory"
-        Me.ResumeLayout(False)
-
+        Me.Text = "frmStockInTbl"
     End Sub
 End Class

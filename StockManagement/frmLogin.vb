@@ -32,7 +32,7 @@
     Private Sub Login_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         Dim varUser As String
 
-        Cm.Conn.ConnectionString = "Provider=sqloledb;Data Source=ocalhost\sqlexpress;Initial Catalog=master;Integrated Security=SSPI;"
+        Cm.Conn.ConnectionString = "Provider=sqloledb;Data Source=localhost\sqlexpress;Initial Catalog=master;Integrated Security=SSPI;"
 
         Try
             Cm.Conn.Open()
