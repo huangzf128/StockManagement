@@ -1,5 +1,5 @@
 ﻿<Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()>
-Partial Class frmMenu
+Partial Class FrmMenu
     Inherits System.Windows.Forms.Form
 
     'Form 重写 Dispose，以清理组件列表。
@@ -84,7 +84,7 @@ Partial Class frmMenu
         Me.tabPnl.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 18.0!))
         Me.tabPnl.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 18.0!))
         Me.tabPnl.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 18.0!))
-        Me.tabPnl.Size = New System.Drawing.Size(252, 238)
+        Me.tabPnl.Size = New System.Drawing.Size(252, 243)
         Me.tabPnl.TabIndex = 1
         '
         'btnStockIn
@@ -93,7 +93,7 @@ Partial Class frmMenu
             Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.btnStockIn.Font = New System.Drawing.Font("ＭＳ Ｐゴシック", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(134, Byte))
-        Me.btnStockIn.Location = New System.Drawing.Point(3, 30)
+        Me.btnStockIn.Location = New System.Drawing.Point(3, 31)
         Me.btnStockIn.Name = "btnStockIn"
         Me.btnStockIn.Size = New System.Drawing.Size(120, 35)
         Me.btnStockIn.TabIndex = 0
@@ -106,7 +106,7 @@ Partial Class frmMenu
             Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.btnStockHistory.Font = New System.Drawing.Font("ＭＳ Ｐゴシック", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(134, Byte))
-        Me.btnStockHistory.Location = New System.Drawing.Point(129, 30)
+        Me.btnStockHistory.Location = New System.Drawing.Point(129, 31)
         Me.btnStockHistory.Name = "btnStockHistory"
         Me.btnStockHistory.Size = New System.Drawing.Size(120, 35)
         Me.btnStockHistory.TabIndex = 1
@@ -119,7 +119,7 @@ Partial Class frmMenu
             Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.btnStockOut.Font = New System.Drawing.Font("ＭＳ Ｐゴシック", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(134, Byte))
-        Me.btnStockOut.Location = New System.Drawing.Point(3, 71)
+        Me.btnStockOut.Location = New System.Drawing.Point(3, 72)
         Me.btnStockOut.Name = "btnStockOut"
         Me.btnStockOut.Size = New System.Drawing.Size(120, 35)
         Me.btnStockOut.TabIndex = 2
@@ -132,7 +132,7 @@ Partial Class frmMenu
             Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.Button4.Font = New System.Drawing.Font("ＭＳ Ｐゴシック", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(134, Byte))
-        Me.Button4.Location = New System.Drawing.Point(129, 71)
+        Me.Button4.Location = New System.Drawing.Point(129, 72)
         Me.Button4.Name = "Button4"
         Me.Button4.Size = New System.Drawing.Size(120, 35)
         Me.Button4.TabIndex = 3
@@ -145,7 +145,7 @@ Partial Class frmMenu
             Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.Button5.Font = New System.Drawing.Font("ＭＳ Ｐゴシック", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(134, Byte))
-        Me.Button5.Location = New System.Drawing.Point(3, 112)
+        Me.Button5.Location = New System.Drawing.Point(3, 113)
         Me.Button5.Name = "Button5"
         Me.Button5.Size = New System.Drawing.Size(120, 35)
         Me.Button5.TabIndex = 4
@@ -158,7 +158,7 @@ Partial Class frmMenu
             Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.Button6.Font = New System.Drawing.Font("ＭＳ Ｐゴシック", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(134, Byte))
-        Me.Button6.Location = New System.Drawing.Point(129, 112)
+        Me.Button6.Location = New System.Drawing.Point(129, 113)
         Me.Button6.Name = "Button6"
         Me.Button6.Size = New System.Drawing.Size(120, 35)
         Me.Button6.TabIndex = 5
@@ -175,7 +175,7 @@ Partial Class frmMenu
         Me.lblTitleLeft.ForeColor = System.Drawing.Color.White
         Me.lblTitleLeft.Location = New System.Drawing.Point(3, 5)
         Me.lblTitleLeft.Name = "lblTitleLeft"
-        Me.lblTitleLeft.Size = New System.Drawing.Size(120, 22)
+        Me.lblTitleLeft.Size = New System.Drawing.Size(120, 23)
         Me.lblTitleLeft.TabIndex = 6
         Me.lblTitleLeft.Text = "入　力"
         Me.lblTitleLeft.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
@@ -190,7 +190,7 @@ Partial Class frmMenu
         Me.lblTitleRight.ForeColor = System.Drawing.Color.White
         Me.lblTitleRight.Location = New System.Drawing.Point(129, 5)
         Me.lblTitleRight.Name = "lblTitleRight"
-        Me.lblTitleRight.Size = New System.Drawing.Size(120, 22)
+        Me.lblTitleRight.Size = New System.Drawing.Size(120, 23)
         Me.lblTitleRight.TabIndex = 7
         Me.lblTitleRight.Text = "出　力"
         Me.lblTitleRight.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
@@ -201,7 +201,7 @@ Partial Class frmMenu
             Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.Button7.Font = New System.Drawing.Font("ＭＳ Ｐゴシック", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(134, Byte))
-        Me.Button7.Location = New System.Drawing.Point(3, 153)
+        Me.Button7.Location = New System.Drawing.Point(3, 154)
         Me.Button7.Name = "Button7"
         Me.Button7.Size = New System.Drawing.Size(120, 35)
         Me.Button7.TabIndex = 8
@@ -214,7 +214,7 @@ Partial Class frmMenu
             Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.Button8.Font = New System.Drawing.Font("ＭＳ Ｐゴシック", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(134, Byte))
-        Me.Button8.Location = New System.Drawing.Point(129, 153)
+        Me.Button8.Location = New System.Drawing.Point(129, 154)
         Me.Button8.Name = "Button8"
         Me.Button8.Size = New System.Drawing.Size(120, 35)
         Me.Button8.TabIndex = 9
@@ -227,9 +227,9 @@ Partial Class frmMenu
             Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.Button9.Font = New System.Drawing.Font("ＭＳ Ｐゴシック", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(134, Byte))
-        Me.Button9.Location = New System.Drawing.Point(3, 194)
+        Me.Button9.Location = New System.Drawing.Point(3, 195)
         Me.Button9.Name = "Button9"
-        Me.Button9.Size = New System.Drawing.Size(120, 36)
+        Me.Button9.Size = New System.Drawing.Size(120, 40)
         Me.Button9.TabIndex = 10
         Me.Button9.Text = "Button9"
         Me.Button9.UseVisualStyleBackColor = True
@@ -267,7 +267,7 @@ Partial Class frmMenu
         Me.Label3.TabIndex = 3
         Me.Label3.Text = "サーバー最終自動処理日時："
         '
-        'frmMenu
+        'FrmMenu
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 12.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
@@ -277,7 +277,7 @@ Partial Class frmMenu
         Me.Controls.Add(Me.pnlFooter)
         Me.Controls.Add(Me.lblTitle)
         Me.Controls.Add(Me.tabPnl)
-        Me.Name = "frmMenu"
+        Me.Name = "FrmMenu"
         Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen
         Me.Text = "メニュー"
         Me.tabPnl.ResumeLayout(False)
