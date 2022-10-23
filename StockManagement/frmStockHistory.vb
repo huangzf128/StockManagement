@@ -3,6 +3,50 @@
     Dim Q_RefStockHistory As String = "SELECT dbo_T_StockHistory.CRTDT, dbo_T_StockHistory.ITEMCD, dbo_T_StockHistory.LOCATIONCD, dbo_T_StockHistory.IOKBN, dbo_T_StockHistory.QTY, dbo_T_StockHistory.REMARKS, dbo_T_StockHistory.UPDIP, CODE1.VALUE1 AS LOCATIONNM, CODE2.VALUE1 AS IOKBNNM
 FROM (dbo_T_StockHistory LEFT JOIN (SELECT CODE, VALUE1 FROM dbo_M_Code WHERE CATEGORY='LOCATIONCD')  AS CODE1 ON dbo_T_StockHistory.LOCATIONCD=CODE1.CODE) LEFT JOIN (SELECT CODE, VALUE1 FROM dbo_M_Code WHERE CATEGORY='IOKBN')  AS CODE2 ON dbo_T_StockHistory.IOKBN=CODE2.CODE;"
 
+    Public Function GetPanel() As Panel
+        Return Me.pnlCondition
+    End Function
+
+
+    Private Sub btnClose_Click(sender As Object, e As EventArgs) Handles btnClose.Click
+        Me.Close()
+    End Sub
+
+    Private Sub btnSearch_Click(sender As Object, e As EventArgs) Handles btnSearch.Click
+        Dim db As New DbHandler
+        Dim dt As DataTable = db.executeSelect(getSql(), Nothing)
+        dgStockHistory.DataSource = dt
+
+        Dim dtime As String = dtPickerFrom.Value
+
+    End Sub
+
+    Private Sub FrmStockHistory_Load(sender As Object, e As EventArgs) Handles Me.Load
+        dgStockHistory.AutoGenerateColumns = False
+        dgStockHistory.AllowUserToResizeRows = False
+        SetStyle(ControlStyles.OptimizedDoubleBuffer, True)
+    End Sub
+
+    Private Function getSql() As String
+        Dim sql As String = ""
+        sql += " SELECT "
+        sql += "     T.* "
+        sql += "    ,M1.VALUE1 AS LOCATIONNM "
+        sql += "    ,M2.VALUE1 AS IOKBNNM "
+        sql += ""
+        sql += " FROM T_StockHistory T "
+        sql += " LEFT JOIN M_Code AS M1 "
+        sql += " ON     M1.CODE = T.LOCATIONCD "
+        sql += " AND    M1.CATEGORY = 'LOCATIONCD' "
+        sql += ""
+        sql += " LEFT JOIN M_Code AS M2 "
+        sql += " ON     M2.CODE = T.IOKBN "
+        sql += " AND    M2.CATEGORY = 'IOKBN' "
+        sql += ""
+
+        Return sql
+    End Function
+
     'Private Sub chkIn_Click(sender As Object, e As EventArgs) Handles chkIn.Click
     '    If chkIn.Checked And chkOut.Checked Then
     '        chkOut.Checked = False

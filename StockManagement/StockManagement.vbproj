@@ -125,10 +125,17 @@
     </Compile>
     <Compile Include="Cm.vb" />
     <Compile Include="common\control\IControl.vb" />
+    <Compile Include="common\db\DbHandler.vb" />
     <Compile Include="frmDairiImport.Designer.vb">
       <DependentUpon>frmDairiImport.vb</DependentUpon>
     </Compile>
     <Compile Include="frmDairiImport.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FrmDashboard.Designer.vb">
+      <DependentUpon>FrmDashboard.vb</DependentUpon>
+    </Compile>
+    <Compile Include="FrmDashboard.vb">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="frmErrorAlertTbl.Designer.vb">
@@ -185,10 +192,10 @@
     <Compile Include="FrmStockHistory.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="frmStockReserv.Designer.vb">
-      <DependentUpon>frmStockReserv.vb</DependentUpon>
+    <Compile Include="FrmStockReserve.Designer.vb">
+      <DependentUpon>FrmStockReserve.vb</DependentUpon>
     </Compile>
-    <Compile Include="frmStockReserv.vb">
+    <Compile Include="FrmStockReserve.vb">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="frmYahooImport.Designer.vb">
@@ -228,6 +235,9 @@
     <EmbeddedResource Include="frmDairiImport.resx">
       <DependentUpon>frmDairiImport.vb</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="FrmDashboard.resx">
+      <DependentUpon>FrmDashboard.vb</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="frmItemSearch.resx">
       <DependentUpon>frmItemSearch.vb</DependentUpon>
     </EmbeddedResource>
@@ -246,8 +256,8 @@
     <EmbeddedResource Include="FrmStockHistory.resx">
       <DependentUpon>FrmStockHistory.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="frmStockReserv.resx">
-      <DependentUpon>frmStockReserv.vb</DependentUpon>
+    <EmbeddedResource Include="FrmStockReserve.resx">
+      <DependentUpon>FrmStockReserve.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="frmYahooImport.resx">
       <DependentUpon>frmYahooImport.vb</DependentUpon>

@@ -1,6 +1,6 @@
 ﻿Imports System.Data.SqlClient
 
-Public Class Connection
+Public Class DbHandler
 
     'これを記述するだけでデストラクタが自動生成される
     Implements IDisposable
@@ -9,16 +9,14 @@ Public Class Connection
     Private disposedValue As Boolean '自動生成コード
 
     '(接続文字列)
-    Private Property conStr As String = ""
+    Private Property conStr As String = "Server=MIBAO\SQLEXPRESS;Database=STOCKDB;User Id=sa;Password=sasasa;"
     Private Property sqlCon As SqlConnection
     Private Property sqlTrn As SqlTransaction
-    Private Property sqlCmd As SqlCommand
-    Private Property sqlAdp As SqlDataAdapter
 
     'コンストラクタ
     'クラスをインスタンス化した時、DB接続を開始する
     Public Sub New()
-        Me.open()
+        'Me.open()
     End Sub
 
     'DB接続を開始
@@ -31,14 +29,6 @@ Public Class Connection
 
     '全てのオブジェクトを破棄し、DB接続を終了
     Public Sub close()
-        If Not sqlAdp Is Nothing Then
-            sqlAdp.Dispose()
-            sqlAdp = Nothing
-        End If
-        If Not sqlCmd Is Nothing Then
-            sqlCmd.Dispose()
-            sqlCmd = Nothing
-        End If
         If Not sqlTrn Is Nothing Then
             sqlTrn.Dispose()
             sqlTrn = Nothing
@@ -75,21 +65,25 @@ Public Class Connection
     ''' トランザクションを伴わないSQLを実行(主にSELECT文)
     ''' </summary>
     ''' <param name="sql"></param>
+    ''' <param name="param"></param>
     ''' <returns>Datatable</returns>
-    Public Function getDateSql(sql As String) As DataTable
+    Public Function executeSelect(sql As String, param As SqlParameter) As DataTable
         '結果を格納するDataTableを宣言
         Dim returnDt As New DataTable
 
-        Try
-            sqlCmd = New SqlCommand(sql, sqlCon)
-            sqlAdp = New SqlDataAdapter(sqlCmd)
+        Using connection As New SqlConnection(conStr)
+
+            Dim command As New SqlCommand(sql, connection)
+            command.Connection.Open()
+            If param IsNot Nothing Then
+                command.Parameters.Add(param)
+            End If
+
+            Dim sqlAdp As SqlDataAdapter = New SqlDataAdapter(command)
             sqlAdp.Fill(returnDt)
-        Catch ex As Exception
-            Throw
-        End Try
+        End Using
 
         Return returnDt
-
     End Function
 
     ''' <summary>
@@ -98,16 +92,15 @@ Public Class Connection
     ''' <param name="sql"></param>
     Public Sub executeSql(sql As String)
 
-        Try
-            sqlCmd = New SqlCommand(sql, sqlCon, sqlTrn)
-            sqlCmd.ExecuteNonQuery()
-        Catch ex As Exception
-            Throw
-        End Try
+        Using connection As New SqlConnection(conStr)
+
+            Dim command As New SqlCommand(sql, connection)
+            command.Connection.Open()
+            command.ExecuteNonQuery()
+        End Using
 
     End Sub
 
-    '以下ほぼ自動生成コード
     Protected Overridable Sub Dispose(disposing As Boolean)
         '重複してデストラクタを実行しないためのIfステートメント
         'この中身の処理だけ自分で書く

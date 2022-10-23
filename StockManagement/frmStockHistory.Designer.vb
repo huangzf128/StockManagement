@@ -22,109 +22,148 @@ Partial Class FrmStockHistory
     'コード エディターを使って変更しないでください。
     <System.Diagnostics.DebuggerStepThrough()>
     Private Sub InitializeComponent()
-        Me.dateFrom = New System.Windows.Forms.DateTimePicker()
-        Me.dateTo = New System.Windows.Forms.DateTimePicker()
-        Me.cboHourFrom = New System.Windows.Forms.ComboBox()
-        Me.cboMinFrom = New System.Windows.Forms.ComboBox()
-        Me.cboHourTo = New System.Windows.Forms.ComboBox()
-        Me.cboMinTo = New System.Windows.Forms.ComboBox()
+        Dim DataGridViewCellStyle1 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle2 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle6 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle3 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle4 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle5 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Me.txtItemCd = New System.Windows.Forms.TextBox()
         Me.dgStockHistory = New System.Windows.Forms.DataGridView()
+        Me.CRTDT = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.ITEMCD = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.LOCATIONNM = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.IOKBNNM = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.QTY = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.REMARKS = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.UPDIP = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.btnClose = New StockManagement.ButtonBase()
         Me.btnSearch = New StockManagement.ButtonBase()
         Me.chkIn = New StockManagement.CheckBoxBase()
         Me.chkOut = New StockManagement.CheckBoxBase()
+        Me.dtPickerFrom = New System.Windows.Forms.DateTimePicker()
+        Me.dtPickerTo = New System.Windows.Forms.DateTimePicker()
+        Me.lblItemName = New System.Windows.Forms.Label()
+        Me.lblWavy = New System.Windows.Forms.Label()
         Me.pnlCondition.SuspendLayout()
         CType(Me.dgStockHistory, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
         'pnlCondition
         '
-        Me.pnlCondition.Controls.Add(Me.chkOut)
-        Me.pnlCondition.Controls.Add(Me.chkIn)
-        Me.pnlCondition.Controls.Add(Me.btnSearch)
-        Me.pnlCondition.Controls.Add(Me.cboHourTo)
-        Me.pnlCondition.Controls.Add(Me.cboMinTo)
+        Me.pnlCondition.Controls.Add(Me.dtPickerFrom)
+        Me.pnlCondition.Controls.Add(Me.dtPickerTo)
+        Me.pnlCondition.Controls.Add(Me.lblWavy)
         Me.pnlCondition.Controls.Add(Me.btnClose)
+        Me.pnlCondition.Controls.Add(Me.btnSearch)
+        Me.pnlCondition.Controls.Add(Me.lblItemName)
         Me.pnlCondition.Controls.Add(Me.txtItemCd)
-        Me.pnlCondition.Size = New System.Drawing.Size(944, 100)
-        '
-        'dateFrom
-        '
-        Me.dateFrom.Location = New System.Drawing.Point(53, 34)
-        Me.dateFrom.Margin = New System.Windows.Forms.Padding(2)
-        Me.dateFrom.Name = "dateFrom"
-        Me.dateFrom.Size = New System.Drawing.Size(111, 19)
-        Me.dateFrom.TabIndex = 0
-        '
-        'dateTo
-        '
-        Me.dateTo.Location = New System.Drawing.Point(323, 35)
-        Me.dateTo.Margin = New System.Windows.Forms.Padding(2)
-        Me.dateTo.Name = "dateTo"
-        Me.dateTo.Size = New System.Drawing.Size(111, 19)
-        Me.dateTo.TabIndex = 1
-        '
-        'cboHourFrom
-        '
-        Me.cboHourFrom.FormattingEnabled = True
-        Me.cboHourFrom.Location = New System.Drawing.Point(166, 35)
-        Me.cboHourFrom.Margin = New System.Windows.Forms.Padding(2)
-        Me.cboHourFrom.Name = "cboHourFrom"
-        Me.cboHourFrom.Size = New System.Drawing.Size(68, 20)
-        Me.cboHourFrom.TabIndex = 2
-        '
-        'cboMinFrom
-        '
-        Me.cboMinFrom.FormattingEnabled = True
-        Me.cboMinFrom.Location = New System.Drawing.Point(243, 35)
-        Me.cboMinFrom.Margin = New System.Windows.Forms.Padding(2)
-        Me.cboMinFrom.Name = "cboMinFrom"
-        Me.cboMinFrom.Size = New System.Drawing.Size(68, 20)
-        Me.cboMinFrom.TabIndex = 3
-        '
-        'cboHourTo
-        '
-        Me.cboHourTo.FormattingEnabled = True
-        Me.cboHourTo.Location = New System.Drawing.Point(485, 36)
-        Me.cboHourTo.Margin = New System.Windows.Forms.Padding(2)
-        Me.cboHourTo.Name = "cboHourTo"
-        Me.cboHourTo.Size = New System.Drawing.Size(68, 20)
-        Me.cboHourTo.TabIndex = 4
-        '
-        'cboMinTo
-        '
-        Me.cboMinTo.FormattingEnabled = True
-        Me.cboMinTo.Location = New System.Drawing.Point(574, 36)
-        Me.cboMinTo.Margin = New System.Windows.Forms.Padding(2)
-        Me.cboMinTo.Name = "cboMinTo"
-        Me.cboMinTo.Size = New System.Drawing.Size(68, 20)
-        Me.cboMinTo.TabIndex = 5
+        Me.pnlCondition.Controls.Add(Me.chkIn)
+        Me.pnlCondition.Controls.Add(Me.chkOut)
+        Me.pnlCondition.Size = New System.Drawing.Size(910, 84)
         '
         'txtItemCd
         '
-        Me.txtItemCd.Location = New System.Drawing.Point(53, 67)
+        Me.txtItemCd.Location = New System.Drawing.Point(88, 43)
         Me.txtItemCd.Margin = New System.Windows.Forms.Padding(2)
         Me.txtItemCd.Name = "txtItemCd"
-        Me.txtItemCd.Size = New System.Drawing.Size(56, 19)
+        Me.txtItemCd.Size = New System.Drawing.Size(114, 19)
         Me.txtItemCd.TabIndex = 6
         '
         'dgStockHistory
         '
+        DataGridViewCellStyle1.BackColor = System.Drawing.Color.WhiteSmoke
+        Me.dgStockHistory.AlternatingRowsDefaultCellStyle = DataGridViewCellStyle1
+        DataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.TopCenter
+        DataGridViewCellStyle2.BackColor = System.Drawing.SystemColors.Highlight
+        DataGridViewCellStyle2.Font = New System.Drawing.Font("MS PGothic", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(134, Byte))
+        DataGridViewCellStyle2.ForeColor = System.Drawing.SystemColors.Window
+        DataGridViewCellStyle2.Padding = New System.Windows.Forms.Padding(0, 4, 0, 4)
+        DataGridViewCellStyle2.SelectionBackColor = System.Drawing.SystemColors.Highlight
+        DataGridViewCellStyle2.SelectionForeColor = System.Drawing.SystemColors.HighlightText
+        DataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
+        Me.dgStockHistory.ColumnHeadersDefaultCellStyle = DataGridViewCellStyle2
         Me.dgStockHistory.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
-        Me.dgStockHistory.Location = New System.Drawing.Point(53, 156)
+        Me.dgStockHistory.Columns.AddRange(New System.Windows.Forms.DataGridViewColumn() {Me.CRTDT, Me.ITEMCD, Me.LOCATIONNM, Me.IOKBNNM, Me.QTY, Me.REMARKS, Me.UPDIP})
+        Me.dgStockHistory.EnableHeadersVisualStyles = False
+        Me.dgStockHistory.Location = New System.Drawing.Point(9, 111)
         Me.dgStockHistory.Margin = New System.Windows.Forms.Padding(2)
         Me.dgStockHistory.Name = "dgStockHistory"
+        DataGridViewCellStyle6.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter
+        DataGridViewCellStyle6.BackColor = System.Drawing.SystemColors.Control
+        DataGridViewCellStyle6.Font = New System.Drawing.Font("MS PGothic", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(134, Byte))
+        DataGridViewCellStyle6.ForeColor = System.Drawing.SystemColors.WindowText
+        DataGridViewCellStyle6.SelectionBackColor = System.Drawing.SystemColors.Highlight
+        DataGridViewCellStyle6.SelectionForeColor = System.Drawing.SystemColors.HighlightText
+        DataGridViewCellStyle6.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
+        Me.dgStockHistory.RowHeadersDefaultCellStyle = DataGridViewCellStyle6
+        Me.dgStockHistory.RowHeadersVisible = False
         Me.dgStockHistory.RowHeadersWidth = 72
-        Me.dgStockHistory.RowTemplate.Height = 33
-        Me.dgStockHistory.Size = New System.Drawing.Size(131, 86)
+        Me.dgStockHistory.RowTemplate.DefaultCellStyle.Padding = New System.Windows.Forms.Padding(2, 0, 2, 0)
+        Me.dgStockHistory.RowTemplate.ReadOnly = True
+        Me.dgStockHistory.Size = New System.Drawing.Size(890, 440)
         Me.dgStockHistory.TabIndex = 11
+        '
+        'CRTDT
+        '
+        Me.CRTDT.DataPropertyName = "CRTDT"
+        DataGridViewCellStyle3.Format = "F"
+        DataGridViewCellStyle3.NullValue = Nothing
+        Me.CRTDT.DefaultCellStyle = DataGridViewCellStyle3
+        Me.CRTDT.HeaderText = "入出庫日時"
+        Me.CRTDT.Name = "CRTDT"
+        Me.CRTDT.Width = 130
+        '
+        'ITEMCD
+        '
+        Me.ITEMCD.DataPropertyName = "ITEMCD"
+        Me.ITEMCD.HeaderText = "変更商品名"
+        Me.ITEMCD.Name = "ITEMCD"
+        Me.ITEMCD.Width = 215
+        '
+        'LOCATIONNM
+        '
+        Me.LOCATIONNM.DataPropertyName = "LOCATIONNM"
+        Me.LOCATIONNM.HeaderText = "ロケーション"
+        Me.LOCATIONNM.Name = "LOCATIONNM"
+        '
+        'IOKBNNM
+        '
+        Me.IOKBNNM.DataPropertyName = "IOKBNNM"
+        DataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter
+        Me.IOKBNNM.DefaultCellStyle = DataGridViewCellStyle4
+        Me.IOKBNNM.HeaderText = "区分"
+        Me.IOKBNNM.Name = "IOKBNNM"
+        Me.IOKBNNM.Width = 55
+        '
+        'QTY
+        '
+        Me.QTY.DataPropertyName = "QTY"
+        DataGridViewCellStyle5.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight
+        Me.QTY.DefaultCellStyle = DataGridViewCellStyle5
+        Me.QTY.HeaderText = "数量"
+        Me.QTY.Name = "QTY"
+        Me.QTY.Width = 60
+        '
+        'REMARKS
+        '
+        Me.REMARKS.DataPropertyName = "REMARKS"
+        Me.REMARKS.HeaderText = "備考"
+        Me.REMARKS.Name = "REMARKS"
+        Me.REMARKS.Width = 200
+        '
+        'UPDIP
+        '
+        Me.UPDIP.DataPropertyName = "UPDIP"
+        Me.UPDIP.HeaderText = "更新者"
+        Me.UPDIP.Name = "UPDIP"
+        Me.UPDIP.Width = 110
         '
         'btnClose
         '
-        Me.btnClose.BackColor = System.Drawing.Color.Red
-        Me.btnClose.Font = New System.Drawing.Font("ＭＳ Ｐゴシック", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(134, Byte))
-        Me.btnClose.Location = New System.Drawing.Point(847, 59)
+        Me.btnClose.BackColor = System.Drawing.Color.Goldenrod
+        Me.btnClose.Font = New System.Drawing.Font("MS PGothic", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(134, Byte))
+        Me.btnClose.Location = New System.Drawing.Point(795, 25)
         Me.btnClose.Name = "btnClose"
         Me.btnClose.Size = New System.Drawing.Size(70, 30)
         Me.btnClose.TabIndex = 0
@@ -135,8 +174,8 @@ Partial Class FrmStockHistory
         'btnSearch
         '
         Me.btnSearch.BackColor = System.Drawing.Color.DeepSkyBlue
-        Me.btnSearch.Font = New System.Drawing.Font("ＭＳ Ｐゴシック", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(134, Byte))
-        Me.btnSearch.Location = New System.Drawing.Point(760, 59)
+        Me.btnSearch.Font = New System.Drawing.Font("MS PGothic", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(134, Byte))
+        Me.btnSearch.Location = New System.Drawing.Point(710, 25)
         Me.btnSearch.Margin = New System.Windows.Forms.Padding(2)
         Me.btnSearch.Name = "btnSearch"
         Me.btnSearch.Size = New System.Drawing.Size(70, 30)
@@ -148,8 +187,8 @@ Partial Class FrmStockHistory
         'chkIn
         '
         Me.chkIn.AutoSize = True
-        Me.chkIn.ForeColor = System.Drawing.Color.Red
-        Me.chkIn.Location = New System.Drawing.Point(172, 69)
+        Me.chkIn.ForeColor = System.Drawing.SystemColors.Info
+        Me.chkIn.Location = New System.Drawing.Point(231, 45)
         Me.chkIn.Name = "chkIn"
         Me.chkIn.Size = New System.Drawing.Size(72, 16)
         Me.chkIn.TabIndex = 14
@@ -160,8 +199,8 @@ Partial Class FrmStockHistory
         'chkOut
         '
         Me.chkOut.AutoSize = True
-        Me.chkOut.ForeColor = System.Drawing.Color.Red
-        Me.chkOut.Location = New System.Drawing.Point(250, 69)
+        Me.chkOut.ForeColor = System.Drawing.SystemColors.Info
+        Me.chkOut.Location = New System.Drawing.Point(334, 45)
         Me.chkOut.Name = "chkOut"
         Me.chkOut.Size = New System.Drawing.Size(72, 16)
         Me.chkOut.TabIndex = 15
@@ -169,24 +208,55 @@ Partial Class FrmStockHistory
         Me.chkOut.Type = 0
         Me.chkOut.UseVisualStyleBackColor = True
         '
+        'dtPickerFrom
+        '
+        Me.dtPickerFrom.CustomFormat = "yyyy年MM月dd   HH時mm分"
+        Me.dtPickerFrom.Format = System.Windows.Forms.DateTimePickerFormat.Custom
+        Me.dtPickerFrom.Location = New System.Drawing.Point(20, 10)
+        Me.dtPickerFrom.Name = "dtPickerFrom"
+        Me.dtPickerFrom.Size = New System.Drawing.Size(180, 19)
+        Me.dtPickerFrom.TabIndex = 16
+        '
+        'dtPickerTo
+        '
+        Me.dtPickerTo.CustomFormat = "yyyy年MM月dd   HH時mm分"
+        Me.dtPickerTo.Format = System.Windows.Forms.DateTimePickerFormat.Custom
+        Me.dtPickerTo.Location = New System.Drawing.Point(231, 10)
+        Me.dtPickerTo.Name = "dtPickerTo"
+        Me.dtPickerTo.Size = New System.Drawing.Size(180, 19)
+        Me.dtPickerTo.TabIndex = 17
+        '
+        'lblItemName
+        '
+        Me.lblItemName.AutoSize = True
+        Me.lblItemName.ForeColor = System.Drawing.SystemColors.Control
+        Me.lblItemName.Location = New System.Drawing.Point(18, 46)
+        Me.lblItemName.Name = "lblItemName"
+        Me.lblItemName.Size = New System.Drawing.Size(65, 12)
+        Me.lblItemName.TabIndex = 18
+        Me.lblItemName.Text = "変更商品名"
+        '
+        'lblWavy
+        '
+        Me.lblWavy.AutoSize = True
+        Me.lblWavy.ForeColor = System.Drawing.SystemColors.Control
+        Me.lblWavy.Location = New System.Drawing.Point(208, 15)
+        Me.lblWavy.Name = "lblWavy"
+        Me.lblWavy.Size = New System.Drawing.Size(17, 12)
+        Me.lblWavy.TabIndex = 19
+        Me.lblWavy.Text = "～"
+        '
         'FrmStockHistory
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 12.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.ClientSize = New System.Drawing.Size(944, 729)
+        Me.ClientSize = New System.Drawing.Size(910, 560)
         Me.Controls.Add(Me.dgStockHistory)
-        Me.Controls.Add(Me.cboMinFrom)
-        Me.Controls.Add(Me.cboHourFrom)
-        Me.Controls.Add(Me.dateTo)
-        Me.Controls.Add(Me.dateFrom)
+        Me.DoubleBuffered = True
         Me.Margin = New System.Windows.Forms.Padding(2)
         Me.Name = "FrmStockHistory"
-        Me.Text = "frmStockHistory"
+        Me.Text = "入出庫履歴"
         Me.Controls.SetChildIndex(Me.pnlCondition, 0)
-        Me.Controls.SetChildIndex(Me.dateFrom, 0)
-        Me.Controls.SetChildIndex(Me.dateTo, 0)
-        Me.Controls.SetChildIndex(Me.cboHourFrom, 0)
-        Me.Controls.SetChildIndex(Me.cboMinFrom, 0)
         Me.Controls.SetChildIndex(Me.dgStockHistory, 0)
         Me.pnlCondition.ResumeLayout(False)
         Me.pnlCondition.PerformLayout()
@@ -194,17 +264,21 @@ Partial Class FrmStockHistory
         Me.ResumeLayout(False)
 
     End Sub
-
-    Friend WithEvents dateFrom As DateTimePicker
-    Friend WithEvents dateTo As DateTimePicker
-    Friend WithEvents cboHourFrom As ComboBox
-    Friend WithEvents cboMinFrom As ComboBox
-    Friend WithEvents cboHourTo As ComboBox
-    Friend WithEvents cboMinTo As ComboBox
     Friend WithEvents txtItemCd As TextBox
     Friend WithEvents dgStockHistory As DataGridView
     Friend WithEvents btnClose As ButtonBase
     Friend WithEvents btnSearch As ButtonBase
     Friend WithEvents chkIn As CheckBoxBase
     Friend WithEvents chkOut As CheckBoxBase
+    Friend WithEvents dtPickerTo As DateTimePicker
+    Friend WithEvents dtPickerFrom As DateTimePicker
+    Friend WithEvents CRTDT As DataGridViewTextBoxColumn
+    Friend WithEvents ITEMCD As DataGridViewTextBoxColumn
+    Friend WithEvents LOCATIONNM As DataGridViewTextBoxColumn
+    Friend WithEvents IOKBNNM As DataGridViewTextBoxColumn
+    Friend WithEvents QTY As DataGridViewTextBoxColumn
+    Friend WithEvents REMARKS As DataGridViewTextBoxColumn
+    Friend WithEvents UPDIP As DataGridViewTextBoxColumn
+    Friend WithEvents lblItemName As Label
+    Friend WithEvents lblWavy As Label
 End Class

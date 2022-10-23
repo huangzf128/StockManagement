@@ -31,22 +31,25 @@ Partial Class FrmBase
         Me.pnlCondition.Dock = System.Windows.Forms.DockStyle.Top
         Me.pnlCondition.Location = New System.Drawing.Point(0, 0)
         Me.pnlCondition.Name = "pnlCondition"
-        Me.pnlCondition.Size = New System.Drawing.Size(800, 100)
+        Me.pnlCondition.Size = New System.Drawing.Size(910, 80)
         Me.pnlCondition.TabIndex = 0
         '
         'FrmBase
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 12.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
+        Me.BackColor = System.Drawing.SystemColors.Control
         Me.BackgroundImage = Global.StockManagement.My.Resources.Resources.Dark_Ocean
-        Me.ClientSize = New System.Drawing.Size(800, 450)
+        Me.ClientSize = New System.Drawing.Size(910, 560)
         Me.Controls.Add(Me.pnlCondition)
-        Me.Font = New System.Drawing.Font("ＭＳ Ｐゴシック", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(134, Byte))
+        Me.DoubleBuffered = True
+        Me.Font = New System.Drawing.Font("MS PGothic", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(134, Byte))
+        Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None
         Me.Name = "FrmBase"
         Me.Text = "Base"
         Me.ResumeLayout(False)
 
     End Sub
 
-    Protected WithEvents pnlCondition As Panel
+    Protected Friend WithEvents pnlCondition As Panel
 End Class
