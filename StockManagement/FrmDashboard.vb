@@ -1,4 +1,6 @@
-﻿Imports System.Reflection
+﻿Imports System.Drawing.Imaging
+Imports System.IO
+Imports System.Reflection
 Imports System.Runtime.CompilerServices
 Imports System.Runtime.InteropServices
 Imports System.Security.Cryptography.X509Certificates
@@ -7,6 +9,8 @@ Imports Microsoft.VisualBasic.ApplicationServices
 
 Public Class FrmDashboard
 
+#Region "API"
+
     <DllImport("user32.dll", EntryPoint:="SendMessageW")>
     Private Shared Function SendMessageW(ByVal hWnd As IntPtr, ByVal Msg As UInteger, ByVal wParam As IntPtr, ByVal lParam As IntPtr) As Integer
     End Function
@@ -14,6 +18,8 @@ Public Class FrmDashboard
     <DllImportAttribute("user32.dll")>
     Private Shared Function ReleaseCapture() As Boolean
     End Function
+
+#End Region
 
 #Region "EVENT"
 
@@ -33,25 +39,26 @@ Public Class FrmDashboard
     End Sub
 
     Private Sub btnStockHistory_Click(sender As Object, e As EventArgs) Handles btnStockHistory.Click
-
-        showForm(FrmStockHistory)
+        Me.lblTitle.Text = FrmStockHistory.Text
+        switchForm(FrmStockHistory)
     End Sub
 
     Private Sub btnStockReserve_Click(sender As Object, e As EventArgs) Handles btnStockReserve.Click
-
-        showForm(FrmStockReserve)
+        Me.lblTitle.Text = FrmStockReserve.Text
+        switchForm(FrmStockReserve)
     End Sub
 
-    ''' <summary>
-    ''' show Dashboard
-    ''' </summary>
-    ''' <param name="sender"></param>
-    ''' <param name="e"></param>
+    Private Sub btnStockList_Click(sender As Object, e As EventArgs) Handles btnStockList.Click
+        Me.lblTitle.Text = FrmStockList.Text
+        switchForm(FrmStockList)
+    End Sub
+
     Private Sub btnDashboard_Click(sender As Object, e As EventArgs) Handles btnDashboard.Click
+        Me.lblTitle.Text = Me.Text
         Me.pnlDashboard.Visible = True
 
-        If Me.MdiChildren.Length > 0 AndAlso TypeOf Me.MdiChildren(0) Is FrmBase Then
-            TryCast(Me.MdiChildren(0), FrmBase).Close()
+        If Me.ActiveMdiChild IsNot Nothing Then
+            Me.ActiveMdiChild.Close()
         End If
     End Sub
 
@@ -67,19 +74,6 @@ Public Class FrmDashboard
 
 #Region "Overrides"
 
-    ''' <summary>
-    ''' flickering対策
-    ''' </summary>
-    ''' <returns></returns>
-    Protected Overrides ReadOnly Property CreateParams As CreateParams
-        Get
-            Dim cp As CreateParams = MyBase.CreateParams
-            'cp.ExStyle = cp.ExStyle Or &H2000000
-            Return cp
-        End Get
-    End Property
-
-
     Protected Overrides Sub WndProc(ByRef m As Message)
         Const WM_SYSCOMMAND As Integer = &H112
         Const SC_RESTORE As Integer = &HF120
@@ -88,8 +82,8 @@ Public Class FrmDashboard
         If m.Msg = WM_SYSCOMMAND Then
             If m.WParam = New IntPtr(SC_RESTORE) Then
                 ' do something before restore
-                Me.Refresh()
-                Me.MinimizeBox = False
+                'Me.Refresh()
+                'Me.MinimizeBox = False
 
             ElseIf m.WParam = New IntPtr(SC_MAXIMIZE) Then
                 ' do something before maximize
@@ -102,37 +96,22 @@ Public Class FrmDashboard
 #End Region
 
 
-    Private Sub showForm(ByVal frm As Form)
+    Private Sub switchForm(ByVal frm As FrmBase)
 
         Me.pnlDashboard.Visible = False
 
+        If frm Is Me.ActiveMdiChild Then
+            Return
+        End If
 
-        'If Me.MdiChildren.Length > 0 AndAlso TypeOf Me.MdiChildren(0) Is FrmBase Then
-        '    If frm Is Me.MdiChildren(0) Then
-        '        Return
-        '    End If
-        '    TryCast(Me.MdiChildren(0), FrmBase).Close()
-        'End If
-
-        'tabControl.SelectedTab = tabForm
-
-        frm.SuspendLayout()
-
+        If Me.ActiveMdiChild IsNot Nothing Then
+            Me.ActiveMdiChild.Close()
+        End If
 
         frm.TopLevel = False
-        'frm.MdiParent = Me
-        Me.Controls().Add(frm)
-        'frm.Dock = DockStyle.Fill
+        frm.MdiParent = Me
+        frm.Dock = DockStyle.Fill
         frm.Show()
-
-        frm.ResumeLayout()
-
-        'frm.WindowState = FormWindowState.Maximized
     End Sub
 
-    Private Sub FrmDashboard_Load(sender As Object, e As EventArgs) Handles Me.Load
-        'tabControl.ItemSize = New Size(0, 1)
-        'tabControl.SizeMode = TabSizeMode.Fixed
-        'tabControl.Appearance = TabAppearance.FlatButtons
-    End Sub
 End Class

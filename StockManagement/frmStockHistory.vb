@@ -1,141 +1,150 @@
-﻿Public Class FrmStockHistory
+﻿Imports System.ComponentModel
+Imports System.Data.SqlClient
+Imports System.Text
 
-    Dim Q_RefStockHistory As String = "SELECT dbo_T_StockHistory.CRTDT, dbo_T_StockHistory.ITEMCD, dbo_T_StockHistory.LOCATIONCD, dbo_T_StockHistory.IOKBN, dbo_T_StockHistory.QTY, dbo_T_StockHistory.REMARKS, dbo_T_StockHistory.UPDIP, CODE1.VALUE1 AS LOCATIONNM, CODE2.VALUE1 AS IOKBNNM
-FROM (dbo_T_StockHistory LEFT JOIN (SELECT CODE, VALUE1 FROM dbo_M_Code WHERE CATEGORY='LOCATIONCD')  AS CODE1 ON dbo_T_StockHistory.LOCATIONCD=CODE1.CODE) LEFT JOIN (SELECT CODE, VALUE1 FROM dbo_M_Code WHERE CATEGORY='IOKBN')  AS CODE2 ON dbo_T_StockHistory.IOKBN=CODE2.CODE;"
+Public Class FrmStockHistory
 
-    Public Function GetPanel() As Panel
-        Return Me.pnlCondition
-    End Function
+#Region "変数"
+    Structure SearchCondition
+        Public crdDtFrom As String
+        Public crdDtTo As String
+        Public itemCd As String
+        Public chkIn As Boolean
+        Public chkOut As Boolean
+    End Structure
 
+    Private _srchCondition As New SearchCondition
+#End Region
+
+#Region "EVENT"
+    Private Sub FrmStockHistory_Load(sender As Object, e As EventArgs) Handles Me.Load
+
+        dtPickerFrom.setDateTime(Now.AddMonths(-1 * Consts.DATA_INTERVAL))
+        dtPickerTo.setDateTime(Now)
+
+        getSearchCondition()
+        bindingNavi.initBindingSource(getTotalCount(), Consts.PAGE_COUNT)
+    End Sub
+
+    Private Sub btnSearch_Click(sender As Object, e As EventArgs) Handles btnSearch.Click
+        getSearchCondition()
+        bindingNavi.initBindingSource(getTotalCount(), Consts.PAGE_COUNT)
+    End Sub
+
+    Private Sub chkIn_CheckedChanged(sender As Object, e As EventArgs) Handles chkIn.CheckedChanged
+        If chkIn.Checked AndAlso chkOut.Checked Then
+            chkOut.Checked = False
+        End If
+    End Sub
+    Private Sub chkOut_CheckedChanged(sender As Object, e As EventArgs) Handles chkOut.CheckedChanged
+        If chkIn.Checked And chkOut.Checked Then
+            chkIn.Checked = False
+        End If
+    End Sub
+
+    Private Sub bindingNavi_CurrentChanged(sender As Object, e As EventArgs) Handles bindingNavi.CurrentChanged
+        ShowWaitForm()
+
+        Async.Process(
+            Function()
+                Dim dt As DataTable = getSqlWithOffset(TryCast(sender, BindingSource).Current)
+                dgStockHistory.Invoke(New SetDataSourceDelegate(AddressOf SetDataSource), dgStockHistory, dt)
+            End Function,
+            Sub()
+                CloseForm()
+            End Sub)
+
+    End Sub
 
     Private Sub btnClose_Click(sender As Object, e As EventArgs) Handles btnClose.Click
         Me.Close()
     End Sub
 
-    Private Sub btnSearch_Click(sender As Object, e As EventArgs) Handles btnSearch.Click
-        Dim db As New DbHandler
-        Dim dt As DataTable = db.executeSelect(getSql(), Nothing)
-        dgStockHistory.DataSource = dt
+#End Region
 
-        Dim dtime As String = dtPickerFrom.Value
+    Private Function getTotalCount() As Integer
 
-    End Sub
+        Dim dbParamEnt As DbParamEnt = getSqlAndParam(True)
 
-    Private Sub FrmStockHistory_Load(sender As Object, e As EventArgs) Handles Me.Load
-        dgStockHistory.AutoGenerateColumns = False
-        dgStockHistory.AllowUserToResizeRows = False
-        SetStyle(ControlStyles.OptimizedDoubleBuffer, True)
-    End Sub
-
-    Private Function getSql() As String
-        Dim sql As String = ""
-        sql += " SELECT "
-        sql += "     T.* "
-        sql += "    ,M1.VALUE1 AS LOCATIONNM "
-        sql += "    ,M2.VALUE1 AS IOKBNNM "
-        sql += ""
-        sql += " FROM T_StockHistory T "
-        sql += " LEFT JOIN M_Code AS M1 "
-        sql += " ON     M1.CODE = T.LOCATIONCD "
-        sql += " AND    M1.CATEGORY = 'LOCATIONCD' "
-        sql += ""
-        sql += " LEFT JOIN M_Code AS M2 "
-        sql += " ON     M2.CODE = T.IOKBN "
-        sql += " AND    M2.CATEGORY = 'IOKBN' "
-        sql += ""
-
-        Return sql
+        Dim dt As DataTable = DbHandler.executeSelect(dbParamEnt)
+        If dt.Rows.Count = 0 Then
+            Return 0
+        End If
+        Return dt.Rows(0).Item("CNT")
     End Function
 
-    'Private Sub chkIn_Click(sender As Object, e As EventArgs) Handles chkIn.Click
-    '    If chkIn.Checked And chkOut.Checked Then
-    '        chkOut.Checked = False
-    '    End If
-    'End Sub
+    Private Function getSqlWithOffset(ByVal offset As Integer) As DataTable
 
-    'Private Sub chkOut_Click(sender As Object, e As EventArgs) Handles chkOut.Click
-    '    If chkIn.Checked And chkOut.Checked Then
-    '        chkIn.Checked = False
-    '    End If
-    'End Sub
+        Dim dbParamEnt As DbParamEnt = getSqlAndParam(False)
 
-    'Private Sub cmdClose_Click(sender As Object, e As EventArgs) Handles cmdClose.Click
-    '    Close()
-    'End Sub
+        dbParamEnt.sbSql.Append(" ORDER BY T1.CRTDT DESC ")
+        dbParamEnt.sbSql.Append(" OFFSET " & offset & " ROWS ")
+        dbParamEnt.sbSql.Append(" FETCH Next " & Consts.PAGE_COUNT & " ROWS ONLY ")
 
-    '' 検索ボタンクリック時イベント
-    'Private Sub cmdView_Click(sender As Object, e As EventArgs) Handles cmdView.Click
-    '    Dim Cmd As New OleDb.OleDbCommand
-    '    Dim Dta As New OleDb.OleDbDataAdapter
-    '    Dim Dts As New DataSet
-    '    Dim strWhere As String = ""
-    '    Dim strDateFrom As String = ""
-    '    Dim strDateTo As String = ""
-
-    '    strDateFrom = dateFrom.ToString("yyyy/MM/dd")
-    '    If Cm.Nz(strDateFrom, "") <> "" Then
-    '        strWhere = strWhere & IIf(strWhere = "", "Where", "And") & " CRTDT >= #" & dateFrom.Text & " " & cboHourFrom.SelectedText & ":" & cboMinFrom.SelectedText & ":00# "
-    '    End If
-    '    strDateTo = dateTo.ToString("yyyy/MM/dd")
-    '    If Cm.Nz(strDateTo, "") <> "" Then
-    '        strWhere = strWhere & IIf(strWhere = "", "Where", "And") & " CRTDT <= #" & dateTo.Text & " " & cboHourTo.SelectedText & ":" & cboMinTo.SelectedText & ":00# "
-    '    End If
-
-    '    If Cm.Nz(txtItemCd.Text, "") <> "" Then
-    '        strWhere = strWhere & IIf(strWhere = "", "Where", "And") & " ITEMCD Like '*" & txtItemCd.Text & "*' "
-    '    End If
-    '    If chkIn.Checked Then
-    '        strWhere = strWhere & IIf(strWhere = "", "Where", "And") & " IOKBN = 'I' "
-    '    End If
-    '    If chkOut.Checked Then
-    '        strWhere = strWhere & IIf(strWhere = "", "Where", "And") & " IOKBN = 'O' "
-    '    End If
-
-    '    ' 初期表示状態
-    '    Cmd.Connection = Cm.Conn
-    '    Cmd.CommandText = "Select * From (" & Q_RefStockHistory & ") " & strWhere
-    '    Dta.Fill(Dts)
-
-    '    dgStockHistory.DataSource = Dts
-    '    dgStockHistory.Refresh()
+        Dim dt As DataTable = DbHandler.executeSelect(dbParamEnt)
+        Return dt
+    End Function
 
 
-    'End Sub
+    Private Function getSqlAndParam(ByVal isGetTotalCount As Boolean) As DbParamEnt
 
-    'Private Sub frmStockHistory_Load(sender As Object, e As EventArgs) Handles MyBase.Load
-    '    Dim Cmd As New OleDb.OleDbCommand
-    '    Dim Dta As New OleDb.OleDbDataAdapter
-    '    Dim Dts As New DataSet
+        Dim sb As New StringBuilder
+        sb.Append(" SELECT ")
+        If isGetTotalCount Then
+            sb.Append(" count(*) AS CNT ")
+        Else
+            sb.Append("     T1.* ")
+            sb.Append("    ,M1.VALUE1 AS LOCATIONNM ")
+            sb.Append("    ,M2.VALUE1 AS IOKBNNM ")
+        End If
+        sb.Append(" ")
+        sb.Append(" FROM T_StockHistory T1 ")
+        If Not isGetTotalCount Then
+            sb.Append(" LEFT JOIN M_Code AS M1 ")
+            sb.Append(" ON     M1.CODE = T1.LOCATIONCD ")
+            sb.Append(" AND    M1.CATEGORY = 'LOCATIONCD' ")
+            sb.Append(" ")
+            sb.Append(" LEFT JOIN M_Code AS M2 ")
+            sb.Append(" ON     M2.CODE = T1.IOKBN ")
+            sb.Append(" AND    M2.CATEGORY = 'IOKBN' ")
+            sb.Append(" ")
+        End If
+        sb.Append(" WHERE ")
+        sb.Append(" 1 = 1 ")
 
-    '    dateFrom.Value = DateAdd("d", -1, Now())
-    '    dateTo.Format = DateTimePickerFormat.Custom
-    '    dateTo.CustomFormat = ""
-    '    chkIn.Checked = False
-    '    chkOut.Checked = False
+        Dim param As New List(Of SqlParameter)
+        If _srchCondition.itemCd <> "" Then
+            sb.Append(" AND T1.ITEMCD Like @ITEMCD")
+            param.Add(New SqlParameter("@ITEMCD", "%" & _srchCondition.itemCd & "%"))
+        End If
+        If _srchCondition.crdDtFrom <> "" Then
+            sb.Append(" AND T1.CRTDT >= @CRTDTFROM ")
+            param.Add(New SqlParameter("@CRTDTFROM", _srchCondition.crdDtFrom))
+        End If
+        If _srchCondition.crdDtTo <> "" Then
+            sb.Append(" AND T1.CRTDT <= @CRTDTTO ")
+            param.Add(New SqlParameter("@CRTDTTO", _srchCondition.crdDtTo))
+        End If
+        If _srchCondition.chkIn Then
+            sb.Append(" AND T1.IOKBN = 'I' ")
+        End If
+        If _srchCondition.chkOut Then
+            sb.Append(" AND T1.IOKBN = 'O' ")
+        End If
 
-    '    cboHourFrom.SelectedText = "08"
-    '    cboMinFrom.SelectedText = "00"
-    '    Select Case Hour(Now)
-    '        Case 0, 1, 2, 3, 4, 5, 6
-    '            cboHourTo.SelectedText = "08"
-    '        Case 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18
-    '            cboHourTo.SelectedText = Strings.Right("0" & Hour(Now) + 1, 2)
-    '        Case 19, 20, 21, 22
-    '            cboHourTo.SelectedText = "19"
-    '    End Select
-    '    cboMinTo.SelectedText = "00"
+        Return New DbParamEnt(sb, param.ToArray)
+    End Function
 
-    '    Cmd.Connection = Cm.Conn
-    '    Cmd.CommandText = "Select * From Q_RefStockHistory Where CRTDT >= #" & Format(DateAdd("d", -1, Now()), "yyyy/mm/dd") & "#"
-    '    Dta.SelectCommand = Cmd
-    '    Dta.Fill(Dts)
+    Public Sub getSearchCondition()
+        _srchCondition.crdDtFrom = dtPickerFrom.getDateTime
+        _srchCondition.crdDtTo = dtPickerTo.getDateTime
+        _srchCondition.itemCd = txtItemCd.Text
+        _srchCondition.chkIn = chkIn.Checked
+        _srchCondition.chkOut = chkOut.Checked
+    End Sub
 
-    '    dgStockHistory.DataSource = Dts
-    '    dgStockHistory.Refresh()
+    Public Function isSearchConditionChanged() As Boolean
+    End Function
 
-    '    dgStockHistory.Select()
-    '    dgStockHistory.ReadOnly = True
-
-    'End Sub
 
 End Class

@@ -34,6 +34,7 @@ Partial Class FrmDashboard
         Me.btnDashboard = New System.Windows.Forms.Button()
         Me.btnStockReserve = New System.Windows.Forms.Button()
         Me.btnStockHistory = New System.Windows.Forms.Button()
+        Me.btnStockList = New System.Windows.Forms.Button()
         Me.pnlHeader.SuspendLayout()
         Me.pnlMenu.SuspendLayout()
         Me.SuspendLayout()
@@ -104,6 +105,7 @@ Partial Class FrmDashboard
         'pnlMenu
         '
         Me.pnlMenu.BackgroundImage = Global.StockManagement.My.Resources.Resources.Dark_Ocean
+        Me.pnlMenu.Controls.Add(Me.btnStockList)
         Me.pnlMenu.Controls.Add(Me.Button1)
         Me.pnlMenu.Controls.Add(Me.btnStockIn)
         Me.pnlMenu.Controls.Add(Me.btnStockOut)
@@ -131,7 +133,7 @@ Partial Class FrmDashboard
         '
         Me.btnStockIn.Anchor = CType((System.Windows.Forms.AnchorStyles.Left Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.btnStockIn.Font = New System.Drawing.Font("MS PGothic", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(134, Byte))
-        Me.btnStockIn.Location = New System.Drawing.Point(12, 231)
+        Me.btnStockIn.Location = New System.Drawing.Point(12, 306)
         Me.btnStockIn.Name = "btnStockIn"
         Me.btnStockIn.Size = New System.Drawing.Size(117, 27)
         Me.btnStockIn.TabIndex = 8
@@ -142,7 +144,7 @@ Partial Class FrmDashboard
         '
         Me.btnStockOut.Anchor = CType((System.Windows.Forms.AnchorStyles.Left Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.btnStockOut.Font = New System.Drawing.Font("MS PGothic", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(134, Byte))
-        Me.btnStockOut.Location = New System.Drawing.Point(12, 198)
+        Me.btnStockOut.Location = New System.Drawing.Point(12, 273)
         Me.btnStockOut.Name = "btnStockOut"
         Me.btnStockOut.Size = New System.Drawing.Size(117, 27)
         Me.btnStockOut.TabIndex = 9
@@ -152,9 +154,9 @@ Partial Class FrmDashboard
         'btnDashboard
         '
         Me.btnDashboard.Anchor = CType((System.Windows.Forms.AnchorStyles.Left Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.btnDashboard.Location = New System.Drawing.Point(12, 49)
+        Me.btnDashboard.Location = New System.Drawing.Point(12, 44)
         Me.btnDashboard.Name = "btnDashboard"
-        Me.btnDashboard.Size = New System.Drawing.Size(117, 27)
+        Me.btnDashboard.Size = New System.Drawing.Size(117, 25)
         Me.btnDashboard.TabIndex = 7
         Me.btnDashboard.Text = "ダッシュボード"
         Me.btnDashboard.UseVisualStyleBackColor = True
@@ -165,9 +167,9 @@ Partial Class FrmDashboard
         Me.btnStockReserve.BackColor = System.Drawing.SystemColors.Control
         Me.btnStockReserve.FlatAppearance.BorderSize = 0
         Me.btnStockReserve.Font = New System.Drawing.Font("MS PGothic", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(134, Byte))
-        Me.btnStockReserve.Location = New System.Drawing.Point(12, 134)
+        Me.btnStockReserve.Location = New System.Drawing.Point(12, 132)
         Me.btnStockReserve.Name = "btnStockReserve"
-        Me.btnStockReserve.Size = New System.Drawing.Size(117, 27)
+        Me.btnStockReserve.Size = New System.Drawing.Size(117, 25)
         Me.btnStockReserve.TabIndex = 6
         Me.btnStockReserve.Text = "受注引当履歴"
         Me.btnStockReserve.UseVisualStyleBackColor = False
@@ -178,10 +180,19 @@ Partial Class FrmDashboard
         Me.btnStockHistory.Font = New System.Drawing.Font("MS PGothic", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(134, Byte))
         Me.btnStockHistory.Location = New System.Drawing.Point(12, 101)
         Me.btnStockHistory.Name = "btnStockHistory"
-        Me.btnStockHistory.Size = New System.Drawing.Size(117, 27)
+        Me.btnStockHistory.Size = New System.Drawing.Size(117, 25)
         Me.btnStockHistory.TabIndex = 5
         Me.btnStockHistory.Text = "入出庫履歴"
         Me.btnStockHistory.UseVisualStyleBackColor = True
+        '
+        'btnStockList
+        '
+        Me.btnStockList.Location = New System.Drawing.Point(12, 163)
+        Me.btnStockList.Name = "btnStockList"
+        Me.btnStockList.Size = New System.Drawing.Size(117, 25)
+        Me.btnStockList.TabIndex = 11
+        Me.btnStockList.Text = "在庫一覧"
+        Me.btnStockList.UseVisualStyleBackColor = True
         '
         'FrmDashboard
         '
@@ -216,4 +227,5 @@ Partial Class FrmDashboard
     Friend WithEvents btnStockIn As Button
     Friend WithEvents btnStockOut As Button
     Friend WithEvents Button1 As Button
+    Friend WithEvents btnStockList As Button
 End Class

@@ -1,85 +1,154 @@
-﻿Public Class FrmStockReserve
+﻿Imports System.ComponentModel
+Imports System.Data.SqlClient
+Imports System.Text
+Imports System.Threading
 
-    Dim Q_RefStockReserv As String = "Select Case dbo_T_StockReserv.CRTDT, dbo_T_StockReserv.DELFLG, dbo_T_StockReserv.ORDERSTATUS, dbo_T_StockReserv.ITEMCD, dbo_T_StockReserv.RESERVQTY, dbo_T_StockReserv.ORDERKBN, dbo_T_StockReserv.ORDERID, dbo_T_StockReserv.CUSTID, dbo_T_StockReserv.ORDERDT, dbo_T_StockReserv.INCHARGE, dbo_T_StockReserv.CUSTNAME, dbo_T_StockReserv.TELNO, dbo_T_StockReserv.ZIPCODE, dbo_T_StockReserv.SENDADD1, dbo_T_StockReserv.SENDADD2, dbo_T_StockReserv.DLVCOMPANY, dbo_T_StockReserv.DLVSLIPNO, CODE1.VALUE1 As DELFLGNM, CODE2.VALUE1 As ORDERSTATUSNM, ORDERDAT.[状況] As ORDSTATUS, ORDERDAT.[発送日] As ORDDLVDT
-FROM((dbo_T_StockReserv LEFT JOIN (SELECT CODE, VALUE1 FROM dbo_M_Code WHERE CATEGORY='RESERVDEL')  AS CODE1 ON dbo_T_StockReserv.DELFLG=Val(CODE1.CODE)) LEFT JOIN (SELECT CODE, VALUE1 FROM dbo_M_Code WHERE CATEGORY='RESERVODST')  AS CODE2 ON dbo_T_StockReserv.ORDERSTATUS=Val(CODE2.CODE)) LEFT JOIN (SELECT ID, 状況, 発送日 FROM dbo_ORDERDAT WHERE OrderDate>#1/1/2018#)  AS ORDERDAT ON dbo_T_StockReserv.ORDERID=ORDERDAT.ID"
+Public Class FrmStockReserve
 
-    Private Sub cmdClose_Click(sender As Object, e As EventArgs)
-        Close()
+#Region "変数"
+    Structure SearchCondition
+        Public crdDtFrom As String
+        Public crdDtTo As String
+        Public itemCd As String
+        Public chkReserving As Boolean
+        Public ordStatus As String
+    End Structure
+
+    Private _srchCondition As New SearchCondition
+#End Region
+
+#Region "EVENT"
+
+    Private Sub FrmStockReserve_Load(sender As Object, e As EventArgs) Handles Me.Load
+
+        dtPickerFrom.setDateTime(Now.AddMonths(-1 * Consts.DATA_INTERVAL))
+        dtPickerTo.setDateTime(Now)
+        getOrdStatus()
+
+        getSearchCondition()
+        UBindingNavigator1.initBindingSource(getTotalCount(), Consts.PAGE_COUNT)
     End Sub
 
-    Private Sub btnClose_Click(sender As Object, e As EventArgs) Handles btnClose.Click
-        Me.Close()
-
+    Private Sub btnSearch_Click(sender As Object, e As EventArgs) Handles btnSearch.Click
+        getSearchCondition()
+        UBindingNavigator1.initBindingSource(getTotalCount(), Consts.PAGE_COUNT)
     End Sub
 
-    ' 検索ボタンクリック時イベント
-    'Private Sub cmdView_Click(sender As Object, e As EventArgs) Handles cmdView.Click
-    '    Dim Cmd As New OleDb.OleDbCommand
-    '    Dim Dta As New OleDb.OleDbDataAdapter
-    '    Dim Dts As New DataSet
-    '    Dim strWhere As String = ""
-    '    Dim strDateFrom As String = ""
-    '    Dim strDateTo As String = ""
+    Private Sub UBindingNavigator1_CurrentChanged(sender As Object, e As EventArgs) Handles UBindingNavigator1.CurrentChanged
+        ShowWaitForm()
 
-    '    strDateFrom = dateFrom.ToString("yyyy/MM/dd")
-    '    If Cm.Nz(strDateFrom, "") <> "" Then
-    '        strWhere = strWhere & " Where CRTDT >= #" & strDateFrom & " " & cboHourFrom.SelectedText & ":" & cboMinFrom.SelectedText & ":00# "
-    '    End If
-    '    strDateTo = dateTo.ToString("yyyy/MM/dd")
-    '    If Cm.Nz(strDateTo, "") <> "" Then
-    '        strWhere = strWhere & IIf(strWhere = "", " Where ", " And ") & "CRTDT <= #" & strDateTo & " " & cboHourTo.SelectedText & ":" & cboMinTo.SelectedText & ":00# "
-    '    End If
-
-    '    If Cm.Nz(txtItemCd.Text, "") <> "" Then
-    '        strWhere = strWhere & IIf(strWhere = "", " Where ", " And ") & "ITEMCD Like '*" & txtItemCd.Text & "*' "
-    '    End If
-    '    If chkValid.Checked Then
-    '        strWhere = strWhere & IIf(strWhere = "", " Where ", " And ") & "DELFLG = 0 "
-    '    End If
-    '    If Cm.Nz(cboOrdStatus.SelectedText, "") <> "" Then
-    '        strWhere = strWhere & IIf(strWhere = "", " Where ", " And ") & "ORDSTATUS = '" & cboOrdStatus.SelectedText & "' "
-    '    End If
-
-    '    ' 初期表示状態
-    '    Cmd.Connection = Cm.Conn
-    '    Cmd.CommandText = "Select * From (" & Q_RefStockReserv & ") " & strWhere
-    '    Dta.Fill(Dts)
-
-    '    dgStockReserv.DataSource = Dts
-    '    dgStockReserv.Refresh()
+        Async.Process(
+            Function()
+                Dim dt As DataTable = getSqlWithOffset(TryCast(sender, BindingSource).Current)
+                dgStockReserve.Invoke(New SetDataSourceDelegate(AddressOf SetDataSource), dgStockReserve, dt)
+            End Function,
+            Sub()
+                CloseForm()
+            End Sub)
+    End Sub
 
 
-    'End Sub
+#End Region
 
-    'Private Sub frmStockReserv_Load(sender As Object, e As EventArgs) Handles MyBase.Load
-    '    Dim Cmd As New OleDb.OleDbCommand
-    '    Dim Dta As New OleDb.OleDbDataAdapter
-    '    Dim Dts As New DataSet
+    Private Function getTotalCount() As Integer
 
-    '    chkValid.Checked = True
-    '    cboHourFrom.SelectedText = "08"
-    '    cboMinFrom.SelectedText = "00"
-    '    Select Case Hour(Now)
-    '        Case 0, 1, 2, 3, 4, 5, 6
-    '            cboHourTo.SelectedText = "08"
-    '        Case 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18
-    '            cboHourTo.SelectedText = Strings.Right("0" & Hour(Now) + 1, 2)
-    '        Case 19, 20, 21, 22
-    '            cboHourTo.SelectedText = "19"
-    '    End Select
-    '    cboMinTo.SelectedText = "00"
+        Dim dbParamEnt As DbParamEnt = getSqlAndParam(True)
+        Dim dt As DataTable = DbHandler.executeSelect(dbParamEnt)
+        If dt.Rows.Count = 0 Then
+            Return 0
+        End If
+        Return dt.Rows(0).Item("CNT")
+    End Function
 
-    '    Cmd.Connection = Cm.Conn
-    '    Cmd.CommandText = "Select * From (" & Q_RefStockReserv & ") T Where T.DELFLG = 0"
-    '    Dta.SelectCommand = Cmd
-    '    Dta.Fill(Dts)
+    Private Function getSqlWithOffset(ByVal offset As Integer) As DataTable
 
-    '    dgStockReserv.DataSource = Dts
-    '    dgStockReserv.Refresh()
+        Dim dbParamEnt As DbParamEnt = getSqlAndParam(False)
 
-    '    dgStockReserv.Select()
-    '    dgStockReserv.ReadOnly = True
+        dbParamEnt.sbSql.Append(" ORDER BY T1.CRTDT DESC ")
+        dbParamEnt.sbSql.Append(" OFFSET " & offset & " ROWS ")
+        dbParamEnt.sbSql.Append(" FETCH Next " & Consts.PAGE_COUNT & " ROWS ONLY ")
 
-    'End Sub
+        Dim dt As DataTable = DbHandler.executeSelect(dbParamEnt)
+        Return dt
+    End Function
+
+    Private Function getSqlAndParam(ByVal isGetTotalCount As Boolean) As DbParamEnt
+        Dim sb As New StringBuilder
+
+        sb.Append(" SELECT ")
+        If isGetTotalCount Then
+            sb.Append(" count(*) AS CNT ")
+        Else
+            sb.Append("     T1.* ")
+            sb.Append("    ,M1.VALUE1 As DELFLGNM ")
+            sb.Append("    ,M2.VALUE1 AS ORDERSTATUSNM ")
+            sb.Append("    ,T2.[状況] As ORDSTATUS ")
+            sb.Append("    ,T2.[発送日] As ORDDLVDT ")
+        End If
+        sb.Append(" FROM T_StockReserv T1 ")
+        If Not isGetTotalCount Then
+            sb.Append(" LEFT JOIN M_Code AS M1 ")
+            sb.Append(" ON     CASE M1.CODE WHEN '0' THEN 0 ELSE 1 END = T1.DELFLG ")
+            sb.Append(" AND    M1.CATEGORY = 'RESERVDEL' ")
+            sb.Append(" LEFT JOIN M_Code AS M2 ")
+            sb.Append(" ON     M2.CODE = T1.ORDERSTATUS ")
+            sb.Append(" AND    M2.CATEGORY = 'RESERVODST' ")
+        End If
+        sb.Append(" LEFT JOIN [JPONDATA].[dbo].ORDERDAT AS T2 ")
+        sb.Append(" WITH (INDEX(UIX_ORDERDAT_ID)) ")
+        sb.Append(" ON     T2.ID = T1.ORDERID ")
+        'sb.Append(" AND    T2.OrderDate > CONVERT(Date, '2018-1-1') ")
+
+        sb.Append(" WHERE ")
+        sb.Append(" 1 = 1 ")
+
+        Dim param As New List(Of SqlParameter)
+        If _srchCondition.itemCd <> "" Then
+            sb.Append(" AND T1.ITEMCD = @ITEMCD ")
+            param.Add(New SqlParameter("@ITEMCD", "%" & _srchCondition.itemCd & "%"))
+        End If
+        If _srchCondition.crdDtFrom <> "" Then
+            sb.Append(" AND T1.CRTDT >= @CRTDTFROM ")
+            param.Add(New SqlParameter("@CRTDTFROM", _srchCondition.crdDtFrom))
+        End If
+        If _srchCondition.crdDtTo <> "" Then
+            sb.Append(" AND T1.CRTDT <= @CRTDTTO ")
+            param.Add(New SqlParameter("@CRTDTTO", _srchCondition.crdDtTo))
+        End If
+        If _srchCondition.chkReserving Then
+            sb.Append(" AND T1.DELFLG = 0 ")
+        End If
+        If _srchCondition.ordStatus <> "" Then
+            sb.Append(" AND T2.[状況] = @ORDSTATUS ")
+            param.Add(New SqlParameter("@ORDSTATUS", _srchCondition.ordStatus))
+        End If
+
+        Return New DbParamEnt(sb, param.ToArray)
+    End Function
+
+    Public Sub getOrdStatus()
+        Dim sb As New StringBuilder
+        sb.Append(" SELECT ")
+        sb.Append("  CODE ")
+        sb.Append(" ,VALUE1 ")
+        sb.Append(" FROM ")
+        sb.Append("  M_Code ")
+        sb.Append(" WHERE ")
+        sb.Append("  CATEGORY = 'ORDSTATUS' ")
+
+        Dim dt As DataTable = DbHandler.executeSelect(New DbParamEnt(sb, Nothing))
+
+        cmbOrdStatus.DataSource = dt
+        cmbOrdStatus.ValueMember = "CODE"
+        cmbOrdStatus.DisplayMember = "VALUE1"
+    End Sub
+
+    Public Sub getSearchCondition()
+        _srchCondition.crdDtFrom = dtPickerFrom.getDateTime
+        _srchCondition.crdDtTo = dtPickerTo.getDateTime
+        _srchCondition.itemCd = txtItemCd.Text
+        _srchCondition.chkReserving = chkReserving.Checked
+        _srchCondition.ordStatus = cmbOrdStatus.Text
+    End Sub
 
 End Class

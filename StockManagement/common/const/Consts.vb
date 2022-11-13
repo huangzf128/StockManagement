@@ -6,4 +6,7 @@
         Public Const SEARCH As Integer = 2
     End Structure
 
+    Public Const PAGE_COUNT = 1000
+
+    Public Const DATA_INTERVAL = 12
 End Class

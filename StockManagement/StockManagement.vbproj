@@ -117,6 +117,18 @@
     <Compile Include="common\control\CheckBoxBase.vb">
       <SubType>Component</SubType>
     </Compile>
+    <Compile Include="common\control\UBindingNavigator.Designer.vb">
+      <DependentUpon>UBindingNavigator.vb</DependentUpon>
+    </Compile>
+    <Compile Include="common\control\UBindingNavigator.vb">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="common\control\UDataTimePicker.Designer.vb">
+      <DependentUpon>UDataTimePicker.vb</DependentUpon>
+    </Compile>
+    <Compile Include="common\control\UDataTimePicker.vb">
+      <SubType>UserControl</SubType>
+    </Compile>
     <Compile Include="common\control\FrmBase.Designer.vb">
       <DependentUpon>FrmBase.vb</DependentUpon>
     </Compile>
@@ -125,7 +137,16 @@
     </Compile>
     <Compile Include="Cm.vb" />
     <Compile Include="common\control\IControl.vb" />
+    <Compile Include="common\control\LoadingForm.Designer.vb">
+      <DependentUpon>LoadingForm.vb</DependentUpon>
+    </Compile>
+    <Compile Include="common\control\LoadingForm.vb">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="common\db\DbHandler.vb" />
+    <Compile Include="common\db\DbParamEnt.vb" />
+    <Compile Include="common\utils\Async.vb" />
+    <Compile Include="common\utils\Util.vb" />
     <Compile Include="frmDairiImport.Designer.vb">
       <DependentUpon>frmDairiImport.vb</DependentUpon>
     </Compile>
@@ -166,6 +187,12 @@
       <DependentUpon>frmStockInTbl.vb</DependentUpon>
     </Compile>
     <Compile Include="frmStockInTbl.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FrmStockList.Designer.vb">
+      <DependentUpon>FrmStockList.vb</DependentUpon>
+    </Compile>
+    <Compile Include="FrmStockList.vb">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="frmStockOut.Designer.vb">
@@ -232,6 +259,15 @@
     <EmbeddedResource Include="common\control\FrmBase.resx">
       <DependentUpon>FrmBase.vb</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="common\control\UBindingNavigator.resx">
+      <DependentUpon>UBindingNavigator.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="common\control\UDataTimePicker.resx">
+      <DependentUpon>UDataTimePicker.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="common\control\LoadingForm.resx">
+      <DependentUpon>LoadingForm.vb</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="frmDairiImport.resx">
       <DependentUpon>frmDairiImport.vb</DependentUpon>
     </EmbeddedResource>
@@ -246,6 +282,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="frmStockIn.resx">
       <DependentUpon>frmStockIn.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FrmStockList.resx">
+      <DependentUpon>FrmStockList.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="frmStockOut.resx">
       <DependentUpon>frmStockOut.vb</DependentUpon>
@@ -301,6 +340,17 @@
     <Content Include="image\Dark Ocean.jpg">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Content Include="image\Loading1.gif">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="image\loading2.gif">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="image\loading_cat.gif">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="view\StockList.sql" />
+    <None Include="Resources\Light_Ocean.bmp" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
 </Project>

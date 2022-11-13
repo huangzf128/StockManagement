@@ -9,7 +9,7 @@ Public Class DbHandler
     Private disposedValue As Boolean '自動生成コード
 
     '(接続文字列)
-    Private Property conStr As String = "Server=MIBAO\SQLEXPRESS;Database=STOCKDB;User Id=sa;Password=sasasa;"
+    Private Const conStr As String = "Server=MIBAO\SQLEXPRESS;Database=STOCKDB;User Id=sa;Password=sasasa;"
     Private Property sqlCon As SqlConnection
     Private Property sqlTrn As SqlTransaction
 
@@ -64,19 +64,18 @@ Public Class DbHandler
     ''' <summary>
     ''' トランザクションを伴わないSQLを実行(主にSELECT文)
     ''' </summary>
-    ''' <param name="sql"></param>
-    ''' <param name="param"></param>
+    ''' <param name="dbParamEnt"></param>
     ''' <returns>Datatable</returns>
-    Public Function executeSelect(sql As String, param As SqlParameter) As DataTable
+    Public Shared Function executeSelect(ByRef dbParamEnt As DbParamEnt) As DataTable
         '結果を格納するDataTableを宣言
         Dim returnDt As New DataTable
 
         Using connection As New SqlConnection(conStr)
 
-            Dim command As New SqlCommand(sql, connection)
+            Dim command As New SqlCommand(dbParamEnt.sbSql.ToString, connection)
             command.Connection.Open()
-            If param IsNot Nothing Then
-                command.Parameters.Add(param)
+            If dbParamEnt.parameters IsNot Nothing AndAlso dbParamEnt.parameters.Length > 0 Then
+                command.Parameters.AddRange(dbParamEnt.parameters)
             End If
 
             Dim sqlAdp As SqlDataAdapter = New SqlDataAdapter(command)

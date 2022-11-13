@@ -38,7 +38,7 @@ Partial Class FrmBase
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 12.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.BackColor = System.Drawing.SystemColors.Control
+        Me.BackColor = System.Drawing.Color.CornflowerBlue
         Me.BackgroundImage = Global.StockManagement.My.Resources.Resources.Dark_Ocean
         Me.ClientSize = New System.Drawing.Size(910, 560)
         Me.Controls.Add(Me.pnlCondition)
