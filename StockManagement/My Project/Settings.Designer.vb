@@ -53,6 +53,30 @@ Namespace My
                 Return defaultInstance
             End Get
         End Property
+        
+        <Global.System.Configuration.UserScopedSettingAttribute(),  _
+         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.Configuration.DefaultSettingValueAttribute("")>  _
+        Public Property OrderCsv() As String
+            Get
+                Return CType(Me("OrderCsv"),String)
+            End Get
+            Set
+                Me("OrderCsv") = value
+            End Set
+        End Property
+        
+        <Global.System.Configuration.UserScopedSettingAttribute(),  _
+         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.Configuration.DefaultSettingValueAttribute("")>  _
+        Public Property OrderOutput() As String
+            Get
+                Return CType(Me("OrderOutput"),String)
+            End Get
+            Set
+                Me("OrderOutput") = value
+            End Set
+        End Property
     End Class
 End Namespace
 

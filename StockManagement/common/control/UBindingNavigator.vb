@@ -10,7 +10,11 @@ Public Class UBindingNavigator
         Me.BindingNavigator1.BindingSource = BindingSource1
     End Sub
 
-    Public Sub initBindingSource(ByVal totalCount As Integer, ByVal pageCount As Integer)
+    Public Sub initBindingSource(ByVal totalCount As Integer, Optional ByVal pageCount As Integer = -9999)
+
+        If pageCount = -9999 Then
+            pageCount = totalCount
+        End If
 
         _isBindingProcess = True
         BindingSource1.DataSource = Nothing
@@ -52,7 +56,7 @@ Public Class UBindingNavigator
         Public Function GetList() As IList Implements IListSource.GetList
 
             Dim pageOffsets As New List(Of Integer)()
-            For offset As Integer = 0 To _totalCount Step _pageCount
+            For offset As Integer = 0 To _totalCount - 1 Step _pageCount
                 pageOffsets.Add(offset)
             Next
             Return pageOffsets

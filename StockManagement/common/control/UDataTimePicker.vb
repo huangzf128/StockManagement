@@ -11,16 +11,16 @@ Public Class UDataTimePicker
     End Sub
 
     Private Sub cmbHour_Enter(sender As Object, e As EventArgs) Handles cmbHour.Enter
-        Me.cmbHour.DroppedDown = True
+        'Me.cmbHour.DroppedDown = True
     End Sub
 
     Private Sub cmbMinute_Enter(sender As Object, e As EventArgs) Handles cmbMinute.Enter
-        Me.cmbMinute.DroppedDown = True
+        'Me.cmbMinute.DroppedDown = True
     End Sub
 #End Region
 
     Public Function getDateTime(Optional dateFormat As String = "yyyy-MM-dd") As String
-        Return dtpDate.Value.Date.ToString(dateFormat) & " " & cmbHour.SelectedText.PadLeft(2, "0") & ":" & cmbMinute.SelectedText.PadLeft(2, "0")
+        Return dtpDate.Value.Date.ToString(dateFormat) & " " & cmbHour.Text.PadLeft(2, "0") & ":" & cmbMinute.Text.PadLeft(2, "0")
     End Function
 
     Public Sub setDateTime(ByRef dTime As Date)

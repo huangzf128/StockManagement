@@ -22,14 +22,15 @@ Partial Class FrmStockReserve
     'コード エディターを使って変更しないでください。
     <System.Diagnostics.DebuggerStepThrough()>
     Private Sub InitializeComponent()
-        Dim DataGridViewCellStyle9 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle10 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle12 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle11 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle1 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle2 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle5 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle3 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle4 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Me.txtItemCd = New System.Windows.Forms.TextBox()
         Me.cmbOrdStatus = New System.Windows.Forms.ComboBox()
         Me.chkReserving = New System.Windows.Forms.CheckBox()
-        Me.dgStockReserve = New System.Windows.Forms.DataGridView()
+        Me.grd = New System.Windows.Forms.DataGridView()
         Me.CRTDT = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.ITEMCD = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.RESERVQTY = New System.Windows.Forms.DataGridViewTextBoxColumn()
@@ -40,6 +41,14 @@ Partial Class FrmStockReserve
         Me.ORDDLVDT = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.INCHARGE = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.CUSTNAME = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.TELNO = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.ZIPCODE = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.SENDADD1 = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.SENDADD2 = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.DLVCOMPANY = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.DLVSLIPNO = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.ORDERSTATUSNM = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.ORDERDT = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.lblItemName = New System.Windows.Forms.Label()
         Me.lblOrdStatus = New System.Windows.Forms.Label()
         Me.btnSearch = New StockManagement.ButtonBase()
@@ -48,12 +57,16 @@ Partial Class FrmStockReserve
         Me.dtPickerFrom = New StockManagement.UDataTimePicker()
         Me.dtPickerTo = New StockManagement.UDataTimePicker()
         Me.BackgroundWorker1 = New System.ComponentModel.BackgroundWorker()
+        Me.chkExclude = New System.Windows.Forms.CheckBox()
+        Me.btnCopy = New StockManagement.ButtonBase()
         Me.pnlCondition.SuspendLayout()
-        CType(Me.dgStockReserve, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.grd, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
         'pnlCondition
         '
+        Me.pnlCondition.Controls.Add(Me.btnCopy)
+        Me.pnlCondition.Controls.Add(Me.chkExclude)
         Me.pnlCondition.Controls.Add(Me.dtPickerTo)
         Me.pnlCondition.Controls.Add(Me.dtPickerFrom)
         Me.pnlCondition.Controls.Add(Me.lblWavy)
@@ -70,7 +83,7 @@ Partial Class FrmStockReserve
         Me.txtItemCd.Margin = New System.Windows.Forms.Padding(2)
         Me.txtItemCd.Name = "txtItemCd"
         Me.txtItemCd.Size = New System.Drawing.Size(120, 19)
-        Me.txtItemCd.TabIndex = 6
+        Me.txtItemCd.TabIndex = 3
         '
         'cmbOrdStatus
         '
@@ -79,7 +92,7 @@ Partial Class FrmStockReserve
         Me.cmbOrdStatus.Margin = New System.Windows.Forms.Padding(2)
         Me.cmbOrdStatus.Name = "cmbOrdStatus"
         Me.cmbOrdStatus.Size = New System.Drawing.Size(129, 20)
-        Me.cmbOrdStatus.TabIndex = 7
+        Me.cmbOrdStatus.TabIndex = 4
         '
         'chkReserving
         '
@@ -89,56 +102,58 @@ Partial Class FrmStockReserve
         Me.chkReserving.Margin = New System.Windows.Forms.Padding(2)
         Me.chkReserving.Name = "chkReserving"
         Me.chkReserving.Size = New System.Drawing.Size(84, 16)
-        Me.chkReserving.TabIndex = 8
+        Me.chkReserving.TabIndex = 5
         Me.chkReserving.Text = "引当中のみ"
         Me.chkReserving.UseVisualStyleBackColor = True
         '
-        'dgStockReserve
+        'grd
         '
-        Me.dgStockReserve.AllowUserToResizeRows = False
-        DataGridViewCellStyle9.BackColor = System.Drawing.Color.WhiteSmoke
-        Me.dgStockReserve.AlternatingRowsDefaultCellStyle = DataGridViewCellStyle9
-        Me.dgStockReserve.AutoGenerateColumns = False
-        Me.dgStockReserve.CellBorderStyle = System.Windows.Forms.DataGridViewCellBorderStyle.SingleHorizontal
-        Me.dgStockReserve.ColumnHeadersBorderStyle = System.Windows.Forms.DataGridViewHeaderBorderStyle.None
-        DataGridViewCellStyle10.Alignment = System.Windows.Forms.DataGridViewContentAlignment.TopCenter
-        DataGridViewCellStyle10.BackColor = System.Drawing.SystemColors.Highlight
-        DataGridViewCellStyle10.Font = New System.Drawing.Font("MS PGothic", 9.0!)
-        DataGridViewCellStyle10.ForeColor = System.Drawing.SystemColors.Window
-        DataGridViewCellStyle10.Padding = New System.Windows.Forms.Padding(0, 4, 0, 4)
-        DataGridViewCellStyle10.SelectionBackColor = System.Drawing.SystemColors.Highlight
-        DataGridViewCellStyle10.SelectionForeColor = System.Drawing.SystemColors.HighlightText
-        DataGridViewCellStyle10.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
-        Me.dgStockReserve.ColumnHeadersDefaultCellStyle = DataGridViewCellStyle10
-        Me.dgStockReserve.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
-        Me.dgStockReserve.Columns.AddRange(New System.Windows.Forms.DataGridViewColumn() {Me.CRTDT, Me.ITEMCD, Me.RESERVQTY, Me.ORDERKBN, Me.DELFLGNM, Me.ORDERID, Me.ORDSTATUS, Me.ORDDLVDT, Me.INCHARGE, Me.CUSTNAME})
-        DataGridViewCellStyle12.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
-        DataGridViewCellStyle12.BackColor = System.Drawing.SystemColors.Window
-        DataGridViewCellStyle12.Font = New System.Drawing.Font("MS PGothic", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(134, Byte))
-        DataGridViewCellStyle12.ForeColor = System.Drawing.SystemColors.ControlText
-        DataGridViewCellStyle12.SelectionBackColor = System.Drawing.Color.FromArgb(CType(CType(75, Byte), Integer), CType(CType(112, Byte), Integer), CType(CType(178, Byte), Integer))
-        DataGridViewCellStyle12.SelectionForeColor = System.Drawing.Color.Black
-        DataGridViewCellStyle12.WrapMode = System.Windows.Forms.DataGridViewTriState.[False]
-        Me.dgStockReserve.DefaultCellStyle = DataGridViewCellStyle12
-        Me.dgStockReserve.EnableHeadersVisualStyles = False
-        Me.dgStockReserve.Location = New System.Drawing.Point(10, 90)
-        Me.dgStockReserve.Margin = New System.Windows.Forms.Padding(2)
-        Me.dgStockReserve.Name = "dgStockReserve"
-        Me.dgStockReserve.RowHeadersVisible = False
-        Me.dgStockReserve.RowHeadersWidth = 72
-        Me.dgStockReserve.RowTemplate.DefaultCellStyle.Padding = New System.Windows.Forms.Padding(3, 0, 3, 0)
-        Me.dgStockReserve.RowTemplate.ReadOnly = True
-        Me.dgStockReserve.Size = New System.Drawing.Size(890, 440)
-        Me.dgStockReserve.TabIndex = 11
+        Me.grd.AllowUserToAddRows = False
+        Me.grd.AllowUserToResizeRows = False
+        DataGridViewCellStyle1.BackColor = System.Drawing.Color.WhiteSmoke
+        Me.grd.AlternatingRowsDefaultCellStyle = DataGridViewCellStyle1
+        Me.grd.AutoGenerateColumns = False
+        Me.grd.CellBorderStyle = System.Windows.Forms.DataGridViewCellBorderStyle.SingleHorizontal
+        Me.grd.ColumnHeadersBorderStyle = System.Windows.Forms.DataGridViewHeaderBorderStyle.None
+        DataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.TopCenter
+        DataGridViewCellStyle2.BackColor = System.Drawing.SystemColors.Highlight
+        DataGridViewCellStyle2.Font = New System.Drawing.Font("ＭＳ Ｐゴシック", 9.0!)
+        DataGridViewCellStyle2.ForeColor = System.Drawing.SystemColors.Window
+        DataGridViewCellStyle2.Padding = New System.Windows.Forms.Padding(0, 4, 0, 4)
+        DataGridViewCellStyle2.SelectionBackColor = System.Drawing.SystemColors.Highlight
+        DataGridViewCellStyle2.SelectionForeColor = System.Drawing.SystemColors.HighlightText
+        DataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
+        Me.grd.ColumnHeadersDefaultCellStyle = DataGridViewCellStyle2
+        Me.grd.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
+        Me.grd.Columns.AddRange(New System.Windows.Forms.DataGridViewColumn() {Me.CRTDT, Me.ITEMCD, Me.RESERVQTY, Me.ORDERKBN, Me.DELFLGNM, Me.ORDERID, Me.ORDSTATUS, Me.ORDDLVDT, Me.INCHARGE, Me.CUSTNAME, Me.TELNO, Me.ZIPCODE, Me.SENDADD1, Me.SENDADD2, Me.DLVCOMPANY, Me.DLVSLIPNO, Me.ORDERSTATUSNM, Me.ORDERDT})
+        DataGridViewCellStyle5.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
+        DataGridViewCellStyle5.BackColor = System.Drawing.SystemColors.Window
+        DataGridViewCellStyle5.Font = New System.Drawing.Font("ＭＳ Ｐゴシック", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(134, Byte))
+        DataGridViewCellStyle5.ForeColor = System.Drawing.SystemColors.ControlText
+        DataGridViewCellStyle5.SelectionBackColor = System.Drawing.Color.FromArgb(CType(CType(218, Byte), Integer), CType(CType(242, Byte), Integer), CType(CType(222, Byte), Integer))
+        DataGridViewCellStyle5.SelectionForeColor = System.Drawing.Color.Black
+        DataGridViewCellStyle5.WrapMode = System.Windows.Forms.DataGridViewTriState.[False]
+        Me.grd.DefaultCellStyle = DataGridViewCellStyle5
+        Me.grd.EnableHeadersVisualStyles = False
+        Me.grd.Location = New System.Drawing.Point(10, 90)
+        Me.grd.Margin = New System.Windows.Forms.Padding(2)
+        Me.grd.Name = "grd"
+        Me.grd.ReadOnly = True
+        Me.grd.RowHeadersVisible = False
+        Me.grd.RowHeadersWidth = 72
+        Me.grd.RowTemplate.DefaultCellStyle.Padding = New System.Windows.Forms.Padding(3, 0, 3, 0)
+        Me.grd.Size = New System.Drawing.Size(890, 440)
+        Me.grd.TabIndex = 8
         '
         'CRTDT
         '
         Me.CRTDT.DataPropertyName = "CRTDT"
-        DataGridViewCellStyle11.Format = "yyyy-MM-dd hh:mm:ss"
-        Me.CRTDT.DefaultCellStyle = DataGridViewCellStyle11
+        DataGridViewCellStyle3.Format = "yyyy-MM-dd HH:mm:ss"
+        Me.CRTDT.DefaultCellStyle = DataGridViewCellStyle3
         Me.CRTDT.Frozen = True
         Me.CRTDT.HeaderText = "引当日時"
         Me.CRTDT.Name = "CRTDT"
+        Me.CRTDT.ReadOnly = True
         Me.CRTDT.Width = 120
         '
         'ITEMCD
@@ -147,13 +162,17 @@ Partial Class FrmStockReserve
         Me.ITEMCD.Frozen = True
         Me.ITEMCD.HeaderText = "変更商品名"
         Me.ITEMCD.Name = "ITEMCD"
+        Me.ITEMCD.ReadOnly = True
         Me.ITEMCD.Width = 120
         '
         'RESERVQTY
         '
         Me.RESERVQTY.DataPropertyName = "RESERVQTY"
+        DataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter
+        Me.RESERVQTY.DefaultCellStyle = DataGridViewCellStyle4
         Me.RESERVQTY.HeaderText = "引当数"
         Me.RESERVQTY.Name = "RESERVQTY"
+        Me.RESERVQTY.ReadOnly = True
         Me.RESERVQTY.Width = 65
         '
         'ORDERKBN
@@ -161,6 +180,7 @@ Partial Class FrmStockReserve
         Me.ORDERKBN.DataPropertyName = "ORDERKBN"
         Me.ORDERKBN.HeaderText = "受注区分"
         Me.ORDERKBN.Name = "ORDERKBN"
+        Me.ORDERKBN.ReadOnly = True
         Me.ORDERKBN.Width = 120
         '
         'DELFLGNM
@@ -168,6 +188,7 @@ Partial Class FrmStockReserve
         Me.DELFLGNM.DataPropertyName = "DELFLGNM"
         Me.DELFLGNM.HeaderText = "引当状態"
         Me.DELFLGNM.Name = "DELFLGNM"
+        Me.DELFLGNM.ReadOnly = True
         Me.DELFLGNM.Width = 80
         '
         'ORDERID
@@ -175,6 +196,7 @@ Partial Class FrmStockReserve
         Me.ORDERID.DataPropertyName = "ORDERID"
         Me.ORDERID.HeaderText = "受注ID"
         Me.ORDERID.Name = "ORDERID"
+        Me.ORDERID.ReadOnly = True
         Me.ORDERID.Width = 70
         '
         'ORDSTATUS
@@ -182,6 +204,7 @@ Partial Class FrmStockReserve
         Me.ORDSTATUS.DataPropertyName = "ORDSTATUS"
         Me.ORDSTATUS.HeaderText = "状況"
         Me.ORDSTATUS.Name = "ORDSTATUS"
+        Me.ORDSTATUS.ReadOnly = True
         Me.ORDSTATUS.Width = 60
         '
         'ORDDLVDT
@@ -189,6 +212,7 @@ Partial Class FrmStockReserve
         Me.ORDDLVDT.DataPropertyName = "ORDDLVDT"
         Me.ORDDLVDT.HeaderText = "発送日"
         Me.ORDDLVDT.Name = "ORDDLVDT"
+        Me.ORDDLVDT.ReadOnly = True
         Me.ORDDLVDT.Width = 80
         '
         'INCHARGE
@@ -196,12 +220,77 @@ Partial Class FrmStockReserve
         Me.INCHARGE.DataPropertyName = "INCHARGE"
         Me.INCHARGE.HeaderText = "担当者"
         Me.INCHARGE.Name = "INCHARGE"
+        Me.INCHARGE.ReadOnly = True
         '
         'CUSTNAME
         '
         Me.CUSTNAME.DataPropertyName = "CUSTNAME"
         Me.CUSTNAME.HeaderText = "お客様氏名"
         Me.CUSTNAME.Name = "CUSTNAME"
+        Me.CUSTNAME.ReadOnly = True
+        '
+        'TELNO
+        '
+        Me.TELNO.DataPropertyName = "TELNO"
+        Me.TELNO.HeaderText = "TEL"
+        Me.TELNO.Name = "TELNO"
+        Me.TELNO.ReadOnly = True
+        Me.TELNO.Width = 90
+        '
+        'ZIPCODE
+        '
+        Me.ZIPCODE.DataPropertyName = "ZIPCODE"
+        Me.ZIPCODE.HeaderText = "郵便番号"
+        Me.ZIPCODE.Name = "ZIPCODE"
+        Me.ZIPCODE.ReadOnly = True
+        Me.ZIPCODE.Width = 80
+        '
+        'SENDADD1
+        '
+        Me.SENDADD1.DataPropertyName = "SENDADD1"
+        Me.SENDADD1.HeaderText = "住所1"
+        Me.SENDADD1.Name = "SENDADD1"
+        Me.SENDADD1.ReadOnly = True
+        Me.SENDADD1.Width = 150
+        '
+        'SENDADD2
+        '
+        Me.SENDADD2.DataPropertyName = "SENDADD2"
+        Me.SENDADD2.HeaderText = "住所2"
+        Me.SENDADD2.Name = "SENDADD2"
+        Me.SENDADD2.ReadOnly = True
+        Me.SENDADD2.Width = 60
+        '
+        'DLVCOMPANY
+        '
+        Me.DLVCOMPANY.DataPropertyName = "DLVCOMPANY"
+        Me.DLVCOMPANY.HeaderText = "配送業者"
+        Me.DLVCOMPANY.Name = "DLVCOMPANY"
+        Me.DLVCOMPANY.ReadOnly = True
+        Me.DLVCOMPANY.Width = 80
+        '
+        'DLVSLIPNO
+        '
+        Me.DLVSLIPNO.DataPropertyName = "DLVSLIPNO"
+        Me.DLVSLIPNO.HeaderText = "配送伝票番号"
+        Me.DLVSLIPNO.Name = "DLVSLIPNO"
+        Me.DLVSLIPNO.ReadOnly = True
+        '
+        'ORDERSTATUSNM
+        '
+        Me.ORDERSTATUSNM.DataPropertyName = "ORDERSTATUSNM"
+        Me.ORDERSTATUSNM.HeaderText = "受注ステータス"
+        Me.ORDERSTATUSNM.Name = "ORDERSTATUSNM"
+        Me.ORDERSTATUSNM.ReadOnly = True
+        Me.ORDERSTATUSNM.Width = 110
+        '
+        'ORDERDT
+        '
+        Me.ORDERDT.DataPropertyName = "ORDERDT"
+        Me.ORDERDT.HeaderText = "受注日"
+        Me.ORDERDT.Name = "ORDERDT"
+        Me.ORDERDT.ReadOnly = True
+        Me.ORDERDT.Width = 120
         '
         'lblItemName
         '
@@ -226,11 +315,11 @@ Partial Class FrmStockReserve
         'btnSearch
         '
         Me.btnSearch.BackColor = System.Drawing.Color.DeepSkyBlue
-        Me.btnSearch.Font = New System.Drawing.Font("MS PGothic", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(134, Byte))
-        Me.btnSearch.Location = New System.Drawing.Point(731, 15)
+        Me.btnSearch.Font = New System.Drawing.Font("ＭＳ Ｐゴシック", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(134, Byte))
+        Me.btnSearch.Location = New System.Drawing.Point(730, 15)
         Me.btnSearch.Name = "btnSearch"
         Me.btnSearch.Size = New System.Drawing.Size(70, 30)
-        Me.btnSearch.TabIndex = 21
+        Me.btnSearch.TabIndex = 7
         Me.btnSearch.Text = "検索"
         Me.btnSearch.Type = 2
         Me.btnSearch.UseVisualStyleBackColor = False
@@ -258,14 +347,39 @@ Partial Class FrmStockReserve
         Me.dtPickerFrom.Location = New System.Drawing.Point(20, 15)
         Me.dtPickerFrom.Name = "dtPickerFrom"
         Me.dtPickerFrom.Size = New System.Drawing.Size(190, 20)
-        Me.dtPickerFrom.TabIndex = 24
+        Me.dtPickerFrom.TabIndex = 1
         '
         'dtPickerTo
         '
         Me.dtPickerTo.Location = New System.Drawing.Point(246, 15)
         Me.dtPickerTo.Name = "dtPickerTo"
         Me.dtPickerTo.Size = New System.Drawing.Size(217, 20)
-        Me.dtPickerTo.TabIndex = 25
+        Me.dtPickerTo.TabIndex = 2
+        '
+        'chkExclude
+        '
+        Me.chkExclude.AutoSize = True
+        Me.chkExclude.ForeColor = System.Drawing.SystemColors.Control
+        Me.chkExclude.Location = New System.Drawing.Point(571, 47)
+        Me.chkExclude.Margin = New System.Windows.Forms.Padding(2)
+        Me.chkExclude.Name = "chkExclude"
+        Me.chkExclude.Size = New System.Drawing.Size(92, 16)
+        Me.chkExclude.TabIndex = 6
+        Me.chkExclude.Text = "引当数０除外"
+        Me.chkExclude.UseVisualStyleBackColor = True
+        '
+        'btnCopy
+        '
+        Me.btnCopy.BackColor = System.Drawing.Color.Sienna
+        Me.btnCopy.Font = New System.Drawing.Font("ＭＳ Ｐゴシック", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(134, Byte))
+        Me.btnCopy.ForeColor = System.Drawing.Color.WhiteSmoke
+        Me.btnCopy.Location = New System.Drawing.Point(810, 15)
+        Me.btnCopy.Name = "btnCopy"
+        Me.btnCopy.Size = New System.Drawing.Size(70, 30)
+        Me.btnCopy.TabIndex = 25
+        Me.btnCopy.Text = "全コピー"
+        Me.btnCopy.Type = 5
+        Me.btnCopy.UseVisualStyleBackColor = False
         '
         'FrmStockReserve
         '
@@ -273,23 +387,23 @@ Partial Class FrmStockReserve
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.ClientSize = New System.Drawing.Size(910, 560)
         Me.Controls.Add(Me.UBindingNavigator1)
-        Me.Controls.Add(Me.dgStockReserve)
+        Me.Controls.Add(Me.grd)
         Me.Margin = New System.Windows.Forms.Padding(2)
         Me.Name = "FrmStockReserve"
         Me.Text = "自動引当履歴"
         Me.Controls.SetChildIndex(Me.pnlCondition, 0)
-        Me.Controls.SetChildIndex(Me.dgStockReserve, 0)
+        Me.Controls.SetChildIndex(Me.grd, 0)
         Me.Controls.SetChildIndex(Me.UBindingNavigator1, 0)
         Me.pnlCondition.ResumeLayout(False)
         Me.pnlCondition.PerformLayout()
-        CType(Me.dgStockReserve, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.grd, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)
 
     End Sub
     Friend WithEvents txtItemCd As TextBox
     Friend WithEvents cmbOrdStatus As ComboBox
     Friend WithEvents chkReserving As CheckBox
-    Friend WithEvents dgStockReserve As DataGridView
+    Friend WithEvents grd As DataGridView
     Friend WithEvents lblItemName As Label
     Friend WithEvents lblOrdStatus As Label
     Friend WithEvents btnSearch As ButtonBase
@@ -297,6 +411,8 @@ Partial Class FrmStockReserve
     Friend WithEvents UBindingNavigator1 As UBindingNavigator
     Friend WithEvents dtPickerFrom As UDataTimePicker
     Friend WithEvents dtPickerTo As UDataTimePicker
+    Friend WithEvents BackgroundWorker1 As System.ComponentModel.BackgroundWorker
+    Friend WithEvents chkExclude As CheckBox
     Friend WithEvents CRTDT As DataGridViewTextBoxColumn
     Friend WithEvents ITEMCD As DataGridViewTextBoxColumn
     Friend WithEvents RESERVQTY As DataGridViewTextBoxColumn
@@ -307,5 +423,13 @@ Partial Class FrmStockReserve
     Friend WithEvents ORDDLVDT As DataGridViewTextBoxColumn
     Friend WithEvents INCHARGE As DataGridViewTextBoxColumn
     Friend WithEvents CUSTNAME As DataGridViewTextBoxColumn
-    Friend WithEvents BackgroundWorker1 As System.ComponentModel.BackgroundWorker
+    Friend WithEvents TELNO As DataGridViewTextBoxColumn
+    Friend WithEvents ZIPCODE As DataGridViewTextBoxColumn
+    Friend WithEvents SENDADD1 As DataGridViewTextBoxColumn
+    Friend WithEvents SENDADD2 As DataGridViewTextBoxColumn
+    Friend WithEvents DLVCOMPANY As DataGridViewTextBoxColumn
+    Friend WithEvents DLVSLIPNO As DataGridViewTextBoxColumn
+    Friend WithEvents ORDERSTATUSNM As DataGridViewTextBoxColumn
+    Friend WithEvents ORDERDT As DataGridViewTextBoxColumn
+    Friend WithEvents btnCopy As ButtonBase
 End Class

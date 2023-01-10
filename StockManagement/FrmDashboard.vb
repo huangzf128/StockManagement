@@ -1,11 +1,7 @@
-﻿Imports System.Drawing.Imaging
-Imports System.IO
-Imports System.Reflection
-Imports System.Runtime.CompilerServices
+﻿Imports System.Data.SqlClient
+Imports System.Deployment.Application
 Imports System.Runtime.InteropServices
-Imports System.Security.Cryptography.X509Certificates
 Imports System.Text
-Imports Microsoft.VisualBasic.ApplicationServices
 
 Public Class FrmDashboard
 
@@ -23,6 +19,30 @@ Public Class FrmDashboard
 
 #Region "EVENT"
 
+    Private Sub FrmDashboard_Load(sender As Object, e As EventArgs) Handles Me.Load
+
+        ' 未処理受注
+        Dim dt As DataTable = getStockReservInfo()
+        grdBacklogReserv.DataSource = dt
+        grdBacklogReserv.Rows(0).DefaultCellStyle.BackColor = Color.LightYellow
+        grdBacklogReserv.Rows(1).DefaultCellStyle.BackColor = Color.PaleVioletRed
+        grdBacklogReserv.Rows(2).DefaultCellStyle.BackColor = Color.LightGray
+        grdBacklogReserv.SelectionMode = DataGridViewSelectionMode.FullRowSelect
+        grdBacklogReserv.AllowUserToOrderColumns = False
+
+        Dim lastBatchUpdDt As String = getLastBatDt()
+        lblServerLastUpdatedTime.Text = lastBatchUpdDt
+
+        grdBacklogReserv.CurrentCell = Nothing
+        grdBacklogReserv.ClearSelection()
+
+        If ApplicationDeployment.IsNetworkDeployed Then
+            Dim appVersion As Version = ApplicationDeployment.CurrentDeployment.CurrentVersion
+            linkVersion.Text = "AppVer:" & appVersion.ToString
+        End If
+
+    End Sub
+
     ''' <summary>
     ''' draggble header panel 
     ''' </summary>
@@ -36,6 +56,40 @@ Public Class FrmDashboard
             ReleaseCapture()
             SendMessageW(Handle, WM_NCLBUTTONDOWN, HT_CAPTION, 0)
         End If
+    End Sub
+
+
+    Private Sub btnDashboard_Click(sender As Object, e As EventArgs) Handles btnDashboard.Click
+        Me.lblTitle.Text = Me.Text
+        Me.pnlDashboard.Visible = True
+
+        If Me.ActiveMdiChild IsNot Nothing Then
+            Me.ActiveMdiChild.Close()
+        End If
+    End Sub
+
+    Private Sub btnClose_Click(sender As Object, e As EventArgs) Handles btnClose.Click, btnCloseMenu.Click
+        Me.Close()
+    End Sub
+
+    Private Sub btnMin_Click(sender As Object, e As EventArgs) Handles btnMin.Click
+        Me.WindowState = FormWindowState.Minimized
+    End Sub
+
+
+#End Region
+
+#Region "BUTTON EVENT"
+
+    Private Sub btnRanking_Click(sender As Object, e As EventArgs) Handles btnRanking.Click
+        Me.lblTitle.Text = FrmRanking.Text
+        switchForm(FrmRanking)
+    End Sub
+
+    Private Sub btnStockOut_Click(sender As Object, e As EventArgs) Handles btnStockOut.Click
+        Return
+        Me.lblTitle.Text = FrmStockOut.Text
+        switchForm(FrmStockOut)
     End Sub
 
     Private Sub btnStockHistory_Click(sender As Object, e As EventArgs) Handles btnStockHistory.Click
@@ -53,23 +107,14 @@ Public Class FrmDashboard
         switchForm(FrmStockList)
     End Sub
 
-    Private Sub btnDashboard_Click(sender As Object, e As EventArgs) Handles btnDashboard.Click
-        Me.lblTitle.Text = Me.Text
-        Me.pnlDashboard.Visible = True
-
-        If Me.ActiveMdiChild IsNot Nothing Then
-            Me.ActiveMdiChild.Close()
-        End If
+    Private Sub btnStockListHistory_Click(sender As Object, e As EventArgs) Handles btnStockListHistory.Click
+        Me.lblTitle.Text = FrmStockListHistory.Text
+        switchForm(FrmStockListHistory)
     End Sub
 
-    Private Sub btnClose_Click(sender As Object, e As EventArgs) Handles btnClose.Click
-        Me.Close()
+    Private Sub linkVersion_LinkClicked(sender As Object, e As LinkLabelLinkClickedEventArgs) Handles linkVersion.LinkClicked
+        System.Diagnostics.Process.Start("http://www.bpoint-nouki.com/public/publish/updHistory.html")
     End Sub
-
-    Private Sub btnMin_Click(sender As Object, e As EventArgs) Handles btnMin.Click
-        Me.WindowState = FormWindowState.Minimized
-    End Sub
-
 #End Region
 
 #Region "Overrides"
@@ -112,6 +157,109 @@ Public Class FrmDashboard
         frm.MdiParent = Me
         frm.Dock = DockStyle.Fill
         frm.Show()
+    End Sub
+
+
+    Private Function getStockReservInfo() As DataTable
+
+        Dim dbParamEnt As DbParamEnt = getReservSqlAndParam(Util.removeTime(Now.AddDays(-14)), Util.removeTime(Now.AddDays(-7)))
+        Dim dt As DataTable = DbHandler.executeSelect(dbParamEnt)
+        dt.Rows(0).Item("interval") = "1週間前"
+
+        dbParamEnt = getReservSqlAndParam(Util.removeTime(Now.AddDays(-21)), Util.removeTime(Now.AddDays(-14)))
+        Dim tempDt As DataTable = DbHandler.executeSelect(dbParamEnt)
+        If tempDt.Rows.Count > 0 Then
+            Dim r As DataRow = dt.NewRow
+            dt.Rows.Add(r)
+            r.ItemArray = tempDt.Rows(0).ItemArray
+            r.Item("interval") = "2週間前"
+        End If
+        dbParamEnt = getReservSqlAndParam(Util.removeTime(Now.AddYears(-3)), Util.removeTime(Now.AddDays(-21)))
+        tempDt = DbHandler.executeSelect(dbParamEnt)
+        If tempDt.Rows.Count > 0 Then
+            Dim r As DataRow = dt.NewRow
+            dt.Rows.Add(r)
+            r.ItemArray = tempDt.Rows(0).ItemArray
+            r.Item("interval") = "3週間以前"
+        End If
+
+        Return dt
+    End Function
+
+    Private Function getLastBatDt() As String
+        Dim sb As New StringBuilder
+
+        sb.Append(" SELECT ")
+        sb.Append("     M.VALUE1 ")
+        sb.Append(" FROM M_Code M ")
+        sb.Append(" WHERE ")
+        sb.Append("     M.CATEGORY = 'LASTBATDT' ")
+        Dim dt As DataTable = DbHandler.executeSelect(New DbParamEnt(sb, Nothing))
+        If dt.Rows.Count > 0 Then
+            Return dt.Rows(0).Item("VALUE1")
+        End If
+
+        Return ""
+    End Function
+
+#Region "SQL"
+
+    Private Function getReservSqlAndParam(ByRef dateFrom As Date?, dateTo As Date) As DbParamEnt
+        Dim sb As New StringBuilder
+
+        sb.Append(" SELECT ")
+        sb.Append("     COUNT(*) AS dataCount ")
+        If dateFrom IsNot Nothing Then
+            sb.Append("     ,@CRTDTFrom AS dateFrom ")
+        Else
+            sb.Append("     ,null AS dateFrom ")
+        End If
+        sb.Append("     ,@CRTDTTo AS dateTo ")
+        sb.Append("     , '' AS interval")
+        sb.Append(" FROM T_StockReserv T1 ")
+        'sb.Append(" LEFT JOIN [JPONDATA].[dbo].ORDERDAT AS T2 ")
+        'sb.Append(" WITH (INDEX(UIX_ORDERDAT_ID)) ")
+        'sb.Append(" ON     T2.ID = T1.ORDERID ")
+        'sb.Append(" AND    T2.OrderDate > CONVERT(Date, '2018-1-1') ")
+
+        sb.Append(" WHERE ")
+        sb.Append("     T1.DELFLG = 0 ")
+        sb.Append(" AND T1.RESERVQTY > 0 ")
+
+        Dim param As New List(Of SqlParameter)
+        sb.Append(" AND T1.CRTDT <= @CRTDTTo ")
+        param.Add(New SqlParameter("@CRTDTTo", dateTo))
+        If dateFrom IsNot Nothing Then
+            sb.Append(" AND T1.CRTDT > @CRTDTFrom ")
+            param.Add(New SqlParameter("@CRTDTFrom", dateFrom))
+        End If
+        'sb.Append(" AND T2.[状況] not in ( @ORDSTATUS )")
+        'param.Add(New SqlParameter("@ORDSTATUS", "02"))
+
+        Return New DbParamEnt(sb, param.ToArray)
+    End Function
+
+#End Region
+
+    Private Sub pnlDashboard_ControlAdded(sender As Object, e As ControlEventArgs) Handles pnlDashboard.ControlAdded
+        If TypeOf (e.Control) Is DataGridView Then
+            Dim grd As DataGridView = TryCast(e.Control, DataGridView)
+            Call New GridStyle().setStyle(grd)
+        End If
+    End Sub
+
+    Private Sub grdReserv_CellDoubleClick(sender As Object, e As DataGridViewCellEventArgs) Handles grdBacklogReserv.CellDoubleClick
+        If e.RowIndex >= 0 AndAlso e.ColumnIndex >= 0 Then
+            Dim selectedRow As DataGridViewRow = grdBacklogReserv.Rows(e.RowIndex)
+
+            Me.lblTitle.Text = FrmStockReserve.Text
+            FrmStockReserve.setSrchCondition(selectedRow.Cells.Item("dateFrom").Value, selectedRow.Cells.Item("dateTo").Value)
+            switchForm(FrmStockReserve)
+        End If
+    End Sub
+
+    Private Sub grdReserv_SelectionChanged(sender As Object, e As EventArgs) Handles grdBacklogReserv.SelectionChanged
+        grdBacklogReserv.ClearSelection()
     End Sub
 
 End Class

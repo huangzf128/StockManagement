@@ -1,179 +1,329 @@
-﻿Imports System.Security.Cryptography
+﻿Imports System.Data.SqlClient
+Imports System.Runtime.CompilerServices
+Imports System.Security.Cryptography
+Imports System.Text
 Imports System.Windows.Forms.VisualStyles.VisualStyleElement.Window
 
-Public Class frmRanking
+Public Class FrmRanking
 
-    ' 検索ボタンクリック時処理（店舗毎）
-    Private Sub cmdExec1_Click(sender As Object, e As EventArgs) Handles cmdExec1.Click
-        Dim Cmd As New OleDb.OleDbCommand
-        Dim Dta As New OleDb.OleDbDataAdapter
-        Dim Dts As New DataSet
-        Dim strSql As String
-        Dim strWhere1 As String = ""
-        Dim strWhere2 As String = ""
-        Dim strWhere3 As String = ""
-        Dim strDateFrom As String
-        Dim strDateTo As String
+    Private Const SRCH_TYPE_SHOP = 0
+    Private Const SRCH_TYPE_ITEM = 1
+    Private Const SRCH_TYPE_STAYING = 2
+    Private Const COL_NM_PREFIX = "_col_"
 
-        strDateFrom = dateFrom1.Value.ToString("yyyy/MM/dd")
-        If Cm.Nz(strDateFrom, "") <> "" Then
-            strWhere1 = "And OrderDate >= '" & strDateFrom & "' "
-            strWhere3 = "And CRTDT >= '" & strDateFrom & "' "
-        End If
-        strDateTo = dateTo1.Value.ToString("yyyy/MM/dd")
-        If Cm.Nz(strDateTo, "") <> "" Then
-            strWhere1 = strWhere1 & "And OrderDate <= '" & strDateTo & "' "
-            strWhere3 = strWhere3 & "And CRTDT <= '" & strDateTo & "' "
-        End If
-        If Cm.Nz(txtItemCd.Text, "") <> "" Then
-            strWhere2 = "And [ITEMCD] Like '%" & txtItemCd.Text & "%' "
-        End If
+#Region "EVENT"
+    Private Sub FrmRanking_Load(sender As Object, e As EventArgs) Handles Me.Load
+        grd.CellBorderStyle = DataGridViewCellBorderStyle.Single
 
-        strSql = "SELECT T1.分類2, T3.ITEMCD, Sum(T2.数量*T3.QTY) AS SumQTY " &
-                 "FROM (SELECT ID, 分類2 FROM JPONDATA.dbo.ORDERDAT WHERE 状況='確定' And 分類2 Is Not Null " & strWhere1 & ") AS T1 " &
-                 "LEFT JOIN (SELECT ID, 商品CODE, 数量 FROM JPONDATA.dbo.RECVDAT WHERE ID Is Not Null) AS T2 " &
-                 "ON T1.ID=T2.ID " &
-                 "LEFT JOIN dbo.M_ConvItem AS T3 " &
-                 "ON T2.商品CODE=T3.ORDERITEMCD " &
-                 "GROUP BY T3.ITEMCD, T1.分類2 " &
-                 "HAVING T3.ITEMCD Is Not Null " & strWhere2 &
-                 "Union All " &
-                 "Select T1.ORDERKBN As 分類2, T1.ITEMCD, Sum(T1.RESERVQTY) As SumQTY " &
-                 "From (Select ORDERKBN, ITEMCD, RESERVQTY From dbo.T_StockReserv " &
-                 "Where ORDERSTATUS = 3 " & strWhere2 & strWhere3 & " ) As T1 " &
-                 "Group By T1.ORDERKBN, T1.ITEMCD;"
+        dtPickerFrom.setDateTime(Now.AddMonths(-1 * Consts.DATA_INTERVAL))
+        dtPickerTo.setDateTime(Now)
 
-        Cmd.Connection = Cm.Conn
-        Cmd.CommandText = strSql
-        Dta.SelectCommand = Cmd
-        Dta.Fill(Dts)
+        initCombo()
 
-        dgOrderShopRanking.DataSource = Dts
-        dgOrderShopRanking.Refresh()
-
+        search()
     End Sub
 
-    ' 検索ボタンクリック時処理（期間毎）
-    Private Sub cmdExec2_Click(sender As Object, e As EventArgs) Handles cmdExec2.Click
-        Dim Cmd As New OleDb.OleDbCommand
-        Dim Dta As New OleDb.OleDbDataAdapter
-        Dim Dts As New DataSet
-        Dim strSql As String
-        Dim strWhere1 As String
-        Dim strWhere2 As String
-        strWhere1 = ""
-        strWhere2 = ""
+    Private Sub initCombo()
+        With cmbTenpo
+            .Items.Add("AmazonDIYtools")
+            .Items.Add("AmazonDIY倉庫")
+            .Items.Add("AmazonGLMALL")
+            .Items.Add("DIY倉庫")
+            .Items.Add("YahooDIYtools")
+            .Items.Add("YahooGLMALL")
+            .Items.Add("YahooP-GeneratioN")
+            .Items.Add("Yahooエターナルチャーム")
+            .Items.Add("Yahooオートゲージジャパン")
+            .Items.Add("Yahooマルビ")
+            .Items.Add("auPayマーケット")
+            .Items.Add("エターナルチャーム")
+            .Items.Add("オートゲージジャパン")
+            .Items.Add("メルカリアシスタント")
+            .Items.Add("メルカリ昌隆")
+            .Items.Add("ヤフオクDIYtools")
+            .Items.Add("ヤフオクGLMALL")
+            .Items.Add("ヤフオク丸美")
+            .Items.Add("楽天GLMALL")
+            .Items.Add("楽天ガジガジ")
+            .Items.Add("承天貿易")
+            .Items.Add("直販")
+            .Items.Add("(株)フルクリエーション")
+            .Items.Add("DISCOM")
+            .Items.Add("オオトモ")
+            .Items.Add("株式会社C&J")
+            .Items.Add("株式会社創能")
+            .Items.Add("興和貿易株式会社")
+            .Items.Add("大友株式会社")
+            .Items.Add("中哲商事株式会社")
+        End With
+    End Sub
 
-        If Cm.Nz(dateFrom2.Value, "") <> "" Then
-            strWhere1 = "And OrderDate >= '" & dateFrom2.Value & "' "
-            strWhere2 = "And CRTDT >= '" & dateFrom2.Value & "' "
+    Private Sub btnCopy_Click(sender As Object, e As EventArgs) Handles btnCopy.Click
+        If grd.Rows.Count = 0 Then
+            Return
         End If
-        If Cm.Nz(dateTo2.Value, "") <> "" Then
-            strWhere1 = strWhere1 & "And OrderDate <= '" & dateTo2.Value & "' "
-            strWhere2 = strWhere2 & "And CRTDT <= '" & dateTo2.Value & "' "
+        Util.CopyDataGridView(grd)
+        AutoClosingMessageBox.Show("すべての明細をコピーしました。", "情報")
+    End Sub
+
+    Private Sub btnSearch_Click(sender As Object, e As EventArgs) Handles btnSearch.Click
+
+        search()
+    End Sub
+
+    Private Sub btnStaying_Click(sender As Object, e As EventArgs) Handles btnStaying.Click
+
+        If Util.isEmpty(Me.txtQtyMax.Text) Then
+            Msg.warning("販売数上限を入力してください。", "入力エラー")
+            Return
         End If
-        If Cm.Nz(cboShop.SelectedValue, "") <> "" Then
-            strWhere1 = strWhere1 & "And 分類2 = '" & cboShop.SelectedValue & "' "
-            strWhere2 = strWhere2 & "And ORDERKBN = '" & cboShop.SelectedValue & "' "
+
+        ShowWaitForm()
+        resetDataGridView()
+
+        Async.Process(
+            Function()
+                Me.Invoke(Sub()
+                              Dim srchDt As DataTable = DbHandler.executeSelect(getStayingSqlAndParam())
+                              Dim dt As DataTable = editDataSource(srchDt)
+                              grd.DataSource = dt
+                              bindingNavi.initBindingSource(dt.Rows.Count)
+                          End Sub)
+            End Function,
+            Sub()
+                CloseForm()
+            End Sub)
+    End Sub
+
+#End Region
+
+    Private Function search() As AsyncVoidMethodBuilder
+
+        ShowWaitForm()
+        resetDataGridView()
+
+        Async.Process(
+            Function()
+                Me.Invoke(Sub()
+                              Dim srchDt As DataTable = DbHandler.executeSelect(getRankingSqlAndParam())
+                              Dim dt As DataTable
+                              If Me.txtItemCd.Text <> "" Then
+                                  dt = editDataSourceItem(srchDt)
+                                  grd.DataSource = dt
+                              Else
+                                  dt = editDataSource(srchDt)
+                                  grd.DataSource = dt
+                              End If
+                              bindingNavi.initBindingSource(dt.Rows.Count)
+                          End Sub)
+            End Function,
+            Sub()
+                CloseForm()
+            End Sub)
+
+    End Function
+
+    Private Sub resetDataGridView()
+
+        grd.DataSource = Nothing
+
+        For i As Integer = grd.Columns.Count - 1 To 0 Step -1
+            If grd.Columns(i).DataPropertyName.StartsWith(COL_NM_PREFIX) Then
+
+                grd.Columns.RemoveAt(i)
+
+            ElseIf grd.Columns(i).Name <> "SumQTY" AndAlso
+                    grd.Columns(i).Name <> "分類2" AndAlso
+                    grd.Columns(i).Name <> "ITEMCD" Then
+
+                grd.Columns(i).Visible = False
+            End If
+        Next
+    End Sub
+
+    Private Function editDataSourceItem(ByRef srchDt As DataTable) As DataTable
+
+        grd.Columns.Item("SumQTY").Visible = True
+        grd.Columns.Item("分類2").Visible = True
+        grd.Columns.Item("ITEMCD").Visible = False
+
+        Return srchDt
+    End Function
+
+    Private Function editDataSource(ByRef srchDt As DataTable) As DataTable
+        Dim lastItemCd As String = ""
+        Dim dt As DataTable = createDt()
+        Dim row As DataRow = Nothing
+
+        For i As Integer = 0 To srchDt.Rows.Count - 1
+            Dim srchRow As DataRow = srchDt.Rows(i)
+
+            If lastItemCd <> srchRow.Item("ITEMCD") OrElse lastItemCd = "" Then
+                row = dt.NewRow
+                dt.Rows.Add(row)
+
+                lastItemCd = srchRow.Item("ITEMCD")
+
+                row.Item("ITEMCD") = srchRow.Item("ITEMCD")
+                row.Item("SumSumQTY") = srchRow.Item("SumSumQTY")
+            End If
+
+            Dim colNm As String = If(IsDBNull(srchRow.Item("分類2")), "", srchRow.Item("分類2"))
+            If Util.isEmpty(colNm) Then
+                Continue For
+            End If
+
+            colNm = COL_NM_PREFIX & colNm
+            If Not dt.Columns.Contains(colNm) Then
+                dt.Columns.Add(colNm, GetType(Integer))
+                row.Item(colNm) = srchRow.Item("SumQTY")
+                grd.Columns.Add(colNm, colNm)
+                Dim col As DataGridViewColumn = grd.Columns(colNm)
+
+                col.HeaderText = colNm.Replace(COL_NM_PREFIX, "")
+                col.DataPropertyName = colNm
+                col.DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter
+                col.HeaderCell.Style.Alignment = DataGridViewContentAlignment.TopLeft
+            Else
+                row.Item(colNm) = srchRow.Item("SumQTY")
+            End If
+
+        Next
+
+        grd.Columns.Item("SumQTY").Visible = False
+        grd.Columns.Item("分類2").Visible = False
+        grd.Columns.Item("ITEMCD").Visible = True
+        grd.Columns.Item("SumSumQTY").Visible = True
+        Return dt
+    End Function
+
+    Private Function createDt() As DataTable
+
+        Dim dt As New DataTable
+        dt.Columns.Add("ITEMCD", GetType(String))
+        dt.Columns.Add("SumSumQTY", GetType(String))
+        Return dt
+    End Function
+
+#Region "SQL"
+
+    Private Function getStayingSqlAndParam() As DbParamEnt
+
+        Dim dbParamEnt As DbParamEnt = getRankingSqlAndParam()
+        Dim sbR As StringBuilder = dbParamEnt.sbSql
+
+        Dim sb As New StringBuilder
+        Dim param As List(Of SqlParameter) = dbParamEnt.parameters.ToList
+
+        sb.Append(" SELECT * FROM (")
+        sb.Append(sbR)
+        sb.Append(" Union All ")
+
+        sb.Append(" SELECT ")
+        sb.Append("   '' AS 分類2 ")
+        sb.Append("  ,M.ITEMCD ")
+        sb.Append("  ,0 AS SumQTY ")
+        sb.Append("  ,0 AS SumSumQTY ")
+        sb.Append(" FROM ")
+        sb.Append("     M_Item M")
+        sb.Append(" WHERE ")
+        sb.Append("   NOT EXISTS (")
+        sb.Append("     SELECT 1")
+        sb.Append("     FROM T_StockHistory T ")
+        sb.Append("     WHERE T.ITEMCD = M.ITEMCD ")
+        sb.Append("       AND T.IOKBN =  'O' ")
+        If dtPickerFrom.getDateTime <> "" Then
+            sb.Append(" AND T.CRTDT >= @CRTDTFROM ")
+            param.Add(New SqlParameter("@CRTDTFROM", dtPickerFrom.getDateTime))
         End If
+        If dtPickerTo.getDateTime <> "" Then
+            sb.Append(" AND T.CRTDT <= @CRTDTTO ")
+            param.Add(New SqlParameter("@CRTDTTO", dtPickerTo.getDateTime))
+        End If
+        sb.Append(" ) ")
+        If Me.txtItemCd.Text <> "" Then
+            sb.Append(" AND M.ITEMCD Like @ITEMCD")
+        End If
+        sb.Append(" ) T ")
+        sb.Append(" WHERE T.SumSumQTY <= 5 ")
+        sb.Append(" ORDER BY ")
+        sb.Append("     T.SumSumQTY DESC, T.ITEMCD, T.分類2 ")
 
-        strSql = "SELECT T1.分類2, T3.ITEMCD, Sum(T2.数量*T3.QTY) AS SumQTY " &
-                 "FROM (SELECT ID, 分類2 FROM JPONDATA.dbo.ORDERDAT WHERE 状況='確定' " & strWhere1 & ") AS T1 " &
-                 "LEFT JOIN (SELECT ID, 商品CODE, 数量 FROM JPONDATA.dbo.RECVDAT WHERE ID Is Not Null) AS T2 " &
-                 "ON T1.ID=T2.ID " &
-                 "LEFT JOIN dbo.M_ConvItem AS T3 " &
-                 "ON T2.商品CODE=T3.ORDERITEMCD " &
-                 "GROUP BY T3.ITEMCD, T1.分類2 " &
-                 "HAVING T3.ITEMCD Is Not Null " &
-                 "Union All " &
-                 "Select T1.ORDERKBN As 分類2, T1.ITEMCD, Sum(T1.RESERVQTY) As SumQTY " &
-                 "From (Select ORDERKBN, ITEMCD, RESERVQTY From dbo.T_StockReserv " &
-                 "Where ORDERSTATUS = 3 " & strWhere2 & " ) As T1 " &
-                 "Group By T1.ORDERKBN, T1.ITEMCD;"
+        Return New DbParamEnt(sb, param.ToArray)
+    End Function
 
-        Cmd.Connection = Cm.Conn
-        Cmd.CommandText = strSql
-        Dta.SelectCommand = Cmd
-        Dta.Fill(Dts)
+    Private Function getRankingSqlAndParam() As DbParamEnt
 
-        dgOrderRanking.DataSource = Dts
-        dgOrderRanking.Refresh()
+        Dim sb As New StringBuilder
+        Dim param As New List(Of SqlParameter)
 
-    End Sub
+        sb.Append(" SELECT ")
+        sb.Append("   T1.分類2 ")
+        sb.Append("  ,T3.ITEMCD ")
+        sb.Append("  ,Sum(T2.数量*T3.QTY) AS SumQTY")
+        sb.Append("  ,Sum(Sum(T2.数量*T3.QTY)) OVER(PARTITION BY T3.ITEMCD) AS SumSumQTY")
+        sb.Append(" FROM JPONDATA.dbo.ORDERDAT T1 ")
+        sb.Append(" LEFT JOIN [JPONDATA].[dbo].RECVDAT T2 ")
+        sb.Append("  ON T1.ID = T2.ID ")
+        sb.Append(" LEFT JOIN M_ConvItem T3 ")
+        sb.Append("  ON T2.商品CODE = T3.ORDERITEMCD ")
+        sb.Append(" WHERE ")
+        sb.Append("     T1.状況='確定' ")
+        sb.Append(" And T1.分類2 Is Not Null ")
+        sb.Append(" And T3.ITEMCD Is Not Null ")
+        If dtPickerFrom.getDateTime <> "" Then
+            sb.Append(" AND T1.OrderDate >= @ORDERFROM ")
+            param.Add(New SqlParameter("@ORDERFROM", dtPickerFrom.getDateTime))
+        End If
+        If dtPickerTo.getDateTime <> "" Then
+            sb.Append(" AND T1.OrderDate <= @ORDERTO ")
+            param.Add(New SqlParameter("@ORDERTO", dtPickerTo.getDateTime))
+        End If
+        If Not Util.isEmpty(Me.txtItemCd.Text) Then
+            sb.Append(" AND T3.ITEMCD Like @ITEMCD")
+            param.Add(New SqlParameter("@ITEMCD", "%" & Me.txtItemCd.Text & "%"))
+        End If
+        If Not Util.isEmpty(cmbTenpo.Text) Then
+            sb.Append(" AND T1.分類2 Like @分類2")
+            param.Add(New SqlParameter("@分類2", Me.cmbTenpo.Text & "%"))
+        End If
+        sb.Append(" GROUP BY ")
+        sb.Append("  T3.ITEMCD")
+        sb.Append(" ,T1.分類2 ")
+
+        sb.Append(" Union All ")
+        sb.Append(" SELECT ")
+        sb.Append("   T1.ORDERKBN As 分類2 ")
+        sb.Append("  ,T1.ITEMCD ")
+        sb.Append("  ,Sum(T1.RESERVQTY) As SumQTY ")
+        sb.Append("  ,Sum(Sum(T1.RESERVQTY)) OVER(PARTITION BY T1.ITEMCD) AS SumSumQTY")
+        sb.Append(" FROM T_StockReserv T1 ")
+        sb.Append(" WHERE  ")
+        sb.Append("    T1.ORDERSTATUS = 3")
+        If dtPickerFrom.getDateTime <> "" Then
+            sb.Append(" AND T1.CRTDT >= @ORDERFROM ")
+        End If
+        If dtPickerTo.getDateTime <> "" Then
+            sb.Append(" AND T1.CRTDT <= @ORDERTO ")
+        End If
+        If Not Util.isEmpty(Me.txtItemCd.Text) Then
+            sb.Append(" AND T1.ITEMCD Like @ITEMCD")
+        End If
+        If Not Util.isEmpty(cmbTenpo.Text) Then
+            sb.Append(" AND T1.ORDERKBN Like @ORDERKBN")
+            param.Add(New SqlParameter("@ORDERKBN", Me.cmbTenpo.Text & "%"))
+        End If
+        sb.Append(" GROUP BY ")
+        sb.Append("  T1.ITEMCD")
+        sb.Append(" ,T1.ORDERKBN ")
+
+        sb.Append(" ORDER BY ")
+        sb.Append("     SumSumQTY DESC, ITEMCD, 分類2 ")
+        sb.Append(" OFFSET 0 ROWS ")
+
+        Return New DbParamEnt(sb, param.ToArray)
+    End Function
+#End Region
 
 
-
-    ' 商品検索ボタン押下時イベント
-    Private Sub cmdSearch_Click()
-        Cm.StrSearchItemCd = Cm.Nz(txtItemCd.Text, "")
-        Cm.StrSearchItemFormName = Me.Name
-        frmItemSearch.ShowDialog()
-    End Sub
-
-    ' フォームロード時イベント
-    Private Sub Form_Load(sender As Object, e As EventArgs) Handles MyBase.Load
-        Dim Cmd As New OleDb.OleDbCommand
-        Dim Dta As New OleDb.OleDbDataAdapter
-        Dim Dts As New DataSet
-        Dim strSql As String
-
-        strSql = "SELECT T1.分類2, T3.ITEMCD, Sum(T2.数量*T3.QTY) AS SumQTY " &
-                 "FROM (SELECT ID, 分類2 FROM JPONDATA.dbo.ORDERDAT WHERE 状況='確定' And 分類2 Is Not Null And OrderDate >= DATEADD(day,-30,GETDATE())) AS T1 " &
-                 "LEFT JOIN (SELECT ID, 商品CODE, 数量 FROM JPONDATA.dbo.RECVDAT WHERE ID Is Not Null) AS T2 " &
-                 "ON T1.ID=T2.ID " &
-                 "LEFT JOIN dbo.M_ConvItem AS T3 " &
-                 "ON T2.商品CODE=T3.ORDERITEMCD " &
-                 "GROUP BY T3.ITEMCD, T1.分類2 " &
-                 "HAVING T3.ITEMCD Is Not Null " &
-                 "Union All " &
-                 "Select T1.ORDERKBN As 分類2, T1.ITEMCD, Sum(T1.RESERVQTY) As SumQTY " &
-                 "From (Select ORDERKBN, ITEMCD, RESERVQTY From dbo.T_StockReserv " &
-                 "Where ORDERSTATUS = 3 And CRTDT >= DATEADD(day,-30,GETDATE())) As T1 " &
-                 "Group By T1.ORDERKBN, T1.ITEMCD;"
-
-        Cmd.Connection = Cm.Conn
-        Cmd.CommandText = strSql
-        Dta.SelectCommand = Cmd
-        Dta.Fill(Dts)
-
-        dgOrderShopRanking.DataSource = Dts
-        dgOrderShopRanking.Refresh()
-
-        dateFrom1.Value = Format(DateAdd("d", -30, Now()), "yyyy/mm/dd")
-        dateFrom2.Value = Format(DateAdd("d", -30, Now()), "yyyy/mm/dd")
-
-        dgOrderShopRanking.Select()
-        dgOrderShopRanking.ReadOnly = True
-
-    End Sub
-
-    ' TODO：DataGridを使用するため必要なくなりそう
-    '    Private Sub DispShopRanking()
-    '        Dim i As Integer
-    '        Dim RS As DAO.Recordset
-
-    '    Set RS = CurrentDb.QueryDefs("Q_OrderShopRanking").OpenRecordset
-    '    For i = 2 To RS.Fields.Count - 1
-    '            S_OrderShopRanking.Form.Controls("lbl" & i - 1).Caption = RS(i).Name
-    '            S_OrderShopRanking.Form.Controls("lbl" & i - 1).Visible = True
-    '            S_OrderShopRanking.Form.Controls("txt" & i - 1).ControlSource = RS(i).Name
-    '            S_OrderShopRanking.Form.Controls("txt" & i - 1).Visible = True
-    '        Next
-    '        For i = RS.Fields.Count To 41
-    '            S_OrderShopRanking.Form.Controls("lbl" & i - 1).Caption = ""
-    '            S_OrderShopRanking.Form.Controls("lbl" & i - 1).Visible = False
-    '            S_OrderShopRanking.Form.Controls("txt" & i - 1).ControlSource = ""
-    '            S_OrderShopRanking.Form.Controls("txt" & i - 1).Visible = False
-    '        Next
-
-    '    Set RS = Nothing
-    'End Sub
-
-    Private Sub cmdSearch_Click(sender As Object, e As EventArgs) Handles cmdSearch.Click
-
-    End Sub
-
-    Private Sub tabShop_Click(sender As Object, e As EventArgs) Handles tabShop.Click
-
-    End Sub
 End Class

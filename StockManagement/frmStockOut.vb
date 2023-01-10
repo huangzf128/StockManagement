@@ -1,28 +1,27 @@
-﻿Public Class frmStockOut
+﻿Imports System.Text
+
+Public Class FrmStockOut
+
+
+    Private Sub FrmStockOut_Load(sender As Object, e As EventArgs) Handles Me.Load
+        SetLocation()
+
+        Dim dt As New DataTable
+        dt.Columns.Add("ITEMCD", GetType(String))
+        dt.Columns.Add("LOCATIONCD", GetType(String))
+        dt.Columns.Add("QTY", GetType(Integer))
+        dt.Columns.Add("REMARKS", GetType(String))
+
+        grd.DataSource = dt
+    End Sub
+
 
     ' 商品検索ボタン押下時イベント
-    Private Sub cmdSearch_Click(sender As Object, e As EventArgs) Handles cmdSearch.Click
+    Private Sub btnItemSearch_Click(sender As Object, e As EventArgs) Handles btnItemSearch.Click
         Cm.StrSearchItemCd = Cm.Nz(txtItemCd.Text, "")
         frmItemSearch.ShowDialog()
     End Sub
 
-    ' 追加ボタン押下時イベント
-    Private Sub cmdAdd_Click(sender As Object, e As EventArgs) Handles cmdAdd.Click
-        If Cm.Nz(txtItemCd.Text, "") <> "" And Cm.Nz(txtQty.Text, "") <> "" And Cm.Nz(cboLocation.SelectedValue, "") <> "" Then
-            Dim Cmd As New OleDb.OleDbCommand
-            Cmd.Connection = Cm.Conn
-            Cmd.CommandText = "Insert Into T_StockOut(ITEMCD, LOCATIONCD, QTY, REMARKS, UPDDT) Values('" & txtItemCd.Text & "','" & cboLocation.SelectedValue & "'," & txtQty.Text & ",'" & Cm.Nz(txtRemarks.Text, "") & "', Now())"
-            Cmd.ExecuteNonQuery()
-            dgStockOut.Refresh()
-            txtItemCd.Text = ""
-            txtQty.Text = ""
-            txtRemarks.Text = ""
-            txtActQty.Text = ""
-            txtItemCd.Select()
-        Else
-            MessageBox.Show("必要情報を入力してください。", "追加エラー", MessageBoxButtons.OK, MessageBoxIcon.Error)
-        End If
-    End Sub
 
     ' 対象削除ボタン押下時イベント
     Private Sub cmdDelete_Click(sender As Object, e As EventArgs) Handles cmdDelete.Click
@@ -30,7 +29,7 @@
         Cmd.Connection = Cm.Conn
         Cmd.CommandText = "Delete From T_StockOut Where TARGETFLG = True"
         Cmd.ExecuteNonQuery()
-        dgStockOut.Refresh()
+        grd.Refresh()
     End Sub
 
     ' 出庫処理ボタン押下時イベント
@@ -81,15 +80,11 @@
             Cmd.CommandText = "Delete From T_StockOut"
             Cmd.ExecuteNonQuery()
             MessageBox.Show("サーバーへの出庫処理が完了しました。", "出庫処理", MessageBoxButtons.OK, MessageBoxIcon.Information)
-            dgStockOut.Refresh()
+            grd.Refresh()
         End If
     End Sub
 
 
-    ' 閉じるボタン押下時イベント
-    Private Sub cmdClose_Click(sender As Object, e As EventArgs) Handles cmdClose.Click
-        Close()
-    End Sub
 
     ' 商品検索ボタン押下時イベント
     Private Sub cmdSearch_Click()
@@ -104,14 +99,8 @@
     End Sub
 
 
-    Private Sub frmStockOut_Load(sender As Object, e As EventArgs) Handles MyBase.Load
-
-    End Sub
 
     ' フォームロードイベント
-    Private Sub Form_Load()
-        SetLocation()
-    End Sub
 
     ' 商品名フォーカス喪失時イベント
     Private Sub txtItemCd_LostFocus(sender As Object, e As EventArgs) Handles txtItemCd.LostFocus
@@ -119,35 +108,89 @@
     End Sub
 
     ' ロケーションフォーカス喪失時イベント
-    Private Sub cboLocation_LostFocus(sender As Object, e As EventArgs) Handles cboLocation.LostFocus
+    Private Sub cboLocation_LostFocus(sender As Object, e As EventArgs) Handles cmbLocation.LostFocus
         GetActQty()
     End Sub
 
     ' ロケーション変更時イベント
-    Private Sub cboLocation_SelectedIndexChanged(sender As Object, e As EventArgs) Handles cboLocation.SelectedIndexChanged
+    Private Sub cboLocation_SelectedIndexChanged(sender As Object, e As EventArgs) Handles cmbLocation.SelectedIndexChanged
         GetActQty()
     End Sub
 
 
     Private Sub SetLocation()
-        Dim Cmd As New OleDb.OleDbCommand
-        Dim Dta As New OleDb.OleDbDataAdapter
-        Dim Dts As New DataSet
 
-        Cmd.Connection = Cm.Conn
-        Cmd.CommandText = "SELECT CODE,VALUE1 FROM M_Code WHERE CATEGORY = 'LOCATIONCD' ORDER BY CODE;"
-        Dta.SelectCommand = Cmd
-        Dta.Fill(Dts)
-        For i = 0 To Dts.Tables(0).Rows.Count
-            cboLocation.Items.Add(New With {.Text = Dts.Tables(0).Rows(i).Item("VALUE1"), .Value = Dts.Tables(0).Rows(i).Item("CODE")})
-        Next
+        Dim sb As New StringBuilder
+        sb.Append(" SELECT  ")
+        sb.Append("   CODE ")
+        sb.Append("  ,CODE + '-' + VALUE1 AS NAME ")
+        sb.Append(" FROM M_Code ")
+        sb.Append(" WHERE CATEGORY = 'LOCATIONCD' ")
+        sb.Append(" ORDER BY CODE ")
+
+        Dim dt As DataTable = DbHandler.executeSelect(New DbParamEnt(sb, Nothing))
+        cmbLocation.DataSource = dt
+        cmbLocation.DisplayMember = "NAME"
+        cmbLocation.ValueMember = "CODE"
+
     End Sub
 
     ' 実在庫数取得
     Private Sub GetActQty()
+        Return
+        If txtItemCd.Text = "" Then
+            Return
+        End If
         Dim varQty As String
-        varQty = Cm.DLookup("ACTQTY", "T_ActStock", "ITEMCD = '" & txtItemCd.Text & "' And LOCATIONCD = '" & cboLocation.SelectedValue & "'")
+        varQty = Cm.DLookup("ACTQTY", "T_ActStock", "ITEMCD = '" & txtItemCd.Text & "' And LOCATIONCD = '" & cmbLocation.SelectedValue & "'")
         txtActQty.Text = Cm.Nz(varQty, "")
+    End Sub
+
+    Private Sub btnClose_Click(sender As Object, e As EventArgs) Handles btnClose.Click
+        Me.Close()
+    End Sub
+
+    Private Sub btnAdd_Click(sender As Object, e As EventArgs) Handles btnAdd.Click
+
+        If Util.obj2String(txtItemCd.Text, "") = "" Then
+            Msg.warning("変更商品名を入力してください。", "入力エラー")
+            txtItemCd.Select()
+            Return
+        ElseIf Util.obj2String(txtQty.Text, "") = "" Then
+            Msg.warning("数量を入力してください。", "入力エラー")
+            txtQty.Select()
+            Return
+        End If
+
+        If isExists(txtItemCd.Text, cmbLocation.Text) Then
+            Msg.warning("既に追加済みです。", "入力エラー")
+            Return
+        End If
+
+        Dim dt As DataTable = grd.DataSource
+
+        dt.Rows.Add(New Object() {txtItemCd.Text, cmbLocation.Text, txtQty.Text, txtRemarks.Text})
+        grd.Refresh()
+
+        Clear()
+    End Sub
+
+    Private Function isExists(ByVal itemCd As String, ByVal locationNm As String) As Boolean
+        Dim dt As DataTable = grd.DataSource
+        For Each row As DataRow In dt.Rows
+            If row("ITEMCD") = itemCd AndAlso row("LOCATIONCD") = locationNm Then
+                Return True
+            End If
+        Next
+        Return False
+    End Function
+
+    Private Sub Clear()
+        txtItemCd.Text = ""
+        txtQty.Text = ""
+        txtRemarks.Text = ""
+        txtActQty.Text = ""
+        txtItemCd.Select()
     End Sub
 
 End Class

@@ -11,6 +11,7 @@ Public Class FrmStockHistory
         Public itemCd As String
         Public chkIn As Boolean
         Public chkOut As Boolean
+        Public chkExclude As Boolean
     End Structure
 
     Private _srchCondition As New SearchCondition
@@ -18,12 +19,19 @@ Public Class FrmStockHistory
 
 #Region "EVENT"
     Private Sub FrmStockHistory_Load(sender As Object, e As EventArgs) Handles Me.Load
-
         dtPickerFrom.setDateTime(Now.AddMonths(-1 * Consts.DATA_INTERVAL))
         dtPickerTo.setDateTime(Now)
 
         getSearchCondition()
         bindingNavi.initBindingSource(getTotalCount(), Consts.PAGE_COUNT)
+    End Sub
+
+    Private Sub btnCopy_Click(sender As Object, e As EventArgs) Handles btnCopy.Click
+        If grd.Rows.Count = 0 Then
+            Return
+        End If
+        Util.CopyDataGridView(grd)
+        AutoClosingMessageBox.Show("すべての明細をコピーしました。", "情報")
     End Sub
 
     Private Sub btnSearch_Click(sender As Object, e As EventArgs) Handles btnSearch.Click
@@ -48,16 +56,14 @@ Public Class FrmStockHistory
         Async.Process(
             Function()
                 Dim dt As DataTable = getSqlWithOffset(TryCast(sender, BindingSource).Current)
-                dgStockHistory.Invoke(New SetDataSourceDelegate(AddressOf SetDataSource), dgStockHistory, dt)
+                If Not grd.IsHandleCreated Then
+                    Return Nothing
+                End If
+                grd.Invoke(New SetDataSourceDelegate(AddressOf SetDataSource), grd, dt)
             End Function,
             Sub()
                 CloseForm()
             End Sub)
-
-    End Sub
-
-    Private Sub btnClose_Click(sender As Object, e As EventArgs) Handles btnClose.Click
-        Me.Close()
     End Sub
 
 #End Region
@@ -131,6 +137,10 @@ Public Class FrmStockHistory
         If _srchCondition.chkOut Then
             sb.Append(" AND T1.IOKBN = 'O' ")
         End If
+        If _srchCondition.chkExclude Then
+            sb.Append(" AND T1.REMARKS NOT IN ('代理店受注自動出庫', '発送済自動出庫') ")
+        End If
+
 
         Return New DbParamEnt(sb, param.ToArray)
     End Function
@@ -141,6 +151,7 @@ Public Class FrmStockHistory
         _srchCondition.itemCd = txtItemCd.Text
         _srchCondition.chkIn = chkIn.Checked
         _srchCondition.chkOut = chkOut.Checked
+        _srchCondition.chkExclude = chkExclude.Checked
     End Sub
 
     Public Function isSearchConditionChanged() As Boolean

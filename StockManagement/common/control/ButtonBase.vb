@@ -29,6 +29,19 @@ Public Class ButtonBase
 
         ElseIf Me._type = Consts.ButtonType.SEARCH Then
             Me.BackColor = System.Drawing.Color.DeepSkyBlue
+
+        ElseIf Me._type = Consts.ButtonType.SECOND_SEARCH Then
+            Me.BackColor = System.Drawing.Color.DarkGreen
+            Me.ForeColor = Color.WhiteSmoke
+
+        ElseIf Me._type = Consts.ButtonType.SETTING Then
+            Me.BackColor = System.Drawing.Color.DimGray
+            Me.ForeColor = Color.WhiteSmoke
+
+        ElseIf Me._type = Consts.ButtonType.FUN Then
+            Me.BackColor = System.Drawing.Color.Sienna
+            Me.ForeColor = Color.WhiteSmoke
+
         End If
     End Sub
 

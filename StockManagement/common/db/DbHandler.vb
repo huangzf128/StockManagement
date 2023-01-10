@@ -1,4 +1,5 @@
-﻿Imports System.Data.SqlClient
+﻿Imports System.Configuration
+Imports System.Data.SqlClient
 
 Public Class DbHandler
 
@@ -9,7 +10,7 @@ Public Class DbHandler
     Private disposedValue As Boolean '自動生成コード
 
     '(接続文字列)
-    Private Const conStr As String = "Server=MIBAO\SQLEXPRESS;Database=STOCKDB;User Id=sa;Password=sasasa;"
+    Private Shared ReadOnly conStr As String = ConfigurationManager.AppSettings.Get("DBConnStr").ToString
     Private Property sqlCon As SqlConnection
     Private Property sqlTrn As SqlTransaction
 

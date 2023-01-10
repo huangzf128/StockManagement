@@ -14,42 +14,18 @@
 
         If TypeOf (e.Control) Is DataGridView Then
             Dim grd As DataGridView = TryCast(e.Control, DataGridView)
-            grd.AlternatingRowsDefaultCellStyle.BackColor = Color.WhiteSmoke
+            Call New GridStyle().setStyle(grd)
+            grd.ReadOnly = False
+            AddHandler grd.EditingControlShowing, AddressOf grd_EditingControlShowing
+        End If
+    End Sub
 
-            With grd.ColumnHeadersDefaultCellStyle
-                .BackColor = SystemColors.Highlight
-                .ForeColor = SystemColors.Window
-                .SelectionBackColor = SystemColors.Highlight
-                .SelectionForeColor = SystemColors.HighlightText
-                .WrapMode = DataGridViewTriState.True
-                .Alignment = DataGridViewContentAlignment.TopCenter
-                .Padding = New Padding(0, 4, 0, 4)
-                .Font = New Font("MS PGothic", 9)
-            End With
 
-            With grd.RowTemplate
-                .ReadOnly = True
-                .DefaultCellStyle.Padding = New Padding(3, 0, 3, 0)
-                .Height = 22
-            End With
-
-            With grd.DefaultCellStyle
-                .SelectionBackColor = Color.FromArgb(218, 242, 222)
-                .SelectionForeColor = Color.Black
-            End With
-
-            grd.AutoGenerateColumns = False
-            grd.AllowUserToResizeRows = False
-            'grd.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize
-            grd.EnableHeadersVisualStyles = False
-            grd.RowHeadersVisible = False
-
-            'grd.CellBorderStyle = DataGridViewCellBorderStyle.None
-            grd.CellBorderStyle = DataGridViewCellBorderStyle.SingleHorizontal
-            'grd.AdvancedCellBorderStyle.Left = DataGridViewAdvancedCellBorderStyle.None
-            'grd.AdvancedCellBorderStyle.Right = DataGridViewAdvancedCellBorderStyle.None
-            grd.ColumnHeadersBorderStyle = DataGridViewHeaderBorderStyle.None
-
+    Private Sub grd_EditingControlShowing(sender As Object, e As DataGridViewEditingControlShowingEventArgs)
+        If TypeOf e.Control Is TextBox Then
+            ' Set the TextBoxCell to readonly
+            Dim textBoxCell As TextBox = DirectCast(e.Control, TextBox)
+            textBoxCell.[ReadOnly] = True
         End If
     End Sub
 

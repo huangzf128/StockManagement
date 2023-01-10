@@ -14,23 +14,28 @@
     <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
     <AutoGenerateBindingRedirects>false</AutoGenerateBindingRedirects>
     <Deterministic>true</Deterministic>
-    <IsWebBootstrapper>false</IsWebBootstrapper>
+    <IsWebBootstrapper>true</IsWebBootstrapper>
     <PublishUrl>publish\</PublishUrl>
     <Install>true</Install>
-    <InstallFrom>Disk</InstallFrom>
-    <UpdateEnabled>false</UpdateEnabled>
+    <InstallFrom>Web</InstallFrom>
+    <UpdateEnabled>true</UpdateEnabled>
     <UpdateMode>Foreground</UpdateMode>
     <UpdateInterval>7</UpdateInterval>
     <UpdateIntervalUnits>Days</UpdateIntervalUnits>
     <UpdatePeriodically>false</UpdatePeriodically>
     <UpdateRequired>false</UpdateRequired>
     <MapFileExtensions>true</MapFileExtensions>
+    <InstallUrl>http://www.bpoint-nouki.com/public/publish/</InstallUrl>
     <TargetCulture>ja-JP</TargetCulture>
     <ProductName>承天在庫管理システム</ProductName>
-    <PublisherName>日本FULONG株式会社</PublisherName>
-    <ApplicationRevision>1</ApplicationRevision>
-    <ApplicationVersion>1.0.0.1</ApplicationVersion>
+    <PublisherName>B-POINT</PublisherName>
+    <CreateWebPageOnPublish>true</CreateWebPageOnPublish>
+    <WebPage>publish.htm</WebPage>
+    <TrustUrlParameters>true</TrustUrlParameters>
+    <ApplicationRevision>4</ApplicationRevision>
+    <ApplicationVersion>1.0.1.4</ApplicationVersion>
     <UseApplicationTrust>false</UseApplicationTrust>
+    <CreateDesktopShortcut>true</CreateDesktopShortcut>
     <PublishWizardCompleted>true</PublishWizardCompleted>
     <BootstrapperEnabled>true</BootstrapperEnabled>
   </PropertyGroup>
@@ -73,7 +78,7 @@
     <ManifestKeyFile>StockManagement_TemporaryKey.pfx</ManifestKeyFile>
   </PropertyGroup>
   <PropertyGroup>
-    <GenerateManifests>false</GenerateManifests>
+    <GenerateManifests>true</GenerateManifests>
   </PropertyGroup>
   <PropertyGroup>
     <SignManifests>false</SignManifests>
@@ -86,6 +91,8 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
+    <Reference Include="System.Configuration" />
+    <Reference Include="System.Configuration.Install" />
     <Reference Include="System.Data" />
     <Reference Include="System.Deployment" />
     <Reference Include="System.Drawing" />
@@ -111,10 +118,14 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="common\const\Consts.vb" />
+    <Compile Include="common\control\AutoClosingMessageBox.vb" />
     <Compile Include="common\control\ButtonBase.vb">
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="common\control\CheckBoxBase.vb">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="common\control\TextBoxBase.vb">
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="common\control\UBindingNavigator.Designer.vb">
@@ -145,7 +156,10 @@
     </Compile>
     <Compile Include="common\db\DbHandler.vb" />
     <Compile Include="common\db\DbParamEnt.vb" />
+    <Compile Include="common\style\GridStyle.vb" />
+    <Compile Include="common\style\Style.vb" />
     <Compile Include="common\utils\Async.vb" />
+    <Compile Include="common\utils\Msg.vb" />
     <Compile Include="common\utils\Util.vb" />
     <Compile Include="frmDairiImport.Designer.vb">
       <DependentUpon>frmDairiImport.vb</DependentUpon>
@@ -171,10 +185,16 @@
     <Compile Include="frmItemSearch.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="frmRanking.Designer.vb">
-      <DependentUpon>frmRanking.vb</DependentUpon>
+    <Compile Include="FrmStockListHistory.Designer.vb">
+      <DependentUpon>FrmStockListHistory.vb</DependentUpon>
     </Compile>
-    <Compile Include="frmRanking.vb">
+    <Compile Include="FrmStockListHistory.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FrmRanking.Designer.vb">
+      <DependentUpon>FrmRanking.vb</DependentUpon>
+    </Compile>
+    <Compile Include="FrmRanking.vb">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="frmStockIn.Designer.vb">
@@ -195,10 +215,10 @@
     <Compile Include="FrmStockList.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="frmStockOut.Designer.vb">
-      <DependentUpon>frmStockOut.vb</DependentUpon>
+    <Compile Include="FrmStockOut.Designer.vb">
+      <DependentUpon>FrmStockOut.vb</DependentUpon>
     </Compile>
-    <Compile Include="frmStockOut.vb">
+    <Compile Include="FrmStockOut.vb">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="frmStockOutTbl.Designer.vb">
@@ -277,8 +297,11 @@
     <EmbeddedResource Include="frmItemSearch.resx">
       <DependentUpon>frmItemSearch.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="frmRanking.resx">
-      <DependentUpon>frmRanking.vb</DependentUpon>
+    <EmbeddedResource Include="FrmStockListHistory.resx">
+      <DependentUpon>FrmStockListHistory.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FrmRanking.resx">
+      <DependentUpon>FrmRanking.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="frmStockIn.resx">
       <DependentUpon>frmStockIn.vb</DependentUpon>
@@ -286,8 +309,8 @@
     <EmbeddedResource Include="FrmStockList.resx">
       <DependentUpon>FrmStockList.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="frmStockOut.resx">
-      <DependentUpon>frmStockOut.vb</DependentUpon>
+    <EmbeddedResource Include="FrmStockOut.resx">
+      <DependentUpon>FrmStockOut.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="frmLogin.resx">
       <DependentUpon>frmLogin.vb</DependentUpon>

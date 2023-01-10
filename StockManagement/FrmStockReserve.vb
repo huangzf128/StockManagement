@@ -11,23 +11,39 @@ Public Class FrmStockReserve
         Public crdDtTo As String
         Public itemCd As String
         Public chkReserving As Boolean
+        Public chkExclude As Boolean
         Public ordStatus As String
     End Structure
 
     Private _srchCondition As New SearchCondition
+
+    Public needInit As Boolean = True
 #End Region
 
 #Region "EVENT"
-
     Private Sub FrmStockReserve_Load(sender As Object, e As EventArgs) Handles Me.Load
 
-        dtPickerFrom.setDateTime(Now.AddMonths(-1 * Consts.DATA_INTERVAL))
-        dtPickerTo.setDateTime(Now)
+        grd.CellBorderStyle = DataGridViewCellBorderStyle.Single
+
+        If needInit Then
+            dtPickerFrom.setDateTime(Now.AddMonths(-1 * Consts.DATA_INTERVAL))
+            dtPickerTo.setDateTime(Now)
+        End If
+        chkExclude.Checked = True
         getOrdStatus()
 
         getSearchCondition()
         UBindingNavigator1.initBindingSource(getTotalCount(), Consts.PAGE_COUNT)
     End Sub
+
+    Private Sub btnCopy_Click(sender As Object, e As EventArgs) Handles btnCopy.Click
+        If grd.Rows.Count = 0 Then
+            Return
+        End If
+        Util.CopyDataGridView(grd)
+        AutoClosingMessageBox.Show("すべての明細をコピーしました。", "情報")
+    End Sub
+
 
     Private Sub btnSearch_Click(sender As Object, e As EventArgs) Handles btnSearch.Click
         getSearchCondition()
@@ -40,15 +56,24 @@ Public Class FrmStockReserve
         Async.Process(
             Function()
                 Dim dt As DataTable = getSqlWithOffset(TryCast(sender, BindingSource).Current)
-                dgStockReserve.Invoke(New SetDataSourceDelegate(AddressOf SetDataSource), dgStockReserve, dt)
+                If Not grd.IsHandleCreated Then
+                    Return Nothing
+                End If
+                grd.Invoke(New SetDataSourceDelegate(AddressOf SetDataSource), grd, dt)
             End Function,
             Sub()
                 CloseForm()
             End Sub)
     End Sub
 
-
 #End Region
+
+    Public Sub setSrchCondition(dtFrom As Date?, dtTo As Date)
+        Me.dtPickerFrom.setDateTime(dtFrom)
+        Me.dtPickerTo.setDateTime(dtTo)
+        Me.chkReserving.Checked = True
+        needInit = False
+    End Sub
 
     Private Function getTotalCount() As Integer
 
@@ -104,7 +129,7 @@ Public Class FrmStockReserve
 
         Dim param As New List(Of SqlParameter)
         If _srchCondition.itemCd <> "" Then
-            sb.Append(" AND T1.ITEMCD = @ITEMCD ")
+            sb.Append(" AND T1.ITEMCD Like @ITEMCD ")
             param.Add(New SqlParameter("@ITEMCD", "%" & _srchCondition.itemCd & "%"))
         End If
         If _srchCondition.crdDtFrom <> "" Then
@@ -121,6 +146,9 @@ Public Class FrmStockReserve
         If _srchCondition.ordStatus <> "" Then
             sb.Append(" AND T2.[状況] = @ORDSTATUS ")
             param.Add(New SqlParameter("@ORDSTATUS", _srchCondition.ordStatus))
+        End If
+        If _srchCondition.chkExclude Then
+            sb.Append(" AND T1.RESERVQTY > 0 ")
         End If
 
         Return New DbParamEnt(sb, param.ToArray)
@@ -148,6 +176,7 @@ Public Class FrmStockReserve
         _srchCondition.crdDtTo = dtPickerTo.getDateTime
         _srchCondition.itemCd = txtItemCd.Text
         _srchCondition.chkReserving = chkReserving.Checked
+        _srchCondition.chkExclude = chkExclude.Checked
         _srchCondition.ordStatus = cmbOrdStatus.Text
     End Sub
 
