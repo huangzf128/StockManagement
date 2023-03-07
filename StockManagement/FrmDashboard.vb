@@ -1,5 +1,6 @@
 ﻿Imports System.Data.SqlClient
 Imports System.Deployment.Application
+Imports System.IO
 Imports System.Runtime.InteropServices
 Imports System.Text
 
@@ -113,7 +114,8 @@ Public Class FrmDashboard
     End Sub
 
     Private Sub linkVersion_LinkClicked(sender As Object, e As LinkLabelLinkClickedEventArgs) Handles linkVersion.LinkClicked
-        System.Diagnostics.Process.Start("http://www.bpoint-nouki.com/public/publish/updHistory.html")
+        'System.Diagnostics.Process.Start("http://www.bpoint-nouki.com/public/publish/updHistory.html")
+        System.Diagnostics.Process.Start(Path.GetDirectoryName(My.Application.Log.DefaultFileLogWriter.FullLogFileName))
     End Sub
 #End Region
 

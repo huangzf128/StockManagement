@@ -1,5 +1,6 @@
 ﻿Imports System.Configuration
 Imports System.Data.SqlClient
+Imports System.IO
 
 Public Class DbHandler
 
@@ -26,6 +27,7 @@ Public Class DbHandler
             sqlCon = New SqlConnection(conStr)
             sqlCon.Open()
         End If
+
     End Sub
 
     '全てのオブジェクトを破棄し、DB接続を終了
@@ -71,17 +73,25 @@ Public Class DbHandler
         '結果を格納するDataTableを宣言
         Dim returnDt As New DataTable
 
-        Using connection As New SqlConnection(conStr)
+        Try
+            Using connection As New SqlConnection(conStr)
 
-            Dim command As New SqlCommand(dbParamEnt.sbSql.ToString, connection)
-            command.Connection.Open()
-            If dbParamEnt.parameters IsNot Nothing AndAlso dbParamEnt.parameters.Length > 0 Then
-                command.Parameters.AddRange(dbParamEnt.parameters)
-            End If
+                Dim command As New SqlCommand(dbParamEnt.sbSql.ToString, connection)
+                command.Connection.Open()
+                If dbParamEnt.parameters IsNot Nothing AndAlso dbParamEnt.parameters.Length > 0 Then
+                    command.Parameters.AddRange(dbParamEnt.parameters)
+                End If
 
-            Dim sqlAdp As SqlDataAdapter = New SqlDataAdapter(command)
-            sqlAdp.Fill(returnDt)
-        End Using
+                Dim sqlAdp As SqlDataAdapter = New SqlDataAdapter(command)
+                sqlAdp.Fill(returnDt)
+            End Using
+
+        Catch ex As Exception
+            My.Application.Log.WriteException(ex)
+            Msg.warning("エラーが発生しました。ログファイルを確認してください。", "エラー")
+            System.Diagnostics.Process.Start(Path.GetDirectoryName(My.Application.Log.DefaultFileLogWriter.FullLogFileName))
+            Application.Exit()
+        End Try
 
         Return returnDt
     End Function
@@ -92,12 +102,20 @@ Public Class DbHandler
     ''' <param name="sql"></param>
     Public Sub executeSql(sql As String)
 
-        Using connection As New SqlConnection(conStr)
+        Try
+            Using connection As New SqlConnection(conStr)
 
-            Dim command As New SqlCommand(sql, connection)
-            command.Connection.Open()
-            command.ExecuteNonQuery()
-        End Using
+                Dim command As New SqlCommand(sql, connection)
+                command.Connection.Open()
+                command.ExecuteNonQuery()
+            End Using
+
+        Catch ex As Exception
+            My.Application.Log.WriteException(ex)
+            Msg.warning("エラーが発生しました。ログファイルを確認してください。", "エラー")
+            System.Diagnostics.Process.Start(Path.GetDirectoryName(My.Application.Log.DefaultFileLogWriter.FullLogFileName))
+            Application.Exit()
+        End Try
 
     End Sub
 
