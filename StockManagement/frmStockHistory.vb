@@ -19,11 +19,26 @@ Public Class FrmStockHistory
 
 #Region "EVENT"
     Private Sub FrmStockHistory_Load(sender As Object, e As EventArgs) Handles Me.Load
-        dtPickerFrom.setDateTime(Now.AddMonths(-1 * Consts.DATA_INTERVAL))
-        dtPickerTo.setDateTime(Now)
 
-        getSearchCondition()
-        bindingNavi.initBindingSource(getTotalCount(), Consts.PAGE_COUNT)
+        If frmFrom IsNot Nothing Then
+            DisabledPanel(pnlCondition)
+            btnBack.Enabled = True
+            btnBack.Visible = True
+
+            txtItemCd.Text = params(0)
+            dtPickerFrom.setDateTime(Date.Parse(params(1)).AddMonths(-1), "00", "00")
+            dtPickerTo.setDateTime(Date.Parse(params(1)), "23", "59")
+
+            btnSearch_Click(Nothing, Nothing)
+        Else
+            btnBack.Visible = False
+            dtPickerFrom.setDateTime(Now.AddMonths(-1 * Consts.DATA_INTERVAL))
+            dtPickerTo.setDateTime(Now)
+
+            getSearchCondition()
+            bindingNavi.initBindingSource(getTotalCount(), Consts.PAGE_COUNT)
+        End If
+
     End Sub
 
     Private Sub btnCopy_Click(sender As Object, e As EventArgs) Handles btnCopy.Click
@@ -62,23 +77,14 @@ Public Class FrmStockHistory
                 grd.Invoke(New SetDataSourceDelegate(AddressOf SetDataSource), grd, dt)
             End Function,
             Sub()
-                CloseForm()
+                CloseLoadingForm()
             End Sub)
     End Sub
 
 #End Region
 
-    Private Function getTotalCount() As Integer
 
-        Dim dbParamEnt As DbParamEnt = getSqlAndParam(True)
-
-        Dim dt As DataTable = DbHandler.executeSelect(dbParamEnt)
-        If dt.Rows.Count = 0 Then
-            Return 0
-        End If
-        Return dt.Rows(0).Item("CNT")
-    End Function
-
+#Region "SQL"
     Private Function getSqlWithOffset(ByVal offset As Integer) As DataTable
 
         Dim dbParamEnt As DbParamEnt = getSqlAndParam(False)
@@ -145,6 +151,19 @@ Public Class FrmStockHistory
         Return New DbParamEnt(sb, param.ToArray)
     End Function
 
+#End Region
+
+    Private Function getTotalCount() As Integer
+
+        Dim dbParamEnt As DbParamEnt = getSqlAndParam(True)
+
+        Dim dt As DataTable = DbHandler.executeSelect(dbParamEnt)
+        If dt.Rows.Count = 0 Then
+            Return 0
+        End If
+        Return dt.Rows(0).Item("CNT")
+    End Function
+
     Public Sub getSearchCondition()
         _srchCondition.crdDtFrom = dtPickerFrom.getDateTime
         _srchCondition.crdDtTo = dtPickerTo.getDateTime
@@ -154,8 +173,12 @@ Public Class FrmStockHistory
         _srchCondition.chkExclude = chkExclude.Checked
     End Sub
 
-    Public Function isSearchConditionChanged() As Boolean
-    End Function
+    'Public Function isSearchConditionChanged() As Boolean
+    'End Function
 
-
+    Private Sub btnBack_Click(sender As Object, e As EventArgs) Handles btnBack.Click
+        Dim p = New List(Of String)
+        p.Add("you")
+        backTo(p)
+    End Sub
 End Class

@@ -30,18 +30,23 @@ Partial Class FrmStockListHistory
         Me.lblItemName = New System.Windows.Forms.Label()
         Me.txtItemCd = New System.Windows.Forms.TextBox()
         Me.btnSearch = New StockManagement.ButtonBase()
-        Me.grd = New System.Windows.Forms.DataGridView()
+        Me.grd = New StockManagement.DataGridViewBase()
         Me.btnCopy = New StockManagement.ButtonBase()
-        Me.CRTDT = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.btnSumSearch = New StockManagement.ButtonBase()
         Me.ITEMCD = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.LOCATIONNM = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.LOCATIONCD = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.QTY = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.CRTDT = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.QTYI = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.QTYO = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.pnlCondition.SuspendLayout()
         CType(Me.grd, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
         'pnlCondition
         '
+        Me.pnlCondition.Controls.Add(Me.btnSumSearch)
         Me.pnlCondition.Controls.Add(Me.btnCopy)
         Me.pnlCondition.Controls.Add(Me.btnSearch)
         Me.pnlCondition.Controls.Add(Me.dtPickerFrom)
@@ -70,7 +75,7 @@ Partial Class FrmStockListHistory
         Me.txtItemCd.Location = New System.Drawing.Point(88, 45)
         Me.txtItemCd.Margin = New System.Windows.Forms.Padding(2)
         Me.txtItemCd.Name = "txtItemCd"
-        Me.txtItemCd.Size = New System.Drawing.Size(197, 19)
+        Me.txtItemCd.Size = New System.Drawing.Size(223, 19)
         Me.txtItemCd.TabIndex = 26
         '
         'btnSearch
@@ -91,7 +96,6 @@ Partial Class FrmStockListHistory
         Me.grd.AllowUserToResizeRows = False
         DataGridViewCellStyle1.BackColor = System.Drawing.Color.WhiteSmoke
         Me.grd.AlternatingRowsDefaultCellStyle = DataGridViewCellStyle1
-        Me.grd.AutoGenerateColumns = False
         Me.grd.CellBorderStyle = System.Windows.Forms.DataGridViewCellBorderStyle.SingleHorizontal
         Me.grd.ColumnHeadersBorderStyle = System.Windows.Forms.DataGridViewHeaderBorderStyle.None
         DataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.TopCenter
@@ -104,7 +108,7 @@ Partial Class FrmStockListHistory
         DataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
         Me.grd.ColumnHeadersDefaultCellStyle = DataGridViewCellStyle2
         Me.grd.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
-        Me.grd.Columns.AddRange(New System.Windows.Forms.DataGridViewColumn() {Me.CRTDT, Me.ITEMCD, Me.LOCATIONNM, Me.QTY})
+        Me.grd.Columns.AddRange(New System.Windows.Forms.DataGridViewColumn() {Me.ITEMCD, Me.LOCATIONNM, Me.LOCATIONCD, Me.QTY, Me.CRTDT, Me.QTYI, Me.QTYO})
         DataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
         DataGridViewCellStyle4.BackColor = System.Drawing.SystemColors.Window
         DataGridViewCellStyle4.Font = New System.Drawing.Font("ＭＳ Ｐゴシック", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(134, Byte))
@@ -120,6 +124,7 @@ Partial Class FrmStockListHistory
         Me.grd.RowTemplate.DefaultCellStyle.Padding = New System.Windows.Forms.Padding(3, 0, 3, 0)
         Me.grd.Size = New System.Drawing.Size(890, 440)
         Me.grd.TabIndex = 1
+        Me.grd.Type = 0
         '
         'btnCopy
         '
@@ -134,12 +139,19 @@ Partial Class FrmStockListHistory
         Me.btnCopy.Type = 5
         Me.btnCopy.UseVisualStyleBackColor = False
         '
-        'CRTDT
+        'btnSumSearch
         '
-        Me.CRTDT.DataPropertyName = "CRTDT"
-        Me.CRTDT.HeaderText = "日付"
-        Me.CRTDT.Name = "CRTDT"
-        Me.CRTDT.Width = 80
+        Me.btnSumSearch.BackColor = System.Drawing.Color.DarkGreen
+        Me.btnSumSearch.Font = New System.Drawing.Font("ＭＳ Ｐゴシック", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(134, Byte))
+        Me.btnSumSearch.ForeColor = System.Drawing.Color.WhiteSmoke
+        Me.btnSumSearch.Location = New System.Drawing.Point(730, 52)
+        Me.btnSumSearch.Name = "btnSumSearch"
+        Me.btnSumSearch.Size = New System.Drawing.Size(70, 30)
+        Me.btnSumSearch.TabIndex = 33
+        Me.btnSumSearch.Text = "集計検索"
+        Me.btnSumSearch.Type = 3
+        Me.btnSumSearch.UseVisualStyleBackColor = False
+        Me.btnSumSearch.Visible = False
         '
         'ITEMCD
         '
@@ -154,6 +166,13 @@ Partial Class FrmStockListHistory
         Me.LOCATIONNM.HeaderText = "ロケーション"
         Me.LOCATIONNM.Name = "LOCATIONNM"
         '
+        'LOCATIONCD
+        '
+        Me.LOCATIONCD.DataPropertyName = "LOCATIONCD"
+        Me.LOCATIONCD.HeaderText = "LOCATIONCD"
+        Me.LOCATIONCD.Name = "LOCATIONCD"
+        Me.LOCATIONCD.Visible = False
+        '
         'QTY
         '
         Me.QTY.DataPropertyName = "QTY"
@@ -161,6 +180,27 @@ Partial Class FrmStockListHistory
         Me.QTY.DefaultCellStyle = DataGridViewCellStyle3
         Me.QTY.HeaderText = "数量"
         Me.QTY.Name = "QTY"
+        '
+        'CRTDT
+        '
+        Me.CRTDT.DataPropertyName = "CRTDT"
+        Me.CRTDT.HeaderText = "最終移動日"
+        Me.CRTDT.Name = "CRTDT"
+        Me.CRTDT.Width = 90
+        '
+        'QTYI
+        '
+        Me.QTYI.DataPropertyName = "QTYI"
+        Me.QTYI.HeaderText = "1日～入庫合計"
+        Me.QTYI.Name = "QTYI"
+        Me.QTYI.Width = 110
+        '
+        'QTYO
+        '
+        Me.QTYO.DataPropertyName = "QTYO"
+        Me.QTYO.HeaderText = "1日～出庫合計"
+        Me.QTYO.Name = "QTYO"
+        Me.QTYO.Width = 110
         '
         'FrmStockListHistory
         '
@@ -170,7 +210,7 @@ Partial Class FrmStockListHistory
         Me.Controls.Add(Me.grd)
         Me.Margin = New System.Windows.Forms.Padding(2)
         Me.Name = "FrmStockListHistory"
-        Me.Text = "売上ランキング"
+        Me.Text = "在庫履歴一覧"
         Me.Controls.SetChildIndex(Me.pnlCondition, 0)
         Me.Controls.SetChildIndex(Me.grd, 0)
         Me.pnlCondition.ResumeLayout(False)
@@ -183,10 +223,14 @@ Partial Class FrmStockListHistory
     Friend WithEvents lblItemName As Label
     Friend WithEvents txtItemCd As TextBox
     Friend WithEvents btnSearch As ButtonBase
-    Friend WithEvents grd As DataGridView
+    Friend WithEvents grd As DataGridViewBase
     Friend WithEvents btnCopy As ButtonBase
-    Friend WithEvents CRTDT As DataGridViewTextBoxColumn
+    Friend WithEvents btnSumSearch As ButtonBase
     Friend WithEvents ITEMCD As DataGridViewTextBoxColumn
     Friend WithEvents LOCATIONNM As DataGridViewTextBoxColumn
+    Friend WithEvents LOCATIONCD As DataGridViewTextBoxColumn
     Friend WithEvents QTY As DataGridViewTextBoxColumn
+    Friend WithEvents CRTDT As DataGridViewTextBoxColumn
+    Friend WithEvents QTYI As DataGridViewTextBoxColumn
+    Friend WithEvents QTYO As DataGridViewTextBoxColumn
 End Class

@@ -65,6 +65,61 @@ Public Class DbHandler
     End Sub
 
     ''' <summary>
+    ''' トランザクションを伴うSQLを実行(主にINSERT,UPDATE,DELETE文)
+    ''' </summary>
+    ''' <param name="dbParamEnt"></param>
+    Public Function execute(ByRef dbParamEnt As DbParamEnt) As Integer
+
+        Try
+            Dim command As New SqlCommand(dbParamEnt.sbSql.ToString, Me.sqlCon, Me.sqlTrn)
+            If dbParamEnt.parameters IsNot Nothing AndAlso dbParamEnt.parameters.Length > 0 Then
+                command.Parameters.AddRange(dbParamEnt.parameters)
+            End If
+            Return command.ExecuteNonQuery()
+
+        Catch e As SqlException
+
+            rollback()
+            close()
+            Throw e
+
+        Catch ex As Exception
+
+            rollback()
+            close()
+
+            My.Application.Log.WriteException(ex)
+            Msg.warning("エラーが発生しました。ログファイルを確認してください。", "エラー")
+            System.Diagnostics.Process.Start(Path.GetDirectoryName(My.Application.Log.DefaultFileLogWriter.FullLogFileName))
+            Application.Exit()
+        End Try
+
+        Return -1
+    End Function
+
+    Protected Overridable Sub Dispose(disposing As Boolean)
+        '重複してデストラクタを実行しないためのIfステートメント
+        'この中身の処理だけ自分で書く
+        If Not disposedValue Then
+            Me.close() 'クラスのインスタンスを破棄するとき、DB接続を終了する
+            disposedValue = True
+        End If
+    End Sub
+
+    Protected Overrides Sub Finalize()
+        Dispose(disposing:=False)
+        MyBase.Finalize()
+    End Sub
+
+    Public Sub Dispose() Implements IDisposable.Dispose
+        Dispose(disposing:=True)
+        GC.SuppressFinalize(Me)
+    End Sub
+
+
+
+
+    ''' <summary>
     ''' トランザクションを伴わないSQLを実行(主にSELECT文)
     ''' </summary>
     ''' <param name="dbParamEnt"></param>
@@ -95,46 +150,4 @@ Public Class DbHandler
 
         Return returnDt
     End Function
-
-    ''' <summary>
-    ''' トランザクションを伴うSQLを実行(主にINSERT,UPDATE,DELETE文)
-    ''' </summary>
-    ''' <param name="sql"></param>
-    Public Sub executeSql(sql As String)
-
-        Try
-            Using connection As New SqlConnection(conStr)
-
-                Dim command As New SqlCommand(sql, connection)
-                command.Connection.Open()
-                command.ExecuteNonQuery()
-            End Using
-
-        Catch ex As Exception
-            My.Application.Log.WriteException(ex)
-            Msg.warning("エラーが発生しました。ログファイルを確認してください。", "エラー")
-            System.Diagnostics.Process.Start(Path.GetDirectoryName(My.Application.Log.DefaultFileLogWriter.FullLogFileName))
-            Application.Exit()
-        End Try
-
-    End Sub
-
-    Protected Overridable Sub Dispose(disposing As Boolean)
-        '重複してデストラクタを実行しないためのIfステートメント
-        'この中身の処理だけ自分で書く
-        If Not disposedValue Then
-            Me.close() 'クラスのインスタンスを破棄するとき、DB接続を終了する
-            disposedValue = True
-        End If
-    End Sub
-
-    Protected Overrides Sub Finalize()
-        Dispose(disposing:=False)
-        MyBase.Finalize()
-    End Sub
-
-    Public Sub Dispose() Implements IDisposable.Dispose
-        Dispose(disposing:=True)
-        GC.SuppressFinalize(Me)
-    End Sub
 End Class

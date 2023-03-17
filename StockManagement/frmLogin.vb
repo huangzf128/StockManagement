@@ -1,56 +1,61 @@
-﻿Public Class frmLogin
+﻿Imports System.Data.SqlClient
+Imports System.Text
 
-    ' キャンセルボタン押下時イベント
-    Private Sub cmdExit_Click(sender As Object, e As EventArgs) Handles cmdExit.Click
-        Cm.Conn.Close()
-        Cm.Conn.Dispose()
-        Close()
-    End Sub
+Public Class FrmLogin
 
-    ' ログインボタン押下時イベント
-    Private Sub cmdLogin_Click(sender As Object, e As EventArgs) Handles cmdLogin.Click
-        Dim varAuthLv As String
 
-        ' ログイン情報の問い合わせ
-        varAuthLv = Cm.DLookup("AUTHLV", "M_USER", "USERID = '" & txtUser.Text & "' And PASSWD = '" & txtPass.Text & "'")
-        If IsNothing(varAuthLv) Then
-            MessageBox.Show("ユーザーもしくはパスワードが誤っています。", "ログインエラー", MessageBoxButtons.OK, MessageBoxIcon.Error)
-        Else
-            ' ログイン権限の更新とログイン情報の保存
-            Dim Cmd As New OleDb.OleDbCommand
-            Cmd.Connection = Cm.Conn
-            Cmd.CommandText = "Update M_CODE Set CODE = '" & varAuthLv & "' Where CATEGORY = 'USERAUTH';" &
-                "Update M_CODE Set VALUE1 = '" & txtUser.Text & "' Where CATEGORY = 'PREVUSER';"
-            Cmd.ExecuteNonQuery()
-
-            ' メニュー画面に遷移
-            frmMenu.ShowDialog()
-        End If
-    End Sub
-
-    ' フォームロード時イベント
     Private Sub Login_Load(sender As Object, e As EventArgs) Handles MyBase.Load
-        Dim varUser As String
+        txtUser.Select()
+    End Sub
 
-        Cm.Conn.ConnectionString = "Provider=sqloledb;Data Source=localhost\sqlexpress;Initial Catalog=master;Integrated Security=SSPI;"
+    Private Sub btnClose_Click(sender As Object, e As EventArgs) Handles btnClose.Click
+        Me.Close()
+    End Sub
 
-        Try
-            Cm.Conn.Open()
-        Catch
-            MessageBox.Show("データベースに接続できませんでした。", "起動エラー", MessageBoxButtons.OK, MessageBoxIcon.Error)
-            Close()
-        End Try
+    Private Sub btnLogin_Click(sender As Object, e As EventArgs) Handles btnLogin.Click
 
-
-        '[2.0] M_CODE_CLをM_CODEに統合
-        varUser = Cm.DLookup("VALUE1", "M_CODE", "CATEGORY = 'PREVUSER'")
-        If IsNothing(varUser) Then
-            txtPass.Select()
-        Else
-            txtUser.Text = varUser
-            txtPass.Select()
+        If Util.isEmpty(txtUser.Text) Then
+            Msg.warning("ユーザ名を入力してください。", "入力エラー")
+            txtUser.Select()
+            Return
         End If
 
+        If Util.isEmpty(txtPass.Text) Then
+            Msg.warning("パスワードを入力してください。", "入力エラー")
+            txtPass.Select()
+            Return
+        End If
+
+        Dim dbParamEnt As DbParamEnt = getSqlAndParam()
+        Dim dt As DataTable = DbHandler.executeSelect(dbParamEnt)
+        If dt.Rows.Count > 0 Then
+            If dt.Rows(0).Item("AUTHLV") = 99 And txtUser.Text = "liu liwei" Then
+                FrmDashboard.isAuthUser = True
+                Me.Close()
+            Else
+                Msg.warning("管理者しかログインできません。", "ログインエラー")
+            End If
+        Else
+            Msg.warning("ユーザ名/パスワードが間違っています。", "ログインエラー")
+        End If
     End Sub
+
+
+    Private Function getSqlAndParam() As DbParamEnt
+        Dim param As New List(Of SqlParameter)
+
+        Dim sb As New StringBuilder
+        sb.Append(" SELECT ")
+        sb.Append("   AUTHLV ")
+        sb.Append(" ")
+        sb.Append(" FROM M_User  ")
+        sb.Append(" WHERE ")
+        sb.Append("     USERID = @USERID ")
+        param.Add(New SqlParameter("@USERID", txtUser.Text))
+        sb.Append(" AND PASSWD = @PASSWD ")
+        param.Add(New SqlParameter("@PASSWD", txtPass.Text))
+
+        Return New DbParamEnt(sb, param.ToArray)
+    End Function
 
 End Class

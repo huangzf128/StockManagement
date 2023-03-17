@@ -29,6 +29,7 @@ Public Class Util
     End Function
 #End Region
 
+
     Public Shared Function readCsv(ByVal filePath As String) As DataTable
         Dim dt As New DataTable
         Using tfp As New TextFieldParser(filePath, System.Text.Encoding.GetEncoding("shift_jis"))
@@ -86,4 +87,9 @@ Public Class Util
         Return Not isEmpty(v) AndAlso IsNumeric(v)
     End Function
 #End Region
+
+    Public Shared Function getPcName() As String
+        Return My.Computer.Name
+    End Function
+
 End Class

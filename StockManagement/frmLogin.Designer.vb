@@ -1,9 +1,9 @@
-﻿<Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()> _
-Partial Class frmLogin
-    Inherits System.Windows.Forms.Form
+﻿<Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()>
+Partial Class FrmLogin
+    Inherits SubFrmBase
 
     'フォームがコンポーネントの一覧をクリーンアップするために dispose をオーバーライドします。
-    <System.Diagnostics.DebuggerNonUserCode()> _
+    <System.Diagnostics.DebuggerNonUserCode()>
     Protected Overrides Sub Dispose(ByVal disposing As Boolean)
         Try
             If disposing AndAlso components IsNot Nothing Then
@@ -20,64 +20,117 @@ Partial Class frmLogin
     'メモ: 以下のプロシージャは Windows フォーム デザイナーで必要です。
     'Windows フォーム デザイナーを使用して変更できます。  
     'コード エディターを使って変更しないでください。
-    <System.Diagnostics.DebuggerStepThrough()> _
+    <System.Diagnostics.DebuggerStepThrough()>
     Private Sub InitializeComponent()
-        Me.txtUser = New System.Windows.Forms.TextBox()
-        Me.txtPass = New System.Windows.Forms.TextBox()
-        Me.cmdLogin = New System.Windows.Forms.Button()
-        Me.cmdExit = New System.Windows.Forms.Button()
+        Me.txtPass = New StockManagement.TextBoxBase()
+        Me.txtUser = New StockManagement.TextBoxBase()
+        Me.btnClose = New StockManagement.ButtonBase()
+        Me.btnLogin = New StockManagement.ButtonBase()
+        Me.lblUser = New StockManagement.LabelBase()
+        Me.lblPass = New StockManagement.LabelBase()
+        Me.pnlCondition.SuspendLayout()
         Me.SuspendLayout()
         '
-        'txtUser
+        'lblTitle
         '
-        Me.txtUser.Location = New System.Drawing.Point(219, 97)
-        Me.txtUser.Name = "txtUser"
-        Me.txtUser.Size = New System.Drawing.Size(100, 31)
-        Me.txtUser.TabIndex = 0
+        Me.lblTitle.Size = New System.Drawing.Size(118, 16)
+        Me.lblTitle.Text = "管理者ログイン"
+        '
+        'pnlCondition
+        '
+        Me.pnlCondition.Controls.Add(Me.lblPass)
+        Me.pnlCondition.Controls.Add(Me.lblUser)
+        Me.pnlCondition.Controls.Add(Me.txtUser)
+        Me.pnlCondition.Controls.Add(Me.txtPass)
+        Me.pnlCondition.Size = New System.Drawing.Size(296, 60)
         '
         'txtPass
         '
-        Me.txtPass.Location = New System.Drawing.Point(243, 193)
+        Me.txtPass.Location = New System.Drawing.Point(97, 34)
         Me.txtPass.Name = "txtPass"
-        Me.txtPass.Size = New System.Drawing.Size(100, 31)
-        Me.txtPass.TabIndex = 1
+        Me.txtPass.PasswordChar = Global.Microsoft.VisualBasic.ChrW(42)
+        Me.txtPass.Size = New System.Drawing.Size(113, 19)
+        Me.txtPass.TabIndex = 0
+        Me.txtPass.Type = 0
         '
-        'cmdLogin
+        'txtUser
         '
-        Me.cmdLogin.Location = New System.Drawing.Point(189, 306)
-        Me.cmdLogin.Name = "cmdLogin"
-        Me.cmdLogin.Size = New System.Drawing.Size(154, 80)
-        Me.cmdLogin.TabIndex = 2
-        Me.cmdLogin.Text = "ログイン"
-        Me.cmdLogin.UseVisualStyleBackColor = True
+        Me.txtUser.Location = New System.Drawing.Point(97, 12)
+        Me.txtUser.Name = "txtUser"
+        Me.txtUser.Size = New System.Drawing.Size(113, 19)
+        Me.txtUser.TabIndex = 1
+        Me.txtUser.Type = 0
         '
-        'cmdExit
+        'btnClose
         '
-        Me.cmdExit.Location = New System.Drawing.Point(427, 306)
-        Me.cmdExit.Name = "cmdExit"
-        Me.cmdExit.Size = New System.Drawing.Size(214, 58)
-        Me.cmdExit.TabIndex = 3
-        Me.cmdExit.Text = "キャンセル"
-        Me.cmdExit.UseVisualStyleBackColor = True
+        Me.btnClose.BackColor = System.Drawing.Color.Goldenrod
+        Me.btnClose.Font = New System.Drawing.Font("ＭＳ Ｐゴシック", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(134, Byte))
+        Me.btnClose.Location = New System.Drawing.Point(5, 146)
+        Me.btnClose.Name = "btnClose"
+        Me.btnClose.Size = New System.Drawing.Size(70, 30)
+        Me.btnClose.TabIndex = 2
+        Me.btnClose.Text = "閉じる"
+        Me.btnClose.Type = 1
+        Me.btnClose.UseVisualStyleBackColor = False
         '
-        'frmLogin
+        'btnLogin
         '
-        Me.AutoScaleDimensions = New System.Drawing.SizeF(11.0!, 21.0!)
+        Me.btnLogin.BackColor = System.Drawing.Color.Sienna
+        Me.btnLogin.Font = New System.Drawing.Font("ＭＳ Ｐゴシック", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(134, Byte))
+        Me.btnLogin.ForeColor = System.Drawing.Color.WhiteSmoke
+        Me.btnLogin.Location = New System.Drawing.Point(182, 99)
+        Me.btnLogin.Name = "btnLogin"
+        Me.btnLogin.Size = New System.Drawing.Size(70, 30)
+        Me.btnLogin.TabIndex = 3
+        Me.btnLogin.Text = "ログイン"
+        Me.btnLogin.Type = 5
+        Me.btnLogin.UseVisualStyleBackColor = False
+        '
+        'lblUser
+        '
+        Me.lblUser.AutoSize = True
+        Me.lblUser.ForeColor = System.Drawing.Color.WhiteSmoke
+        Me.lblUser.Location = New System.Drawing.Point(25, 15)
+        Me.lblUser.Name = "lblUser"
+        Me.lblUser.Size = New System.Drawing.Size(53, 12)
+        Me.lblUser.TabIndex = 2
+        Me.lblUser.Text = "ユーザ名"
+        Me.lblUser.Type = 1
+        '
+        'lblPass
+        '
+        Me.lblPass.AutoSize = True
+        Me.lblPass.ForeColor = System.Drawing.Color.WhiteSmoke
+        Me.lblPass.Location = New System.Drawing.Point(25, 37)
+        Me.lblPass.Name = "lblPass"
+        Me.lblPass.Size = New System.Drawing.Size(59, 12)
+        Me.lblPass.TabIndex = 3
+        Me.lblPass.Text = "パスワード"
+        Me.lblPass.Type = 1
+        '
+        'FrmLogin
+        '
+        Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 12.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.ClientSize = New System.Drawing.Size(800, 450)
-        Me.Controls.Add(Me.cmdExit)
-        Me.Controls.Add(Me.cmdLogin)
-        Me.Controls.Add(Me.txtPass)
-        Me.Controls.Add(Me.txtUser)
-        Me.Name = "frmLogin"
+        Me.ClientSize = New System.Drawing.Size(300, 181)
+        Me.Controls.Add(Me.btnLogin)
+        Me.Controls.Add(Me.btnClose)
+        Me.Margin = New System.Windows.Forms.Padding(2)
+        Me.Name = "FrmLogin"
+        Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent
         Me.Text = "Login"
+        Me.Controls.SetChildIndex(Me.pnlCondition, 0)
+        Me.Controls.SetChildIndex(Me.btnClose, 0)
+        Me.Controls.SetChildIndex(Me.btnLogin, 0)
+        Me.pnlCondition.ResumeLayout(False)
+        Me.pnlCondition.PerformLayout()
         Me.ResumeLayout(False)
-        Me.PerformLayout()
 
     End Sub
-
-    Friend WithEvents txtUser As TextBox
-    Friend WithEvents txtPass As TextBox
-    Friend WithEvents cmdLogin As Button
-    Friend WithEvents cmdExit As Button
+    Friend WithEvents txtUser As TextBoxBase
+    Friend WithEvents txtPass As TextBoxBase
+    Friend WithEvents btnClose As ButtonBase
+    Friend WithEvents btnLogin As ButtonBase
+    Friend WithEvents lblPass As LabelBase
+    Friend WithEvents lblUser As LabelBase
 End Class

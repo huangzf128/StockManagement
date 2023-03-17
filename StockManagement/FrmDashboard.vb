@@ -6,6 +6,8 @@ Imports System.Text
 
 Public Class FrmDashboard
 
+    Public isAuthUser As Boolean = False
+
 #Region "API"
 
     <DllImport("user32.dll", EntryPoint:="SendMessageW")>
@@ -78,6 +80,27 @@ Public Class FrmDashboard
     End Sub
 
 
+    Private Sub pnlDashboard_ControlAdded(sender As Object, e As ControlEventArgs) Handles pnlDashboard.ControlAdded
+        If TypeOf (e.Control) Is DataGridView Then
+            Dim grd As DataGridView = TryCast(e.Control, DataGridView)
+            Call New GridStyle().setStyle(grd)
+        End If
+    End Sub
+
+    Private Sub grdReserv_CellDoubleClick(sender As Object, e As DataGridViewCellEventArgs) Handles grdBacklogReserv.CellDoubleClick
+        If e.RowIndex >= 0 AndAlso e.ColumnIndex >= 0 Then
+            Dim selectedRow As DataGridViewRow = grdBacklogReserv.Rows(e.RowIndex)
+
+            Me.lblTitle.Text = FrmStockReserve.Text
+            FrmStockReserve.setSrchCondition(selectedRow.Cells.Item("dateFrom").Value, selectedRow.Cells.Item("dateTo").Value)
+            switchForm(FrmStockReserve)
+        End If
+    End Sub
+
+    Private Sub grdReserv_SelectionChanged(sender As Object, e As EventArgs) Handles grdBacklogReserv.SelectionChanged
+        grdBacklogReserv.ClearSelection()
+    End Sub
+
 #End Region
 
 #Region "BUTTON EVENT"
@@ -88,9 +111,14 @@ Public Class FrmDashboard
     End Sub
 
     Private Sub btnStockOut_Click(sender As Object, e As EventArgs) Handles btnStockOut.Click
-        Return
+
         Me.lblTitle.Text = FrmStockOut.Text
         switchForm(FrmStockOut)
+    End Sub
+
+    Private Sub btnStockIn_Click(sender As Object, e As EventArgs) Handles btnStockIn.Click
+        Me.lblTitle.Text = FrmStockIn.Text
+        switchForm(FrmStockIn)
     End Sub
 
     Private Sub btnStockHistory_Click(sender As Object, e As EventArgs) Handles btnStockHistory.Click
@@ -151,9 +179,15 @@ Public Class FrmDashboard
             Return
         End If
 
-        If Me.ActiveMdiChild IsNot Nothing Then
-            Me.ActiveMdiChild.Close()
+        If Me.MdiChildren IsNot Nothing Then
+            For Each f As Form In Me.MdiChildren
+                f.Close()
+            Next
         End If
+
+        'If Me.ActiveMdiChild IsNot Nothing Then
+        '    Me.ActiveMdiChild.Close()
+        'End If
 
         frm.TopLevel = False
         frm.MdiParent = Me
@@ -188,6 +222,10 @@ Public Class FrmDashboard
         Return dt
     End Function
 
+
+
+#Region "SQL"
+
     Private Function getLastBatDt() As String
         Dim sb As New StringBuilder
 
@@ -203,8 +241,6 @@ Public Class FrmDashboard
 
         Return ""
     End Function
-
-#Region "SQL"
 
     Private Function getReservSqlAndParam(ByRef dateFrom As Date?, dateTo As Date) As DbParamEnt
         Dim sb As New StringBuilder
@@ -241,27 +277,31 @@ Public Class FrmDashboard
         Return New DbParamEnt(sb, param.ToArray)
     End Function
 
+    Private Sub btnLogin_Click(sender As Object, e As EventArgs) Handles btnLogin.Click
+        Using f = FrmLogin
+            f.ShowDialog()
+
+            If isAuthUser Then
+                btnStockIn.Visible = True
+                btnStockOut.Visible = True
+                btnLogin.Visible = False
+                btnLogout.Visible = True
+            End If
+        End Using
+
+
+    End Sub
+
+    Private Sub btnLogout_Click(sender As Object, e As EventArgs) Handles btnLogout.Click
+        btnStockIn.Visible = False
+        btnStockOut.Visible = False
+        btnLogin.Visible = True
+        btnLogout.Visible = False
+        isAuthUser = False
+    End Sub
+
 #End Region
 
-    Private Sub pnlDashboard_ControlAdded(sender As Object, e As ControlEventArgs) Handles pnlDashboard.ControlAdded
-        If TypeOf (e.Control) Is DataGridView Then
-            Dim grd As DataGridView = TryCast(e.Control, DataGridView)
-            Call New GridStyle().setStyle(grd)
-        End If
-    End Sub
 
-    Private Sub grdReserv_CellDoubleClick(sender As Object, e As DataGridViewCellEventArgs) Handles grdBacklogReserv.CellDoubleClick
-        If e.RowIndex >= 0 AndAlso e.ColumnIndex >= 0 Then
-            Dim selectedRow As DataGridViewRow = grdBacklogReserv.Rows(e.RowIndex)
-
-            Me.lblTitle.Text = FrmStockReserve.Text
-            FrmStockReserve.setSrchCondition(selectedRow.Cells.Item("dateFrom").Value, selectedRow.Cells.Item("dateTo").Value)
-            switchForm(FrmStockReserve)
-        End If
-    End Sub
-
-    Private Sub grdReserv_SelectionChanged(sender As Object, e As EventArgs) Handles grdBacklogReserv.SelectionChanged
-        grdBacklogReserv.ClearSelection()
-    End Sub
 
 End Class

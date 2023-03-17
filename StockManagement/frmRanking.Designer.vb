@@ -32,7 +32,7 @@ Partial Class FrmRanking
         Me.lblItemName = New System.Windows.Forms.Label()
         Me.txtItemCd = New System.Windows.Forms.TextBox()
         Me.btnSearch = New StockManagement.ButtonBase()
-        Me.grd = New System.Windows.Forms.DataGridView()
+        Me.grd = New StockManagement.DataGridViewBase()
         Me.ITEMCD = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.分類2 = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.SumSumQTY = New System.Windows.Forms.DataGridViewTextBoxColumn()
@@ -152,6 +152,7 @@ Partial Class FrmRanking
         Me.grd.RowTemplate.DefaultCellStyle.Padding = New System.Windows.Forms.Padding(3, 0, 3, 0)
         Me.grd.Size = New System.Drawing.Size(890, 440)
         Me.grd.TabIndex = 1
+        Me.grd.Type = 0
         '
         'ITEMCD
         '
@@ -279,7 +280,7 @@ Partial Class FrmRanking
     Friend WithEvents lblItemName As Label
     Friend WithEvents txtItemCd As TextBox
     Friend WithEvents btnSearch As ButtonBase
-    Friend WithEvents grd As DataGridView
+    Friend WithEvents grd As DataGridViewBase
     Friend WithEvents lblQty As Label
     Friend WithEvents btnStaying As ButtonBase
     Friend WithEvents bindingNavi As UBindingNavigator

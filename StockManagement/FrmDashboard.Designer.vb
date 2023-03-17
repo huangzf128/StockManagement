@@ -22,8 +22,8 @@ Partial Class FrmDashboard
     '不要使用代码编辑器修改它。
     <System.Diagnostics.DebuggerStepThrough()>
     Private Sub InitializeComponent()
-        Dim DataGridViewCellStyle13 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle14 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle1 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle2 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Me.pnlDashboard = New System.Windows.Forms.Panel()
         Me.lblShowMoving = New System.Windows.Forms.Label()
         Me.lblServerLastUpdatedTime = New System.Windows.Forms.Label()
@@ -40,6 +40,7 @@ Partial Class FrmDashboard
         Me.btnMin = New System.Windows.Forms.Button()
         Me.btnClose = New System.Windows.Forms.Button()
         Me.pnlMenu = New System.Windows.Forms.Panel()
+        Me.linkVersion = New System.Windows.Forms.LinkLabel()
         Me.btnStockListHistory = New System.Windows.Forms.Button()
         Me.btnRanking = New System.Windows.Forms.Button()
         Me.btnStockList = New System.Windows.Forms.Button()
@@ -49,7 +50,8 @@ Partial Class FrmDashboard
         Me.btnDashboard = New System.Windows.Forms.Button()
         Me.btnStockReserve = New System.Windows.Forms.Button()
         Me.btnStockHistory = New System.Windows.Forms.Button()
-        Me.linkVersion = New System.Windows.Forms.LinkLabel()
+        Me.btnLogout = New StockManagement.ButtonBase()
+        Me.btnLogin = New StockManagement.ButtonBase()
         Me.pnlDashboard.SuspendLayout()
         CType(Me.grdBacklogReserv, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.pnlHeader.SuspendLayout()
@@ -133,9 +135,9 @@ Partial Class FrmDashboard
         'dateFrom
         '
         Me.dateFrom.DataPropertyName = "dateFrom"
-        DataGridViewCellStyle13.Format = "d"
-        DataGridViewCellStyle13.NullValue = Nothing
-        Me.dateFrom.DefaultCellStyle = DataGridViewCellStyle13
+        DataGridViewCellStyle1.Format = "d"
+        DataGridViewCellStyle1.NullValue = Nothing
+        Me.dateFrom.DefaultCellStyle = DataGridViewCellStyle1
         Me.dateFrom.HeaderText = "開始日"
         Me.dateFrom.Name = "dateFrom"
         Me.dateFrom.Width = 80
@@ -143,9 +145,9 @@ Partial Class FrmDashboard
         'dateTo
         '
         Me.dateTo.DataPropertyName = "dateTo"
-        DataGridViewCellStyle14.Format = "d"
-        DataGridViewCellStyle14.NullValue = Nothing
-        Me.dateTo.DefaultCellStyle = DataGridViewCellStyle14
+        DataGridViewCellStyle2.Format = "d"
+        DataGridViewCellStyle2.NullValue = Nothing
+        Me.dateTo.DefaultCellStyle = DataGridViewCellStyle2
         Me.dateTo.HeaderText = "終了日"
         Me.dateTo.Name = "dateTo"
         Me.dateTo.Width = 80
@@ -196,7 +198,7 @@ Partial Class FrmDashboard
         Me.btnMin.BackColor = System.Drawing.Color.FromArgb(CType(CType(128, Byte), Integer), CType(CType(128, Byte), Integer), CType(CType(255, Byte), Integer))
         Me.btnMin.FlatAppearance.BorderSize = 0
         Me.btnMin.FlatStyle = System.Windows.Forms.FlatStyle.Flat
-        Me.btnMin.Font = New System.Drawing.Font("宋体", 12.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(134, Byte))
+        Me.btnMin.Font = New System.Drawing.Font("SimSun", 12.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(134, Byte))
         Me.btnMin.ForeColor = System.Drawing.SystemColors.Control
         Me.btnMin.Location = New System.Drawing.Point(988, 8)
         Me.btnMin.Name = "btnMin"
@@ -213,7 +215,7 @@ Partial Class FrmDashboard
         Me.btnClose.BackColor = System.Drawing.Color.Goldenrod
         Me.btnClose.FlatAppearance.BorderSize = 0
         Me.btnClose.FlatStyle = System.Windows.Forms.FlatStyle.Flat
-        Me.btnClose.Font = New System.Drawing.Font("宋体", 12.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(134, Byte))
+        Me.btnClose.Font = New System.Drawing.Font("SimSun", 12.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(134, Byte))
         Me.btnClose.ForeColor = System.Drawing.SystemColors.Control
         Me.btnClose.Location = New System.Drawing.Point(1024, 8)
         Me.btnClose.Name = "btnClose"
@@ -227,6 +229,8 @@ Partial Class FrmDashboard
         'pnlMenu
         '
         Me.pnlMenu.BackgroundImage = Global.StockManagement.My.Resources.Resources.Dark_Ocean
+        Me.pnlMenu.Controls.Add(Me.btnLogout)
+        Me.pnlMenu.Controls.Add(Me.btnLogin)
         Me.pnlMenu.Controls.Add(Me.linkVersion)
         Me.pnlMenu.Controls.Add(Me.btnStockListHistory)
         Me.pnlMenu.Controls.Add(Me.btnRanking)
@@ -243,10 +247,24 @@ Partial Class FrmDashboard
         Me.pnlMenu.Size = New System.Drawing.Size(140, 575)
         Me.pnlMenu.TabIndex = 0
         '
+        'linkVersion
+        '
+        Me.linkVersion.AutoSize = True
+        Me.linkVersion.BackColor = System.Drawing.Color.Transparent
+        Me.linkVersion.ForeColor = System.Drawing.SystemColors.Control
+        Me.linkVersion.LinkColor = System.Drawing.SystemColors.Control
+        Me.linkVersion.Location = New System.Drawing.Point(33, 554)
+        Me.linkVersion.Name = "linkVersion"
+        Me.linkVersion.Size = New System.Drawing.Size(89, 12)
+        Me.linkVersion.TabIndex = 10
+        Me.linkVersion.TabStop = True
+        Me.linkVersion.Text = "AppVer:1.0.0.0"
+        Me.linkVersion.TextAlign = System.Drawing.ContentAlignment.TopRight
+        '
         'btnStockListHistory
         '
         Me.btnStockListHistory.Font = New System.Drawing.Font("ＭＳ Ｐゴシック", 9.0!)
-        Me.btnStockListHistory.Location = New System.Drawing.Point(12, 194)
+        Me.btnStockListHistory.Location = New System.Drawing.Point(12, 200)
         Me.btnStockListHistory.Name = "btnStockListHistory"
         Me.btnStockListHistory.Size = New System.Drawing.Size(117, 25)
         Me.btnStockListHistory.TabIndex = 5
@@ -256,7 +274,7 @@ Partial Class FrmDashboard
         'btnRanking
         '
         Me.btnRanking.Font = New System.Drawing.Font("ＭＳ Ｐゴシック", 9.0!)
-        Me.btnRanking.Location = New System.Drawing.Point(12, 236)
+        Me.btnRanking.Location = New System.Drawing.Point(12, 251)
         Me.btnRanking.Name = "btnRanking"
         Me.btnRanking.Size = New System.Drawing.Size(117, 25)
         Me.btnRanking.TabIndex = 6
@@ -266,7 +284,7 @@ Partial Class FrmDashboard
         'btnStockList
         '
         Me.btnStockList.Font = New System.Drawing.Font("ＭＳ Ｐゴシック", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(128, Byte))
-        Me.btnStockList.Location = New System.Drawing.Point(12, 163)
+        Me.btnStockList.Location = New System.Drawing.Point(12, 170)
         Me.btnStockList.Name = "btnStockList"
         Me.btnStockList.Size = New System.Drawing.Size(117, 25)
         Me.btnStockList.TabIndex = 4
@@ -288,7 +306,7 @@ Partial Class FrmDashboard
         '
         Me.btnStockIn.Anchor = CType((System.Windows.Forms.AnchorStyles.Left Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.btnStockIn.Font = New System.Drawing.Font("ＭＳ Ｐゴシック", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(134, Byte))
-        Me.btnStockIn.Location = New System.Drawing.Point(12, 349)
+        Me.btnStockIn.Location = New System.Drawing.Point(12, 384)
         Me.btnStockIn.Name = "btnStockIn"
         Me.btnStockIn.Size = New System.Drawing.Size(117, 27)
         Me.btnStockIn.TabIndex = 8
@@ -300,7 +318,7 @@ Partial Class FrmDashboard
         '
         Me.btnStockOut.Anchor = CType((System.Windows.Forms.AnchorStyles.Left Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.btnStockOut.Font = New System.Drawing.Font("ＭＳ Ｐゴシック", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(134, Byte))
-        Me.btnStockOut.Location = New System.Drawing.Point(12, 316)
+        Me.btnStockOut.Location = New System.Drawing.Point(12, 351)
         Me.btnStockOut.Name = "btnStockOut"
         Me.btnStockOut.Size = New System.Drawing.Size(117, 27)
         Me.btnStockOut.TabIndex = 7
@@ -328,7 +346,7 @@ Partial Class FrmDashboard
         Me.btnStockReserve.BackColor = System.Drawing.SystemColors.Control
         Me.btnStockReserve.FlatAppearance.BorderSize = 0
         Me.btnStockReserve.Font = New System.Drawing.Font("ＭＳ Ｐゴシック", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(134, Byte))
-        Me.btnStockReserve.Location = New System.Drawing.Point(12, 121)
+        Me.btnStockReserve.Location = New System.Drawing.Point(12, 117)
         Me.btnStockReserve.Name = "btnStockReserve"
         Me.btnStockReserve.Size = New System.Drawing.Size(117, 25)
         Me.btnStockReserve.TabIndex = 3
@@ -339,26 +357,39 @@ Partial Class FrmDashboard
         '
         Me.btnStockHistory.Anchor = CType((System.Windows.Forms.AnchorStyles.Left Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.btnStockHistory.Font = New System.Drawing.Font("ＭＳ Ｐゴシック", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(134, Byte))
-        Me.btnStockHistory.Location = New System.Drawing.Point(12, 90)
+        Me.btnStockHistory.Location = New System.Drawing.Point(12, 87)
         Me.btnStockHistory.Name = "btnStockHistory"
         Me.btnStockHistory.Size = New System.Drawing.Size(117, 25)
         Me.btnStockHistory.TabIndex = 2
         Me.btnStockHistory.Text = "入出庫履歴"
         Me.btnStockHistory.UseVisualStyleBackColor = True
         '
-        'linkVersion
+        'btnLogout
         '
-        Me.linkVersion.AutoSize = True
-        Me.linkVersion.BackColor = System.Drawing.Color.Transparent
-        Me.linkVersion.ForeColor = System.Drawing.SystemColors.Control
-        Me.linkVersion.LinkColor = System.Drawing.SystemColors.Control
-        Me.linkVersion.Location = New System.Drawing.Point(33, 554)
-        Me.linkVersion.Name = "linkVersion"
-        Me.linkVersion.Size = New System.Drawing.Size(89, 12)
-        Me.linkVersion.TabIndex = 10
-        Me.linkVersion.TabStop = True
-        Me.linkVersion.Text = "AppVer:1.0.0.0"
-        Me.linkVersion.TextAlign = System.Drawing.ContentAlignment.TopRight
+        Me.btnLogout.BackColor = System.Drawing.Color.DimGray
+        Me.btnLogout.Font = New System.Drawing.Font("ＭＳ Ｐゴシック", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(134, Byte))
+        Me.btnLogout.ForeColor = System.Drawing.Color.WhiteSmoke
+        Me.btnLogout.Location = New System.Drawing.Point(58, 464)
+        Me.btnLogout.Name = "btnLogout"
+        Me.btnLogout.Size = New System.Drawing.Size(70, 30)
+        Me.btnLogout.TabIndex = 12
+        Me.btnLogout.Text = "ログアウト"
+        Me.btnLogout.Type = 4
+        Me.btnLogout.UseVisualStyleBackColor = False
+        Me.btnLogout.Visible = False
+        '
+        'btnLogin
+        '
+        Me.btnLogin.BackColor = System.Drawing.Color.DarkGreen
+        Me.btnLogin.Font = New System.Drawing.Font("ＭＳ Ｐゴシック", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(134, Byte))
+        Me.btnLogin.ForeColor = System.Drawing.Color.WhiteSmoke
+        Me.btnLogin.Location = New System.Drawing.Point(58, 463)
+        Me.btnLogin.Name = "btnLogin"
+        Me.btnLogin.Size = New System.Drawing.Size(70, 30)
+        Me.btnLogin.TabIndex = 11
+        Me.btnLogin.Text = "ログイン"
+        Me.btnLogin.Type = 3
+        Me.btnLogin.UseVisualStyleBackColor = False
         '
         'FrmDashboard
         '
@@ -411,4 +442,6 @@ Partial Class FrmDashboard
     Friend WithEvents lblServerLastUpdatedTime As Label
     Friend WithEvents lblShowMoving As Label
     Friend WithEvents linkVersion As LinkLabel
+    Friend WithEvents btnLogin As ButtonBase
+    Friend WithEvents btnLogout As ButtonBase
 End Class

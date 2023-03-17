@@ -91,7 +91,7 @@ Public Class FrmRanking
                           End Sub)
             End Function,
             Sub()
-                CloseForm()
+                CloseLoadingForm()
             End Sub)
     End Sub
 
@@ -118,7 +118,7 @@ Public Class FrmRanking
                           End Sub)
             End Function,
             Sub()
-                CloseForm()
+                CloseLoadingForm()
             End Sub)
 
     End Function

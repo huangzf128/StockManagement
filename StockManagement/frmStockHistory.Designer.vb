@@ -30,7 +30,7 @@ Partial Class FrmStockHistory
         Dim DataGridViewCellStyle4 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Dim DataGridViewCellStyle5 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Me.txtItemCd = New System.Windows.Forms.TextBox()
-        Me.grd = New System.Windows.Forms.DataGridView()
+        Me.grd = New StockManagement.DataGridViewBase()
         Me.CRTDT = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.ITEMCD = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.LOCATIONNM = New System.Windows.Forms.DataGridViewTextBoxColumn()
@@ -48,12 +48,14 @@ Partial Class FrmStockHistory
         Me.bindingNavi = New StockManagement.UBindingNavigator()
         Me.chkExclude = New StockManagement.CheckBoxBase()
         Me.btnCopy = New StockManagement.ButtonBase()
+        Me.btnBack = New StockManagement.ButtonBase()
         Me.pnlCondition.SuspendLayout()
         CType(Me.grd, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
         'pnlCondition
         '
+        Me.pnlCondition.Controls.Add(Me.btnBack)
         Me.pnlCondition.Controls.Add(Me.btnCopy)
         Me.pnlCondition.Controls.Add(Me.chkExclude)
         Me.pnlCondition.Controls.Add(Me.dtPickerFrom)
@@ -79,12 +81,11 @@ Partial Class FrmStockHistory
         Me.grd.AllowUserToResizeRows = False
         DataGridViewCellStyle1.BackColor = System.Drawing.Color.WhiteSmoke
         Me.grd.AlternatingRowsDefaultCellStyle = DataGridViewCellStyle1
-        Me.grd.AutoGenerateColumns = False
         Me.grd.CellBorderStyle = System.Windows.Forms.DataGridViewCellBorderStyle.SingleHorizontal
         Me.grd.ColumnHeadersBorderStyle = System.Windows.Forms.DataGridViewHeaderBorderStyle.None
         DataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.TopCenter
         DataGridViewCellStyle2.BackColor = System.Drawing.SystemColors.Highlight
-        DataGridViewCellStyle2.Font = New System.Drawing.Font("ＭＳ Ｐゴシック", 9.0!)
+        DataGridViewCellStyle2.Font = New System.Drawing.Font("ＭＳ Ｐゴシック", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(134, Byte))
         DataGridViewCellStyle2.ForeColor = System.Drawing.SystemColors.Window
         DataGridViewCellStyle2.Padding = New System.Windows.Forms.Padding(0, 4, 0, 4)
         DataGridViewCellStyle2.SelectionBackColor = System.Drawing.SystemColors.Highlight
@@ -105,7 +106,6 @@ Partial Class FrmStockHistory
         Me.grd.Location = New System.Drawing.Point(10, 90)
         Me.grd.Margin = New System.Windows.Forms.Padding(2)
         Me.grd.Name = "grd"
-        Me.grd.ReadOnly = True
         DataGridViewCellStyle7.Font = New System.Drawing.Font("ＭＳ Ｐゴシック", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(134, Byte))
         Me.grd.RowHeadersDefaultCellStyle = DataGridViewCellStyle7
         Me.grd.RowHeadersVisible = False
@@ -113,6 +113,7 @@ Partial Class FrmStockHistory
         Me.grd.RowTemplate.DefaultCellStyle.Padding = New System.Windows.Forms.Padding(3, 0, 3, 0)
         Me.grd.Size = New System.Drawing.Size(890, 440)
         Me.grd.TabIndex = 9
+        Me.grd.Type = 0
         '
         'CRTDT
         '
@@ -122,7 +123,6 @@ Partial Class FrmStockHistory
         Me.CRTDT.DefaultCellStyle = DataGridViewCellStyle3
         Me.CRTDT.HeaderText = "入出庫日時"
         Me.CRTDT.Name = "CRTDT"
-        Me.CRTDT.ReadOnly = True
         Me.CRTDT.Width = 120
         '
         'ITEMCD
@@ -130,7 +130,6 @@ Partial Class FrmStockHistory
         Me.ITEMCD.DataPropertyName = "ITEMCD"
         Me.ITEMCD.HeaderText = "変更商品名"
         Me.ITEMCD.Name = "ITEMCD"
-        Me.ITEMCD.ReadOnly = True
         Me.ITEMCD.Width = 225
         '
         'LOCATIONNM
@@ -138,7 +137,6 @@ Partial Class FrmStockHistory
         Me.LOCATIONNM.DataPropertyName = "LOCATIONNM"
         Me.LOCATIONNM.HeaderText = "ロケーション"
         Me.LOCATIONNM.Name = "LOCATIONNM"
-        Me.LOCATIONNM.ReadOnly = True
         '
         'IOKBNNM
         '
@@ -147,7 +145,6 @@ Partial Class FrmStockHistory
         Me.IOKBNNM.DefaultCellStyle = DataGridViewCellStyle4
         Me.IOKBNNM.HeaderText = "区分"
         Me.IOKBNNM.Name = "IOKBNNM"
-        Me.IOKBNNM.ReadOnly = True
         Me.IOKBNNM.Width = 55
         '
         'QTY
@@ -157,7 +154,6 @@ Partial Class FrmStockHistory
         Me.QTY.DefaultCellStyle = DataGridViewCellStyle5
         Me.QTY.HeaderText = "数量"
         Me.QTY.Name = "QTY"
-        Me.QTY.ReadOnly = True
         Me.QTY.Width = 60
         '
         'REMARKS
@@ -165,7 +161,6 @@ Partial Class FrmStockHistory
         Me.REMARKS.DataPropertyName = "REMARKS"
         Me.REMARKS.HeaderText = "備考"
         Me.REMARKS.Name = "REMARKS"
-        Me.REMARKS.ReadOnly = True
         Me.REMARKS.Width = 200
         '
         'UPDIP
@@ -173,7 +168,6 @@ Partial Class FrmStockHistory
         Me.UPDIP.DataPropertyName = "UPDIP"
         Me.UPDIP.HeaderText = "更新者"
         Me.UPDIP.Name = "UPDIP"
-        Me.UPDIP.ReadOnly = True
         Me.UPDIP.Width = 110
         '
         'btnSearch
@@ -205,7 +199,7 @@ Partial Class FrmStockHistory
         '
         Me.chkOut.AutoSize = True
         Me.chkOut.ForeColor = System.Drawing.SystemColors.Info
-        Me.chkOut.Location = New System.Drawing.Point(350, 46)
+        Me.chkOut.Location = New System.Drawing.Point(246, 68)
         Me.chkOut.Name = "chkOut"
         Me.chkOut.Size = New System.Drawing.Size(72, 16)
         Me.chkOut.TabIndex = 5
@@ -259,7 +253,7 @@ Partial Class FrmStockHistory
         '
         Me.chkExclude.AutoSize = True
         Me.chkExclude.ForeColor = System.Drawing.SystemColors.Info
-        Me.chkExclude.Location = New System.Drawing.Point(428, 45)
+        Me.chkExclude.Location = New System.Drawing.Point(324, 68)
         Me.chkExclude.Name = "chkExclude"
         Me.chkExclude.Size = New System.Drawing.Size(96, 16)
         Me.chkExclude.TabIndex = 6
@@ -279,6 +273,18 @@ Partial Class FrmStockHistory
         Me.btnCopy.Text = "全コピー"
         Me.btnCopy.Type = 5
         Me.btnCopy.UseVisualStyleBackColor = False
+        '
+        'btnBack
+        '
+        Me.btnBack.BackColor = System.Drawing.Color.Goldenrod
+        Me.btnBack.Font = New System.Drawing.Font("ＭＳ Ｐゴシック", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(134, Byte))
+        Me.btnBack.Location = New System.Drawing.Point(730, 51)
+        Me.btnBack.Name = "btnBack"
+        Me.btnBack.Size = New System.Drawing.Size(70, 30)
+        Me.btnBack.TabIndex = 22
+        Me.btnBack.Text = "戻る"
+        Me.btnBack.Type = 1
+        Me.btnBack.UseVisualStyleBackColor = False
         '
         'FrmStockHistory
         '
@@ -300,7 +306,7 @@ Partial Class FrmStockHistory
 
     End Sub
     Friend WithEvents txtItemCd As TextBox
-    Friend WithEvents grd As DataGridView
+    Friend WithEvents grd As DataGridViewBase
     Friend WithEvents btnSearch As ButtonBase
     Friend WithEvents chkIn As CheckBoxBase
     Friend WithEvents chkOut As CheckBoxBase
@@ -318,4 +324,5 @@ Partial Class FrmStockHistory
     Friend WithEvents UPDIP As DataGridViewTextBoxColumn
     Friend WithEvents chkExclude As CheckBoxBase
     Friend WithEvents btnCopy As ButtonBase
+    Friend WithEvents btnBack As ButtonBase
 End Class

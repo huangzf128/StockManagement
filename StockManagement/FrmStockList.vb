@@ -9,23 +9,7 @@ Public Class FrmStockList
 
 #Region "EVENT"
 
-    Private Sub btnSearch_Click(sender As Object, e As EventArgs) Handles btnSearch.Click
 
-        ShowWaitForm()
-        Async.Process(
-            AddressOf search,
-            Sub()
-                CloseForm()
-            End Sub)
-    End Sub
-
-    Private Sub btnCopy_Click(sender As Object, e As EventArgs) Handles btnCopy.Click
-        If grd.Rows.Count = 0 Then
-            Return
-        End If
-        Util.CopyDataGridView(grd)
-        AutoClosingMessageBox.Show("すべての明細をコピーしました。", "情報")
-    End Sub
 
     Private Sub FrmStockList_Load(sender As Object, e As EventArgs) Handles Me.Load
 
@@ -35,7 +19,7 @@ Public Class FrmStockList
         Async.Process(
             AddressOf search,
             Sub()
-                CloseForm()
+                CloseLoadingForm()
             End Sub)
     End Sub
 
@@ -97,6 +81,24 @@ Public Class FrmStockList
             j = j + 2
         Next
 
+    End Sub
+
+    Private Sub btnSearch_Click(sender As Object, e As EventArgs) Handles btnSearch.Click
+
+        ShowWaitForm()
+        Async.Process(
+            AddressOf search,
+            Sub()
+                CloseLoadingForm()
+            End Sub)
+    End Sub
+
+    Private Sub btnCopy_Click(sender As Object, e As EventArgs) Handles btnCopy.Click
+        If grd.Rows.Count = 0 Then
+            Return
+        End If
+        Util.CopyDataGridView(grd)
+        AutoClosingMessageBox.Show("すべての明細をコピーしました。", "情報")
     End Sub
 
 #End Region
@@ -188,6 +190,9 @@ Public Class FrmStockList
 
     End Function
 
+
+#Region "SQL"
+
     Private Function createDt() As DataTable
 
         If locationDt Is Nothing Then
@@ -224,8 +229,8 @@ Public Class FrmStockList
         sb.Append(" FROM M_Code M ")
         sb.Append(" WHERE ")
         sb.Append("     CATEGORY = 'LOCATIONCD' ")
-        ' TODO: 倉庫松ノ木, 西京を除外
-        sb.Append(" AND CODE NOT IN (1, 2) ")
+        ' TODO: 倉庫 西京を除外
+        sb.Append(" AND CODE <> 2 ")
         sb.Append(" ORDER BY ")
         sb.Append("     CODE ")
 
@@ -251,8 +256,8 @@ Public Class FrmStockList
             sb.Append(" AND ITEMNAME Like @ITEMNAME")
             param.Add(New SqlParameter("@ITEMNAME", "%" & Me.txtItemNm.Text & "%"))
         End If
-        ' TODO: 倉庫松ノ木, 西京を除外
-        sb.Append(" AND LOCATIONCD NOT IN (1, 2) ")
+        ' TODO: 倉庫  西京を除外
+        sb.Append(" AND LOCATIONCD <> 2 ")
 
         sb.Append(" ORDER BY ")
         sb.Append("     ITEMCD ")
@@ -260,6 +265,9 @@ Public Class FrmStockList
 
         Return New DbParamEnt(sb, param.ToArray)
     End Function
+
+
+#End Region
 
 
 End Class

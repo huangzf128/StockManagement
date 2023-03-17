@@ -22,65 +22,61 @@ Partial Class FrmStockOut
     'コード エディターを使って変更しないでください。
     <System.Diagnostics.DebuggerStepThrough()>
     Private Sub InitializeComponent()
+        Dim DataGridViewCellStyle1 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle2 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Dim DataGridViewCellStyle4 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle5 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle6 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Me.txtItemCd = New System.Windows.Forms.TextBox()
+        Dim DataGridViewCellStyle3 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Me.txtQty = New System.Windows.Forms.TextBox()
         Me.txtRemarks = New System.Windows.Forms.TextBox()
-        Me.txtActQty = New System.Windows.Forms.TextBox()
-        Me.btnItemSearch = New System.Windows.Forms.Button()
-        Me.cmbLocation = New System.Windows.Forms.ComboBox()
-        Me.cmdAll = New System.Windows.Forms.Button()
-        Me.cmdDelete = New System.Windows.Forms.Button()
-        Me.cmdExec = New System.Windows.Forms.Button()
-        Me.grd = New System.Windows.Forms.DataGridView()
+        Me.grd = New StockManagement.DataGridViewBase()
+        Me.chk = New System.Windows.Forms.DataGridViewCheckBoxColumn()
         Me.ITEMCD = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.LOCATIONCD = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.LOCATIONNM = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.QTY = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.REMARKS = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.lblItemName = New System.Windows.Forms.Label()
+        Me.lblItemNameTitle = New System.Windows.Forms.Label()
         Me.lblQty = New System.Windows.Forms.Label()
         Me.lblRemarks = New System.Windows.Forms.Label()
-        Me.btnClose = New StockManagement.ButtonBase()
         Me.btnAdd = New StockManagement.ButtonBase()
-        Me.lblActQty = New System.Windows.Forms.Label()
+        Me.lblActQtyTitle = New System.Windows.Forms.Label()
         Me.lblLocation = New System.Windows.Forms.Label()
+        Me.lblLocationNm = New System.Windows.Forms.Label()
+        Me.lblLocationCd = New System.Windows.Forms.Label()
+        Me.lblBar = New System.Windows.Forms.Label()
+        Me.lblActQty = New System.Windows.Forms.Label()
+        Me.lblItemCd = New System.Windows.Forms.Label()
+        Me.btnDelete = New StockManagement.ButtonBase()
+        Me.btnItemSearch = New StockManagement.ButtonBase()
+        Me.btnExecute = New StockManagement.ButtonBase()
         Me.pnlCondition.SuspendLayout()
         CType(Me.grd, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
         'pnlCondition
         '
-        Me.pnlCondition.Controls.Add(Me.lblLocation)
+        Me.pnlCondition.Controls.Add(Me.btnItemSearch)
+        Me.pnlCondition.Controls.Add(Me.lblItemCd)
         Me.pnlCondition.Controls.Add(Me.lblActQty)
+        Me.pnlCondition.Controls.Add(Me.lblBar)
+        Me.pnlCondition.Controls.Add(Me.lblLocationCd)
+        Me.pnlCondition.Controls.Add(Me.lblLocationNm)
+        Me.pnlCondition.Controls.Add(Me.lblLocation)
+        Me.pnlCondition.Controls.Add(Me.lblActQtyTitle)
         Me.pnlCondition.Controls.Add(Me.btnAdd)
-        Me.pnlCondition.Controls.Add(Me.btnClose)
         Me.pnlCondition.Controls.Add(Me.lblRemarks)
         Me.pnlCondition.Controls.Add(Me.lblQty)
-        Me.pnlCondition.Controls.Add(Me.lblItemName)
-        Me.pnlCondition.Controls.Add(Me.txtItemCd)
-        Me.pnlCondition.Controls.Add(Me.btnItemSearch)
-        Me.pnlCondition.Controls.Add(Me.cmbLocation)
+        Me.pnlCondition.Controls.Add(Me.lblItemNameTitle)
         Me.pnlCondition.Controls.Add(Me.txtQty)
-        Me.pnlCondition.Controls.Add(Me.txtActQty)
         Me.pnlCondition.Controls.Add(Me.txtRemarks)
         Me.pnlCondition.Size = New System.Drawing.Size(910, 112)
-        '
-        'txtItemCd
-        '
-        Me.txtItemCd.Location = New System.Drawing.Point(90, 15)
-        Me.txtItemCd.Margin = New System.Windows.Forms.Padding(2)
-        Me.txtItemCd.Name = "txtItemCd"
-        Me.txtItemCd.Size = New System.Drawing.Size(105, 19)
-        Me.txtItemCd.TabIndex = 0
         '
         'txtQty
         '
         Me.txtQty.Location = New System.Drawing.Point(90, 45)
         Me.txtQty.Margin = New System.Windows.Forms.Padding(2)
         Me.txtQty.Name = "txtQty"
-        Me.txtQty.Size = New System.Drawing.Size(105, 19)
+        Me.txtQty.Size = New System.Drawing.Size(41, 19)
         Me.txtQty.TabIndex = 1
         '
         'txtRemarks
@@ -91,138 +87,100 @@ Partial Class FrmStockOut
         Me.txtRemarks.Size = New System.Drawing.Size(495, 19)
         Me.txtRemarks.TabIndex = 2
         '
-        'txtActQty
-        '
-        Me.txtActQty.Location = New System.Drawing.Point(289, 45)
-        Me.txtActQty.Margin = New System.Windows.Forms.Padding(2)
-        Me.txtActQty.Name = "txtActQty"
-        Me.txtActQty.Size = New System.Drawing.Size(56, 19)
-        Me.txtActQty.TabIndex = 3
-        '
-        'btnItemSearch
-        '
-        Me.btnItemSearch.Location = New System.Drawing.Point(221, 13)
-        Me.btnItemSearch.Margin = New System.Windows.Forms.Padding(2)
-        Me.btnItemSearch.Name = "btnItemSearch"
-        Me.btnItemSearch.Size = New System.Drawing.Size(68, 22)
-        Me.btnItemSearch.TabIndex = 4
-        Me.btnItemSearch.Text = "商品検索"
-        Me.btnItemSearch.UseVisualStyleBackColor = True
-        '
-        'cmbLocation
-        '
-        Me.cmbLocation.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
-        Me.cmbLocation.FormattingEnabled = True
-        Me.cmbLocation.Location = New System.Drawing.Point(454, 44)
-        Me.cmbLocation.Margin = New System.Windows.Forms.Padding(2)
-        Me.cmbLocation.Name = "cmbLocation"
-        Me.cmbLocation.Size = New System.Drawing.Size(131, 20)
-        Me.cmbLocation.TabIndex = 7
-        '
-        'cmdAll
-        '
-        Me.cmdAll.Location = New System.Drawing.Point(51, 483)
-        Me.cmdAll.Margin = New System.Windows.Forms.Padding(2)
-        Me.cmdAll.Name = "cmdAll"
-        Me.cmdAll.Size = New System.Drawing.Size(115, 34)
-        Me.cmdAll.TabIndex = 9
-        Me.cmdAll.Text = "一括メンテナンス"
-        Me.cmdAll.UseVisualStyleBackColor = True
-        '
-        'cmdDelete
-        '
-        Me.cmdDelete.Location = New System.Drawing.Point(595, 483)
-        Me.cmdDelete.Margin = New System.Windows.Forms.Padding(2)
-        Me.cmdDelete.Name = "cmdDelete"
-        Me.cmdDelete.Size = New System.Drawing.Size(75, 34)
-        Me.cmdDelete.TabIndex = 10
-        Me.cmdDelete.Text = "対象削除"
-        Me.cmdDelete.UseVisualStyleBackColor = True
-        '
-        'cmdExec
-        '
-        Me.cmdExec.Location = New System.Drawing.Point(701, 483)
-        Me.cmdExec.Margin = New System.Windows.Forms.Padding(2)
-        Me.cmdExec.Name = "cmdExec"
-        Me.cmdExec.Size = New System.Drawing.Size(80, 34)
-        Me.cmdExec.TabIndex = 11
-        Me.cmdExec.Text = "出庫処理"
-        Me.cmdExec.UseVisualStyleBackColor = True
-        '
         'grd
         '
         Me.grd.AllowUserToAddRows = False
         Me.grd.AllowUserToResizeRows = False
-        DataGridViewCellStyle4.BackColor = System.Drawing.Color.WhiteSmoke
-        Me.grd.AlternatingRowsDefaultCellStyle = DataGridViewCellStyle4
-        Me.grd.AutoGenerateColumns = False
+        DataGridViewCellStyle1.BackColor = System.Drawing.Color.WhiteSmoke
+        Me.grd.AlternatingRowsDefaultCellStyle = DataGridViewCellStyle1
         Me.grd.CellBorderStyle = System.Windows.Forms.DataGridViewCellBorderStyle.SingleHorizontal
         Me.grd.ColumnHeadersBorderStyle = System.Windows.Forms.DataGridViewHeaderBorderStyle.None
-        DataGridViewCellStyle5.Alignment = System.Windows.Forms.DataGridViewContentAlignment.TopCenter
-        DataGridViewCellStyle5.BackColor = System.Drawing.SystemColors.Highlight
-        DataGridViewCellStyle5.Font = New System.Drawing.Font("ＭＳ Ｐゴシック", 9.0!)
-        DataGridViewCellStyle5.ForeColor = System.Drawing.SystemColors.Window
-        DataGridViewCellStyle5.Padding = New System.Windows.Forms.Padding(0, 4, 0, 4)
-        DataGridViewCellStyle5.SelectionBackColor = System.Drawing.SystemColors.Highlight
-        DataGridViewCellStyle5.SelectionForeColor = System.Drawing.SystemColors.HighlightText
-        DataGridViewCellStyle5.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
-        Me.grd.ColumnHeadersDefaultCellStyle = DataGridViewCellStyle5
+        DataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.TopCenter
+        DataGridViewCellStyle2.BackColor = System.Drawing.SystemColors.Highlight
+        DataGridViewCellStyle2.Font = New System.Drawing.Font("ＭＳ Ｐゴシック", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(134, Byte))
+        DataGridViewCellStyle2.ForeColor = System.Drawing.SystemColors.Window
+        DataGridViewCellStyle2.Padding = New System.Windows.Forms.Padding(0, 4, 0, 4)
+        DataGridViewCellStyle2.SelectionBackColor = System.Drawing.SystemColors.Highlight
+        DataGridViewCellStyle2.SelectionForeColor = System.Drawing.SystemColors.HighlightText
+        DataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
+        Me.grd.ColumnHeadersDefaultCellStyle = DataGridViewCellStyle2
         Me.grd.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
-        Me.grd.Columns.AddRange(New System.Windows.Forms.DataGridViewColumn() {Me.ITEMCD, Me.LOCATIONCD, Me.QTY, Me.REMARKS})
-        DataGridViewCellStyle6.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
-        DataGridViewCellStyle6.BackColor = System.Drawing.SystemColors.Window
-        DataGridViewCellStyle6.Font = New System.Drawing.Font("ＭＳ Ｐゴシック", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(134, Byte))
-        DataGridViewCellStyle6.ForeColor = System.Drawing.SystemColors.ControlText
-        DataGridViewCellStyle6.SelectionBackColor = System.Drawing.Color.FromArgb(CType(CType(218, Byte), Integer), CType(CType(242, Byte), Integer), CType(CType(222, Byte), Integer))
-        DataGridViewCellStyle6.SelectionForeColor = System.Drawing.Color.Black
-        DataGridViewCellStyle6.WrapMode = System.Windows.Forms.DataGridViewTriState.[False]
-        Me.grd.DefaultCellStyle = DataGridViewCellStyle6
+        Me.grd.Columns.AddRange(New System.Windows.Forms.DataGridViewColumn() {Me.chk, Me.ITEMCD, Me.LOCATIONCD, Me.LOCATIONNM, Me.QTY, Me.REMARKS})
+        DataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
+        DataGridViewCellStyle4.BackColor = System.Drawing.SystemColors.Window
+        DataGridViewCellStyle4.Font = New System.Drawing.Font("ＭＳ Ｐゴシック", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(134, Byte))
+        DataGridViewCellStyle4.ForeColor = System.Drawing.SystemColors.ControlText
+        DataGridViewCellStyle4.SelectionBackColor = System.Drawing.Color.FromArgb(CType(CType(218, Byte), Integer), CType(CType(242, Byte), Integer), CType(CType(222, Byte), Integer))
+        DataGridViewCellStyle4.SelectionForeColor = System.Drawing.Color.Black
+        DataGridViewCellStyle4.WrapMode = System.Windows.Forms.DataGridViewTriState.[False]
+        Me.grd.DefaultCellStyle = DataGridViewCellStyle4
+        Me.grd.EditMode = System.Windows.Forms.DataGridViewEditMode.EditOnEnter
         Me.grd.EnableHeadersVisualStyles = False
-        Me.grd.Location = New System.Drawing.Point(11, 128)
+        Me.grd.Location = New System.Drawing.Point(11, 117)
         Me.grd.Margin = New System.Windows.Forms.Padding(2)
         Me.grd.Name = "grd"
         Me.grd.RowHeadersVisible = False
         Me.grd.RowHeadersWidth = 72
         Me.grd.RowTemplate.DefaultCellStyle.Padding = New System.Windows.Forms.Padding(3, 0, 3, 0)
-        Me.grd.RowTemplate.ReadOnly = True
-        Me.grd.Size = New System.Drawing.Size(888, 319)
+        Me.grd.Size = New System.Drawing.Size(888, 394)
         Me.grd.TabIndex = 12
+        Me.grd.Type = 1
+        '
+        'chk
+        '
+        Me.chk.HeaderText = "選択"
+        Me.chk.Name = "chk"
+        Me.chk.Width = 40
         '
         'ITEMCD
         '
         Me.ITEMCD.DataPropertyName = "ITEMCD"
         Me.ITEMCD.HeaderText = "変更商品名"
         Me.ITEMCD.Name = "ITEMCD"
-        Me.ITEMCD.Width = 150
+        Me.ITEMCD.ReadOnly = True
+        Me.ITEMCD.Width = 180
         '
         'LOCATIONCD
         '
         Me.LOCATIONCD.DataPropertyName = "LOCATIONCD"
         Me.LOCATIONCD.HeaderText = "ロケーション"
         Me.LOCATIONCD.Name = "LOCATIONCD"
+        Me.LOCATIONCD.Visible = False
+        '
+        'LOCATIONNM
+        '
+        Me.LOCATIONNM.DataPropertyName = "LOCATIONNM"
+        Me.LOCATIONNM.HeaderText = "ロケーション名"
+        Me.LOCATIONNM.Name = "LOCATIONNM"
+        Me.LOCATIONNM.ReadOnly = True
+        Me.LOCATIONNM.Width = 150
         '
         'QTY
         '
         Me.QTY.DataPropertyName = "QTY"
+        DataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter
+        DataGridViewCellStyle3.NullValue = Nothing
+        Me.QTY.DefaultCellStyle = DataGridViewCellStyle3
         Me.QTY.HeaderText = "数量"
         Me.QTY.Name = "QTY"
+        Me.QTY.Width = 80
         '
         'REMARKS
         '
         Me.REMARKS.DataPropertyName = "REMARKS"
         Me.REMARKS.HeaderText = "備考"
         Me.REMARKS.Name = "REMARKS"
-        Me.REMARKS.Width = 300
+        Me.REMARKS.Width = 420
         '
-        'lblItemName
+        'lblItemNameTitle
         '
-        Me.lblItemName.AutoSize = True
-        Me.lblItemName.ForeColor = System.Drawing.SystemColors.Control
-        Me.lblItemName.Location = New System.Drawing.Point(20, 18)
-        Me.lblItemName.Name = "lblItemName"
-        Me.lblItemName.Size = New System.Drawing.Size(65, 12)
-        Me.lblItemName.TabIndex = 19
-        Me.lblItemName.Text = "変更商品名"
+        Me.lblItemNameTitle.AutoSize = True
+        Me.lblItemNameTitle.ForeColor = System.Drawing.SystemColors.Control
+        Me.lblItemNameTitle.Location = New System.Drawing.Point(112, 18)
+        Me.lblItemNameTitle.Name = "lblItemNameTitle"
+        Me.lblItemNameTitle.Size = New System.Drawing.Size(65, 12)
+        Me.lblItemNameTitle.TabIndex = 19
+        Me.lblItemNameTitle.Text = "変更商品名"
         '
         'lblQty
         '
@@ -244,98 +202,175 @@ Partial Class FrmStockOut
         Me.lblRemarks.TabIndex = 21
         Me.lblRemarks.Text = "備考"
         '
-        'btnClose
-        '
-        Me.btnClose.BackColor = System.Drawing.Color.Goldenrod
-        Me.btnClose.Font = New System.Drawing.Font("ＭＳ Ｐゴシック", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(134, Byte))
-        Me.btnClose.Location = New System.Drawing.Point(819, 15)
-        Me.btnClose.Name = "btnClose"
-        Me.btnClose.Size = New System.Drawing.Size(70, 30)
-        Me.btnClose.TabIndex = 22
-        Me.btnClose.Text = "閉じる"
-        Me.btnClose.Type = 1
-        Me.btnClose.UseVisualStyleBackColor = False
-        '
         'btnAdd
         '
-        Me.btnAdd.BackColor = System.Drawing.Color.DeepSkyBlue
+        Me.btnAdd.BackColor = System.Drawing.Color.Sienna
         Me.btnAdd.Font = New System.Drawing.Font("ＭＳ Ｐゴシック", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(134, Byte))
+        Me.btnAdd.ForeColor = System.Drawing.Color.WhiteSmoke
         Me.btnAdd.Location = New System.Drawing.Point(731, 15)
         Me.btnAdd.Name = "btnAdd"
         Me.btnAdd.Size = New System.Drawing.Size(70, 30)
         Me.btnAdd.TabIndex = 23
         Me.btnAdd.Text = "追加"
-        Me.btnAdd.Type = 2
+        Me.btnAdd.Type = 5
         Me.btnAdd.UseVisualStyleBackColor = False
         '
-        'lblActQty
+        'lblActQtyTitle
         '
-        Me.lblActQty.AutoSize = True
-        Me.lblActQty.ForeColor = System.Drawing.SystemColors.Control
-        Me.lblActQty.Location = New System.Drawing.Point(219, 48)
-        Me.lblActQty.Name = "lblActQty"
-        Me.lblActQty.Size = New System.Drawing.Size(53, 12)
-        Me.lblActQty.TabIndex = 24
-        Me.lblActQty.Text = "現在庫数"
+        Me.lblActQtyTitle.AutoSize = True
+        Me.lblActQtyTitle.ForeColor = System.Drawing.SystemColors.Control
+        Me.lblActQtyTitle.Location = New System.Drawing.Point(183, 48)
+        Me.lblActQtyTitle.Name = "lblActQtyTitle"
+        Me.lblActQtyTitle.Size = New System.Drawing.Size(53, 12)
+        Me.lblActQtyTitle.TabIndex = 24
+        Me.lblActQtyTitle.Text = "現在庫数"
         '
         'lblLocation
         '
         Me.lblLocation.AutoSize = True
         Me.lblLocation.ForeColor = System.Drawing.SystemColors.Control
-        Me.lblLocation.Location = New System.Drawing.Point(382, 48)
+        Me.lblLocation.Location = New System.Drawing.Point(286, 48)
         Me.lblLocation.Name = "lblLocation"
         Me.lblLocation.Size = New System.Drawing.Size(67, 12)
         Me.lblLocation.TabIndex = 25
         Me.lblLocation.Text = "ロケーション"
+        '
+        'lblLocationNm
+        '
+        Me.lblLocationNm.AutoSize = True
+        Me.lblLocationNm.ForeColor = System.Drawing.SystemColors.Control
+        Me.lblLocationNm.Location = New System.Drawing.Point(387, 48)
+        Me.lblLocationNm.Name = "lblLocationNm"
+        Me.lblLocationNm.Size = New System.Drawing.Size(37, 12)
+        Me.lblLocationNm.TabIndex = 26
+        Me.lblLocationNm.Text = "NAME"
+        '
+        'lblLocationCd
+        '
+        Me.lblLocationCd.AutoSize = True
+        Me.lblLocationCd.ForeColor = System.Drawing.SystemColors.Control
+        Me.lblLocationCd.Location = New System.Drawing.Point(360, 48)
+        Me.lblLocationCd.Name = "lblLocationCd"
+        Me.lblLocationCd.Size = New System.Drawing.Size(21, 12)
+        Me.lblLocationCd.TabIndex = 27
+        Me.lblLocationCd.Text = "CD"
+        '
+        'lblBar
+        '
+        Me.lblBar.AutoSize = True
+        Me.lblBar.ForeColor = System.Drawing.SystemColors.Control
+        Me.lblBar.Location = New System.Drawing.Point(377, 48)
+        Me.lblBar.Name = "lblBar"
+        Me.lblBar.Size = New System.Drawing.Size(11, 12)
+        Me.lblBar.TabIndex = 28
+        Me.lblBar.Text = "-"
+        '
+        'lblActQty
+        '
+        Me.lblActQty.AutoSize = True
+        Me.lblActQty.ForeColor = System.Drawing.SystemColors.Control
+        Me.lblActQty.Location = New System.Drawing.Point(242, 48)
+        Me.lblActQty.Name = "lblActQty"
+        Me.lblActQty.Size = New System.Drawing.Size(23, 12)
+        Me.lblActQty.TabIndex = 29
+        Me.lblActQty.Text = "999"
+        '
+        'lblItemCd
+        '
+        Me.lblItemCd.AutoSize = True
+        Me.lblItemCd.ForeColor = System.Drawing.SystemColors.Control
+        Me.lblItemCd.Location = New System.Drawing.Point(183, 18)
+        Me.lblItemCd.Name = "lblItemCd"
+        Me.lblItemCd.Size = New System.Drawing.Size(23, 12)
+        Me.lblItemCd.TabIndex = 30
+        Me.lblItemCd.Text = "999"
+        '
+        'btnDelete
+        '
+        Me.btnDelete.BackColor = System.Drawing.Color.DarkRed
+        Me.btnDelete.Font = New System.Drawing.Font("ＭＳ Ｐゴシック", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(134, Byte))
+        Me.btnDelete.ForeColor = System.Drawing.Color.WhiteSmoke
+        Me.btnDelete.Location = New System.Drawing.Point(700, 519)
+        Me.btnDelete.Name = "btnDelete"
+        Me.btnDelete.Size = New System.Drawing.Size(70, 30)
+        Me.btnDelete.TabIndex = 13
+        Me.btnDelete.Text = "対象削除"
+        Me.btnDelete.Type = 6
+        Me.btnDelete.UseVisualStyleBackColor = False
+        '
+        'btnItemSearch
+        '
+        Me.btnItemSearch.BackColor = System.Drawing.Color.DeepSkyBlue
+        Me.btnItemSearch.Font = New System.Drawing.Font("ＭＳ Ｐゴシック", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(134, Byte))
+        Me.btnItemSearch.ForeColor = System.Drawing.Color.WhiteSmoke
+        Me.btnItemSearch.Location = New System.Drawing.Point(20, 10)
+        Me.btnItemSearch.Name = "btnItemSearch"
+        Me.btnItemSearch.Size = New System.Drawing.Size(70, 30)
+        Me.btnItemSearch.TabIndex = 31
+        Me.btnItemSearch.Text = "商品検索"
+        Me.btnItemSearch.Type = 2
+        Me.btnItemSearch.UseVisualStyleBackColor = False
+        '
+        'btnExecute
+        '
+        Me.btnExecute.BackColor = System.Drawing.Color.Sienna
+        Me.btnExecute.Font = New System.Drawing.Font("ＭＳ Ｐゴシック", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(134, Byte))
+        Me.btnExecute.ForeColor = System.Drawing.Color.WhiteSmoke
+        Me.btnExecute.Location = New System.Drawing.Point(810, 519)
+        Me.btnExecute.Name = "btnExecute"
+        Me.btnExecute.Size = New System.Drawing.Size(70, 30)
+        Me.btnExecute.TabIndex = 14
+        Me.btnExecute.Text = "出庫処理"
+        Me.btnExecute.Type = 5
+        Me.btnExecute.UseVisualStyleBackColor = False
         '
         'FrmStockOut
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 12.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.ClientSize = New System.Drawing.Size(910, 560)
+        Me.Controls.Add(Me.btnExecute)
+        Me.Controls.Add(Me.btnDelete)
         Me.Controls.Add(Me.grd)
-        Me.Controls.Add(Me.cmdExec)
-        Me.Controls.Add(Me.cmdDelete)
-        Me.Controls.Add(Me.cmdAll)
         Me.Margin = New System.Windows.Forms.Padding(2)
         Me.Name = "FrmStockOut"
         Me.Text = "出庫処理"
         Me.Controls.SetChildIndex(Me.pnlCondition, 0)
-        Me.Controls.SetChildIndex(Me.cmdAll, 0)
-        Me.Controls.SetChildIndex(Me.cmdDelete, 0)
-        Me.Controls.SetChildIndex(Me.cmdExec, 0)
         Me.Controls.SetChildIndex(Me.grd, 0)
+        Me.Controls.SetChildIndex(Me.btnDelete, 0)
+        Me.Controls.SetChildIndex(Me.btnExecute, 0)
         Me.pnlCondition.ResumeLayout(False)
         Me.pnlCondition.PerformLayout()
         CType(Me.grd, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)
 
     End Sub
-
-    Friend WithEvents txtItemCd As TextBox
     Friend WithEvents txtQty As TextBox
     Friend WithEvents txtRemarks As TextBox
-    Friend WithEvents txtActQty As TextBox
-    Friend WithEvents btnItemSearch As Button
-    Friend WithEvents cmbLocation As ComboBox
-    Friend WithEvents cmdAll As Button
-    Friend WithEvents cmdDelete As Button
-    Friend WithEvents cmdExec As Button
     Friend WithEvents ITEMCDDataGridViewTextBoxColumn As DataGridViewTextBoxColumn
     Friend WithEvents LOCATIONCDDataGridViewTextBoxColumn As DataGridViewTextBoxColumn
     Friend WithEvents QTYDataGridViewTextBoxColumn As DataGridViewTextBoxColumn
     Friend WithEvents REMARKSDataGridViewTextBoxColumn As DataGridViewTextBoxColumn
     Friend WithEvents TARGETFLGDataGridViewCheckBoxColumn As DataGridViewCheckBoxColumn
-    Friend WithEvents grd As DataGridView
-    Friend WithEvents lblItemName As Label
+    Friend WithEvents lblItemNameTitle As Label
     Friend WithEvents lblQty As Label
     Friend WithEvents lblRemarks As Label
-    Friend WithEvents btnClose As ButtonBase
     Friend WithEvents btnAdd As ButtonBase
-    Friend WithEvents lblActQty As Label
+    Friend WithEvents lblActQtyTitle As Label
     Friend WithEvents lblLocation As Label
+    Friend WithEvents lblLocationNm As Label
+    Friend WithEvents lblLocationCd As Label
+    Friend WithEvents lblBar As Label
+    Friend WithEvents lblActQty As Label
+    Friend WithEvents lblItemCd As Label
+    Friend WithEvents grd As DataGridViewBase
+    Friend WithEvents chk As DataGridViewCheckBoxColumn
     Friend WithEvents ITEMCD As DataGridViewTextBoxColumn
     Friend WithEvents LOCATIONCD As DataGridViewTextBoxColumn
+    Friend WithEvents LOCATIONNM As DataGridViewTextBoxColumn
     Friend WithEvents QTY As DataGridViewTextBoxColumn
     Friend WithEvents REMARKS As DataGridViewTextBoxColumn
+    Friend WithEvents btnDelete As ButtonBase
+    Friend WithEvents btnItemSearch As ButtonBase
+    Protected Friend WithEvents btnExecute As ButtonBase
 End Class

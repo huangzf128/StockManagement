@@ -42,6 +42,10 @@ Public Class ButtonBase
             Me.BackColor = System.Drawing.Color.Sienna
             Me.ForeColor = Color.WhiteSmoke
 
+        ElseIf Me._type = Consts.ButtonType.DELETE Then
+            Me.BackColor = System.Drawing.Color.DarkRed
+            Me.ForeColor = Color.WhiteSmoke
+
         End If
     End Sub
 

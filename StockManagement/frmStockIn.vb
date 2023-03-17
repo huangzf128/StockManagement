@@ -1,153 +1,54 @@
-﻿Public Class frmStockIn
+﻿Imports System.Data.SqlClient
+Imports System.Text
 
-    ' 商品検索ボタン押下時イベント
-    Private Sub cmdSearch_Click(sender As Object, e As EventArgs) Handles cmdSearch.Click
-        Cm.StrSearchItemCd = Cm.Nz(txtItemCd.Text, "")
-        frmItemSearch.ShowDialog()
+Public Class FrmStockIn
+    Private Sub FrmStockIn_Load(sender As Object, e As EventArgs) Handles Me.Load
     End Sub
 
-    ' 追加ボタン押下時イベント
-    Private Sub cmdAdd_Click(sender As Object, e As EventArgs) Handles cmdAdd.Click
-        If Cm.Nz(txtItemCd.Text, "") <> "" And Cm.Nz(txtQty.Text, "") <> "" And Cm.Nz(cboLocation.SelectedValue, "") <> "" Then
-            Dim Cmd As New OleDb.OleDbCommand
-            Cmd.Connection = Cm.Conn
-            Cmd.CommandText = "Insert Into T_StockIn(ITEMCD, LOCATIONCD, QTY, REMARKS, UPDDT) Values('" & txtItemCd.Text & "','" & cboLocation.SelectedValue & "'," & txtQty.Text & ",'" & Cm.Nz(txtRemarks.Text, "") & "', Now())"
-            Cmd.ExecuteNonQuery()
-            dgStockIn.Refresh()
-            txtItemCd.Text = ""
-            txtQty.Text = ""
-            txtRemarks.Text = ""
-            txtActQty.Text = ""
-            txtItemCd.Select()
-        Else
-            MessageBox.Show("必要情報を入力してください。", "追加エラー", MessageBoxButtons.OK, MessageBoxIcon.Error)
-        End If
-    End Sub
+    Protected Overrides Function getSqlAndParamStockHistory(row As DataRow) As DbParamEnt
+        Dim sb As New StringBuilder
+        sb.Append(" Insert Into    ")
+        sb.Append("   T_StockHistory(CRTDT, ITEMCD, LOCATIONCD, IOKBN, QTY, REMARKS, UPDIP) ")
+        sb.Append(" Values (  GETDATE(), @ITEMCD, @LOCATIONCD, 'I', @QTY, @REMARKS, @UPDIP )")
 
-    ' 対象削除ボタン押下時イベント
-    Private Sub cmdDelete_Click(sender As Object, e As EventArgs) Handles cmdDelete.Click
-        Dim Cmd As New OleDb.OleDbCommand
-        Cmd.Connection = Cm.Conn
-        Cmd.CommandText = "Delete From T_StockIn Where TARGETFLG = True"
-        Cmd.ExecuteNonQuery()
-        dgStockIn.Refresh()
-    End Sub
+        Dim param As New List(Of SqlParameter)
+        param.Add(New SqlParameter("@ITEMCD", row("ITEMCD")))
+        param.Add(New SqlParameter("@LOCATIONCD", row("LOCATIONCD")))
+        param.Add(New SqlParameter("@QTY", row("QTY")))
+        param.Add(New SqlParameter("@REMARKS", row("REMARKS")))
+        param.Add(New SqlParameter("@UPDIP", Util.getPcName()))
 
-    ' 入庫処理ボタン押下時イベント
-    Private Sub cmdExec_Click(sender As Object, e As EventArgs) Handles cmdExec.Click
-        Dim varIpAddress As String = ""
+        Return New DbParamEnt(sb, param.ToArray)
 
-        Dim Cmd As New OleDb.OleDbCommand
-        Dim Dta As New OleDb.OleDbDataAdapter
-        Dim Dts As New DataSet
-
-        Cmd.Connection = Cm.Conn
-        varIpAddress = Cm.DLookup("VALUE1", "M_CODE_CL", "CATEGORY = 'PREVUSER'")
-        If Cm.DLookup("LOCKST", "T_Lock", "") <> 0 Then
-            MessageBox.Show("サーバーで定時処理が稼働中です。暫く経ってから実行してください。", "入庫処理", MessageBoxButtons.OK, MessageBoxIcon.Error)
-            Exit Sub
-        End If
-
-        ' 更新データチェック
-        Cmd.CommandText = "Delete From T_ErrorAlert_CL"
-        Cmd.ExecuteNonQuery()
-        Cmd.CommandText = "Insert Into T_ErrorAlert_CL(KEYCODE, MESSAGE, CRTDT) " &
-                 "Select T_StockIn.ITEMCD, '変更商品名がマスタに登録されていません。入庫前に登録して下さい。', Now() From T_StockIn Left Join M_Item " &
-                 "On T_StockIn.ITEMCD = M_Item.ITEMCD Where M_Item.ITEMCD Is Null"
-        Cmd.ExecuteNonQuery()
-        Cmd.CommandText = "Insert Into T_ErrorAlert_CL(KEYCODE, MESSAGE, CRTDT) " &
-                 "Select T_StockIn.ITEMCD, 'ロケーションがマスタに登録されていません。確認して下さい。', Now() " &
-                 "From T_StockIn Left Join (Select * From M_Code Where CATEGORY = 'LOCATIONCD') As CODE " &
-                 "On T_StockIn.LOCATIONCD = CODE.CODE Where CODE.VALUE1 Is Null"
-        Cmd.ExecuteNonQuery()
-
-        If Cm.DCount("KEYCODE", "T_ErrorAlert_CL", "") > 0 Then
-            frmErrorAlertTbl.ShowDialog()
-        Else
-            ' サーバーテーブルに更新
-            Cmd.CommandText = "Insert Into T_StockHistory(CRTDT, ITEMCD, LOCATIONCD, IOKBN, QTY, REMARKS, UPDIP) " &
-                     "Select Now(), ITEMCD, LOCATIONCD, 'I', QTY, REMARKS, '" & Cm.Nz(varIpAddress, "") & "' " &
-                     "From T_StockIn"
-            Cmd.ExecuteNonQuery()
-            Cmd.CommandText = "Update T_ActStock " &
-                     "Inner Join T_StockIn On T_ActStock.ITEMCD = T_StockIn.ITEMCD And T_ActStock.LOCATIONCD = T_StockIn.LOCATIONCD " &
-                     "Set T_ActStock.ACTQTY = T_ActStock.ACTQTY + T_StockIn.QTY, T_ActStock.UPDDT = Now()"
-            Cmd.ExecuteNonQuery()
-            Cmd.CommandText = "Insert Into T_ActStock(ITEMCD, LOCATIONCD, ACTQTY, UPDDT) " &
-                     "Select T1.ITEMCD, T1.LOCATIONCD, T1.QTY * -1, Now() " &
-                     "From T_StockIn As T1 Left Join T_ActStock As T2 On T1.ITEMCD = T2.ITEMCD And T1.LOCATIONCD = T2.LOCATIONCD " &
-                     "Where T2.ITEMCD Is Null"
-            Cmd.ExecuteNonQuery()
-            Cmd.CommandText = "Delete From T_StockIn"
-            Cmd.ExecuteNonQuery()
-            MessageBox.Show("サーバーへの入庫処理が完了しました。", "入庫処理", MessageBoxButtons.OK, MessageBoxIcon.Information)
-            dgStockIn.Refresh()
-        End If
-    End Sub
+    End Function
 
 
-    ' 閉じるボタン押下時イベント
-    Private Sub cmdClose_Click(sender As Object, e As EventArgs) Handles cmdClose.Click
-        Close()
-    End Sub
+    Protected Overrides Function getSqlAndParamActStock(row As DataRow) As DbParamEnt
+        Dim sb As New StringBuilder
+        sb.Append(" MERGE T_ActStock AS ACT ")
+        sb.Append(" USING (values( ")
+        sb.Append("    @ITEMCD ")
+        sb.Append("   ,@LOCATIONCD ")
+        sb.Append("   ,@QTY ")
+        sb.Append(" )) AS DATA(ITEMCD, LOCATIONCD, QTY) ")
+        sb.Append(" ON (")
+        sb.Append("     ACT.ITEMCD = DATA.ITEMCD ")
+        sb.Append(" AND ACT.LOCATIONCD = DATA.LOCATIONCD ) ")
+        sb.Append(" WHEN MATCHED THEN ")
+        sb.Append("   UPDATE SET ")
+        sb.Append("      ACTQTY = ACTQTY + DATA.QTY ")
+        sb.Append("     ,UPDDT = GETDATE() ")
+        sb.Append(" WHEN NOT MATCHED BY Target THEN ")
+        sb.Append("   INSERT (ITEMCD, LOCATIONCD, ACTQTY, UPDDT) ")
+        sb.Append("   VALUES (DATA.ITEMCD, DATA.LOCATIONCD, DATA.QTY, GETDATE());")
 
-    ' 商品検索ボタン押下時イベント
-    Private Sub cmdSearch_Click()
-        Cm.StrSearchItemCd = Cm.Nz(txtItemCd.Text, "")
-        Cm.StrSearchItemFormName = Me.Name
-        frmItemSearch.ShowDialog()
-    End Sub
+        Dim param As New List(Of SqlParameter)
+        param.Add(New SqlParameter("@ITEMCD", row("ITEMCD")))
+        param.Add(New SqlParameter("@LOCATIONCD", row("LOCATIONCD")))
+        param.Add(New SqlParameter("@QTY", row("QTY")))
 
-    ' 一括メンテンスボタン押下時イベント
-    Private Sub cmdAll_Click(sender As Object, e As EventArgs) Handles cmdAll.Click
-        frmStockInTbl.ShowDialog()
-    End Sub
+        Return New DbParamEnt(sb, param.ToArray)
+    End Function
 
-
-    Private Sub frmStockIn_Load(sender As Object, e As EventArgs) Handles MyBase.Load
-
-    End Sub
-
-    ' フォームロードイベント
-    Private Sub Form_Load()
-        SetLocation()
-    End Sub
-
-    ' 商品名フォーカス喪失時イベント
-    Private Sub txtItemCd_LostFocus(sender As Object, e As EventArgs) Handles txtItemCd.LostFocus
-        GetActQty()
-    End Sub
-
-    ' ロケーションフォーカス喪失時イベント
-    Private Sub cboLocation_LostFocus(sender As Object, e As EventArgs) Handles cboLocation.LostFocus
-        GetActQty()
-    End Sub
-
-    ' ロケーション変更時イベント
-    Private Sub cboLocation_SelectedIndexChanged(sender As Object, e As EventArgs) Handles cboLocation.SelectedIndexChanged
-        GetActQty()
-    End Sub
-
-
-    Private Sub SetLocation()
-        Dim Cmd As New OleDb.OleDbCommand
-        Dim Dta As New OleDb.OleDbDataAdapter
-        Dim Dts As New DataSet
-
-        Cmd.Connection = Cm.Conn
-        Cmd.CommandText = "SELECT CODE,VALUE1 FROM M_Code WHERE CATEGORY = 'LOCATIONCD' ORDER BY CODE;"
-        Dta.SelectCommand = Cmd
-        Dta.Fill(Dts)
-        For i = 0 To Dts.Tables(0).Rows.Count
-            cboLocation.Items.Add(New With {.Text = Dts.Tables(0).Rows(i).Item("VALUE1"), .Value = Dts.Tables(0).Rows(i).Item("CODE")})
-        Next
-    End Sub
-
-    ' 実在庫数取得
-    Private Sub GetActQty()
-        Dim varQty As String
-        varQty = Cm.DLookup("ACTQTY", "T_ActStock", "ITEMCD = '" & txtItemCd.Text & "' And LOCATIONCD = '" & cboLocation.SelectedValue & "'")
-        txtActQty.Text = Cm.Nz(varQty, "")
-    End Sub
 
 End Class

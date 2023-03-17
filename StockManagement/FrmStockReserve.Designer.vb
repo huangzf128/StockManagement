@@ -30,7 +30,7 @@ Partial Class FrmStockReserve
         Me.txtItemCd = New System.Windows.Forms.TextBox()
         Me.cmbOrdStatus = New System.Windows.Forms.ComboBox()
         Me.chkReserving = New System.Windows.Forms.CheckBox()
-        Me.grd = New System.Windows.Forms.DataGridView()
+        Me.grd = New StockManagement.DataGridViewBase()
         Me.CRTDT = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.ITEMCD = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.RESERVQTY = New System.Windows.Forms.DataGridViewTextBoxColumn()
@@ -138,12 +138,12 @@ Partial Class FrmStockReserve
         Me.grd.Location = New System.Drawing.Point(10, 90)
         Me.grd.Margin = New System.Windows.Forms.Padding(2)
         Me.grd.Name = "grd"
-        Me.grd.ReadOnly = True
         Me.grd.RowHeadersVisible = False
         Me.grd.RowHeadersWidth = 72
         Me.grd.RowTemplate.DefaultCellStyle.Padding = New System.Windows.Forms.Padding(3, 0, 3, 0)
         Me.grd.Size = New System.Drawing.Size(890, 440)
         Me.grd.TabIndex = 8
+        Me.grd.Type = 0
         '
         'CRTDT
         '
@@ -153,7 +153,6 @@ Partial Class FrmStockReserve
         Me.CRTDT.Frozen = True
         Me.CRTDT.HeaderText = "引当日時"
         Me.CRTDT.Name = "CRTDT"
-        Me.CRTDT.ReadOnly = True
         Me.CRTDT.Width = 120
         '
         'ITEMCD
@@ -162,7 +161,6 @@ Partial Class FrmStockReserve
         Me.ITEMCD.Frozen = True
         Me.ITEMCD.HeaderText = "変更商品名"
         Me.ITEMCD.Name = "ITEMCD"
-        Me.ITEMCD.ReadOnly = True
         Me.ITEMCD.Width = 120
         '
         'RESERVQTY
@@ -172,7 +170,6 @@ Partial Class FrmStockReserve
         Me.RESERVQTY.DefaultCellStyle = DataGridViewCellStyle4
         Me.RESERVQTY.HeaderText = "引当数"
         Me.RESERVQTY.Name = "RESERVQTY"
-        Me.RESERVQTY.ReadOnly = True
         Me.RESERVQTY.Width = 65
         '
         'ORDERKBN
@@ -180,7 +177,6 @@ Partial Class FrmStockReserve
         Me.ORDERKBN.DataPropertyName = "ORDERKBN"
         Me.ORDERKBN.HeaderText = "受注区分"
         Me.ORDERKBN.Name = "ORDERKBN"
-        Me.ORDERKBN.ReadOnly = True
         Me.ORDERKBN.Width = 120
         '
         'DELFLGNM
@@ -188,7 +184,6 @@ Partial Class FrmStockReserve
         Me.DELFLGNM.DataPropertyName = "DELFLGNM"
         Me.DELFLGNM.HeaderText = "引当状態"
         Me.DELFLGNM.Name = "DELFLGNM"
-        Me.DELFLGNM.ReadOnly = True
         Me.DELFLGNM.Width = 80
         '
         'ORDERID
@@ -196,7 +191,6 @@ Partial Class FrmStockReserve
         Me.ORDERID.DataPropertyName = "ORDERID"
         Me.ORDERID.HeaderText = "受注ID"
         Me.ORDERID.Name = "ORDERID"
-        Me.ORDERID.ReadOnly = True
         Me.ORDERID.Width = 70
         '
         'ORDSTATUS
@@ -204,7 +198,6 @@ Partial Class FrmStockReserve
         Me.ORDSTATUS.DataPropertyName = "ORDSTATUS"
         Me.ORDSTATUS.HeaderText = "状況"
         Me.ORDSTATUS.Name = "ORDSTATUS"
-        Me.ORDSTATUS.ReadOnly = True
         Me.ORDSTATUS.Width = 60
         '
         'ORDDLVDT
@@ -212,7 +205,6 @@ Partial Class FrmStockReserve
         Me.ORDDLVDT.DataPropertyName = "ORDDLVDT"
         Me.ORDDLVDT.HeaderText = "発送日"
         Me.ORDDLVDT.Name = "ORDDLVDT"
-        Me.ORDDLVDT.ReadOnly = True
         Me.ORDDLVDT.Width = 80
         '
         'INCHARGE
@@ -220,21 +212,18 @@ Partial Class FrmStockReserve
         Me.INCHARGE.DataPropertyName = "INCHARGE"
         Me.INCHARGE.HeaderText = "担当者"
         Me.INCHARGE.Name = "INCHARGE"
-        Me.INCHARGE.ReadOnly = True
         '
         'CUSTNAME
         '
         Me.CUSTNAME.DataPropertyName = "CUSTNAME"
         Me.CUSTNAME.HeaderText = "お客様氏名"
         Me.CUSTNAME.Name = "CUSTNAME"
-        Me.CUSTNAME.ReadOnly = True
         '
         'TELNO
         '
         Me.TELNO.DataPropertyName = "TELNO"
         Me.TELNO.HeaderText = "TEL"
         Me.TELNO.Name = "TELNO"
-        Me.TELNO.ReadOnly = True
         Me.TELNO.Width = 90
         '
         'ZIPCODE
@@ -242,7 +231,6 @@ Partial Class FrmStockReserve
         Me.ZIPCODE.DataPropertyName = "ZIPCODE"
         Me.ZIPCODE.HeaderText = "郵便番号"
         Me.ZIPCODE.Name = "ZIPCODE"
-        Me.ZIPCODE.ReadOnly = True
         Me.ZIPCODE.Width = 80
         '
         'SENDADD1
@@ -250,7 +238,6 @@ Partial Class FrmStockReserve
         Me.SENDADD1.DataPropertyName = "SENDADD1"
         Me.SENDADD1.HeaderText = "住所1"
         Me.SENDADD1.Name = "SENDADD1"
-        Me.SENDADD1.ReadOnly = True
         Me.SENDADD1.Width = 150
         '
         'SENDADD2
@@ -258,7 +245,6 @@ Partial Class FrmStockReserve
         Me.SENDADD2.DataPropertyName = "SENDADD2"
         Me.SENDADD2.HeaderText = "住所2"
         Me.SENDADD2.Name = "SENDADD2"
-        Me.SENDADD2.ReadOnly = True
         Me.SENDADD2.Width = 60
         '
         'DLVCOMPANY
@@ -266,7 +252,6 @@ Partial Class FrmStockReserve
         Me.DLVCOMPANY.DataPropertyName = "DLVCOMPANY"
         Me.DLVCOMPANY.HeaderText = "配送業者"
         Me.DLVCOMPANY.Name = "DLVCOMPANY"
-        Me.DLVCOMPANY.ReadOnly = True
         Me.DLVCOMPANY.Width = 80
         '
         'DLVSLIPNO
@@ -274,14 +259,12 @@ Partial Class FrmStockReserve
         Me.DLVSLIPNO.DataPropertyName = "DLVSLIPNO"
         Me.DLVSLIPNO.HeaderText = "配送伝票番号"
         Me.DLVSLIPNO.Name = "DLVSLIPNO"
-        Me.DLVSLIPNO.ReadOnly = True
         '
         'ORDERSTATUSNM
         '
         Me.ORDERSTATUSNM.DataPropertyName = "ORDERSTATUSNM"
         Me.ORDERSTATUSNM.HeaderText = "受注ステータス"
         Me.ORDERSTATUSNM.Name = "ORDERSTATUSNM"
-        Me.ORDERSTATUSNM.ReadOnly = True
         Me.ORDERSTATUSNM.Width = 110
         '
         'ORDERDT
@@ -289,7 +272,6 @@ Partial Class FrmStockReserve
         Me.ORDERDT.DataPropertyName = "ORDERDT"
         Me.ORDERDT.HeaderText = "受注日"
         Me.ORDERDT.Name = "ORDERDT"
-        Me.ORDERDT.ReadOnly = True
         Me.ORDERDT.Width = 120
         '
         'lblItemName
@@ -403,7 +385,7 @@ Partial Class FrmStockReserve
     Friend WithEvents txtItemCd As TextBox
     Friend WithEvents cmbOrdStatus As ComboBox
     Friend WithEvents chkReserving As CheckBox
-    Friend WithEvents grd As DataGridView
+    Friend WithEvents grd As DataGridViewBase
     Friend WithEvents lblItemName As Label
     Friend WithEvents lblOrdStatus As Label
     Friend WithEvents btnSearch As ButtonBase

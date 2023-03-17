@@ -33,14 +33,7 @@ Partial Class FrmStockList
         Me.lblItemName = New System.Windows.Forms.Label()
         Me.txtItemCd = New System.Windows.Forms.TextBox()
         Me.btnSearch = New StockManagement.ButtonBase()
-        Me.grd = New System.Windows.Forms.DataGridView()
-        Me.lblItemNm = New System.Windows.Forms.Label()
-        Me.txtItemNm = New System.Windows.Forms.TextBox()
-        Me.chkWarning = New System.Windows.Forms.CheckBox()
-        Me.btnCopy = New StockManagement.ButtonBase()
-        Me.bindingNavi = New StockManagement.UBindingNavigator()
-        Me.lblRemainQty = New System.Windows.Forms.Label()
-        Me.txtRemainQty = New StockManagement.TextBoxBase()
+        Me.grd = New StockManagement.DataGridViewBase()
         Me.ITEMCD = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.SCODE = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.ITEMNAME = New System.Windows.Forms.DataGridViewTextBoxColumn()
@@ -48,6 +41,13 @@ Partial Class FrmStockList
         Me.SUMACTQTY = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.SUMRESERVTOTALQTY = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.SUMRemainQTY = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.lblItemNm = New System.Windows.Forms.Label()
+        Me.txtItemNm = New System.Windows.Forms.TextBox()
+        Me.chkWarning = New System.Windows.Forms.CheckBox()
+        Me.btnCopy = New StockManagement.ButtonBase()
+        Me.bindingNavi = New StockManagement.UBindingNavigator()
+        Me.lblRemainQty = New System.Windows.Forms.Label()
+        Me.txtRemainQty = New StockManagement.TextBoxBase()
         Me.pnlCondition.SuspendLayout()
         CType(Me.grd, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
@@ -100,12 +100,11 @@ Partial Class FrmStockList
         Me.grd.AllowUserToResizeRows = False
         DataGridViewCellStyle1.BackColor = System.Drawing.Color.WhiteSmoke
         Me.grd.AlternatingRowsDefaultCellStyle = DataGridViewCellStyle1
-        Me.grd.AutoGenerateColumns = False
         Me.grd.CellBorderStyle = System.Windows.Forms.DataGridViewCellBorderStyle.SingleHorizontal
         Me.grd.ColumnHeadersBorderStyle = System.Windows.Forms.DataGridViewHeaderBorderStyle.None
         DataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.TopCenter
         DataGridViewCellStyle2.BackColor = System.Drawing.SystemColors.Highlight
-        DataGridViewCellStyle2.Font = New System.Drawing.Font("ＭＳ Ｐゴシック", 9.0!)
+        DataGridViewCellStyle2.Font = New System.Drawing.Font("ＭＳ Ｐゴシック", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(134, Byte))
         DataGridViewCellStyle2.ForeColor = System.Drawing.SystemColors.Window
         DataGridViewCellStyle2.Padding = New System.Windows.Forms.Padding(0, 4, 0, 4)
         DataGridViewCellStyle2.SelectionBackColor = System.Drawing.SystemColors.Highlight
@@ -129,6 +128,68 @@ Partial Class FrmStockList
         Me.grd.RowTemplate.DefaultCellStyle.Padding = New System.Windows.Forms.Padding(3, 0, 3, 0)
         Me.grd.Size = New System.Drawing.Size(890, 440)
         Me.grd.TabIndex = 12
+        Me.grd.Type = 0
+        '
+        'ITEMCD
+        '
+        Me.ITEMCD.DataPropertyName = "ITEMCD"
+        Me.ITEMCD.Frozen = True
+        Me.ITEMCD.HeaderText = "変換商品名"
+        Me.ITEMCD.Name = "ITEMCD"
+        Me.ITEMCD.Width = 130
+        '
+        'SCODE
+        '
+        Me.SCODE.DataPropertyName = "SCODE"
+        DataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter
+        Me.SCODE.DefaultCellStyle = DataGridViewCellStyle3
+        Me.SCODE.HeaderText = "S-Code"
+        Me.SCODE.Name = "SCODE"
+        Me.SCODE.Width = 65
+        '
+        'ITEMNAME
+        '
+        Me.ITEMNAME.DataPropertyName = "ITEMNAME"
+        Me.ITEMNAME.HeaderText = "商品名"
+        Me.ITEMNAME.Name = "ITEMNAME"
+        Me.ITEMNAME.Width = 160
+        '
+        'SAFEQTY
+        '
+        Me.SAFEQTY.DataPropertyName = "SAFEQTY"
+        DataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter
+        DataGridViewCellStyle4.NullValue = Nothing
+        Me.SAFEQTY.DefaultCellStyle = DataGridViewCellStyle4
+        Me.SAFEQTY.HeaderText = "安全在庫数"
+        Me.SAFEQTY.Name = "SAFEQTY"
+        Me.SAFEQTY.Width = 46
+        '
+        'SUMACTQTY
+        '
+        Me.SUMACTQTY.DataPropertyName = "SUMACTQTY"
+        DataGridViewCellStyle5.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter
+        Me.SUMACTQTY.DefaultCellStyle = DataGridViewCellStyle5
+        Me.SUMACTQTY.HeaderText = "実在庫数"
+        Me.SUMACTQTY.Name = "SUMACTQTY"
+        Me.SUMACTQTY.Width = 60
+        '
+        'SUMRESERVTOTALQTY
+        '
+        Me.SUMRESERVTOTALQTY.DataPropertyName = "SUMRESERVTOTALQTY"
+        DataGridViewCellStyle6.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter
+        Me.SUMRESERVTOTALQTY.DefaultCellStyle = DataGridViewCellStyle6
+        Me.SUMRESERVTOTALQTY.HeaderText = "引当数"
+        Me.SUMRESERVTOTALQTY.Name = "SUMRESERVTOTALQTY"
+        Me.SUMRESERVTOTALQTY.Width = 50
+        '
+        'SUMRemainQTY
+        '
+        Me.SUMRemainQTY.DataPropertyName = "SUMRemainQTY"
+        DataGridViewCellStyle7.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter
+        Me.SUMRemainQTY.DefaultCellStyle = DataGridViewCellStyle7
+        Me.SUMRemainQTY.HeaderText = "有効在庫数"
+        Me.SUMRemainQTY.Name = "SUMRemainQTY"
+        Me.SUMRemainQTY.Width = 70
         '
         'lblItemNm
         '
@@ -199,67 +260,6 @@ Partial Class FrmStockList
         Me.txtRemainQty.TabIndex = 27
         Me.txtRemainQty.Type = 1
         '
-        'ITEMCD
-        '
-        Me.ITEMCD.DataPropertyName = "ITEMCD"
-        Me.ITEMCD.Frozen = True
-        Me.ITEMCD.HeaderText = "変換商品名"
-        Me.ITEMCD.Name = "ITEMCD"
-        Me.ITEMCD.Width = 130
-        '
-        'SCODE
-        '
-        Me.SCODE.DataPropertyName = "SCODE"
-        DataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter
-        Me.SCODE.DefaultCellStyle = DataGridViewCellStyle3
-        Me.SCODE.HeaderText = "S-Code"
-        Me.SCODE.Name = "SCODE"
-        Me.SCODE.Width = 65
-        '
-        'ITEMNAME
-        '
-        Me.ITEMNAME.DataPropertyName = "ITEMNAME"
-        Me.ITEMNAME.HeaderText = "商品名"
-        Me.ITEMNAME.Name = "ITEMNAME"
-        Me.ITEMNAME.Width = 160
-        '
-        'SAFEQTY
-        '
-        Me.SAFEQTY.DataPropertyName = "SAFEQTY"
-        DataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter
-        DataGridViewCellStyle4.NullValue = Nothing
-        Me.SAFEQTY.DefaultCellStyle = DataGridViewCellStyle4
-        Me.SAFEQTY.HeaderText = "安全在庫数"
-        Me.SAFEQTY.Name = "SAFEQTY"
-        Me.SAFEQTY.Width = 46
-        '
-        'SUMACTQTY
-        '
-        Me.SUMACTQTY.DataPropertyName = "SUMACTQTY"
-        DataGridViewCellStyle5.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter
-        Me.SUMACTQTY.DefaultCellStyle = DataGridViewCellStyle5
-        Me.SUMACTQTY.HeaderText = "実在庫数"
-        Me.SUMACTQTY.Name = "SUMACTQTY"
-        Me.SUMACTQTY.Width = 60
-        '
-        'SUMRESERVTOTALQTY
-        '
-        Me.SUMRESERVTOTALQTY.DataPropertyName = "SUMRESERVTOTALQTY"
-        DataGridViewCellStyle6.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter
-        Me.SUMRESERVTOTALQTY.DefaultCellStyle = DataGridViewCellStyle6
-        Me.SUMRESERVTOTALQTY.HeaderText = "引当数"
-        Me.SUMRESERVTOTALQTY.Name = "SUMRESERVTOTALQTY"
-        Me.SUMRESERVTOTALQTY.Width = 50
-        '
-        'SUMRemainQTY
-        '
-        Me.SUMRemainQTY.DataPropertyName = "SUMRemainQTY"
-        DataGridViewCellStyle7.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter
-        Me.SUMRemainQTY.DefaultCellStyle = DataGridViewCellStyle7
-        Me.SUMRemainQTY.HeaderText = "有効在庫数"
-        Me.SUMRemainQTY.Name = "SUMRemainQTY"
-        Me.SUMRemainQTY.Width = 70
-        '
         'FrmStockList
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 12.0!)
@@ -282,7 +282,7 @@ Partial Class FrmStockList
     Friend WithEvents lblItemName As Label
     Friend WithEvents txtItemCd As TextBox
     Friend WithEvents btnSearch As ButtonBase
-    Friend WithEvents grd As DataGridView
+    Friend WithEvents grd As DataGridViewBase
     Friend WithEvents lblItemNm As Label
     Friend WithEvents txtItemNm As TextBox
     Friend WithEvents chkWarning As CheckBox

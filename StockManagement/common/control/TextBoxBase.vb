@@ -25,6 +25,11 @@ Public Class TextBoxBase
         End If
     End Sub
 
+    ''' <summary>
+    ''' 数値のみ
+    ''' </summary>
+    ''' <param name="sender"></param>
+    ''' <param name="e"></param>
     Private Sub TextBox_KeyPress(ByVal sender As Object, ByVal e As System.Windows.Forms.KeyPressEventArgs)
 
         '97 - 122 = Ascii codes for simple letters

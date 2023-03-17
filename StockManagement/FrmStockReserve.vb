@@ -17,7 +17,6 @@ Public Class FrmStockReserve
 
     Private _srchCondition As New SearchCondition
 
-    Public needInit As Boolean = True
 #End Region
 
 #Region "EVENT"
@@ -62,7 +61,7 @@ Public Class FrmStockReserve
                 grd.Invoke(New SetDataSourceDelegate(AddressOf SetDataSource), grd, dt)
             End Function,
             Sub()
-                CloseForm()
+                CloseLoadingForm()
             End Sub)
     End Sub
 

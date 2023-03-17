@@ -19,9 +19,13 @@ Public Class UDataTimePicker
     End Sub
 #End Region
 
-    Public Function getDateTime(Optional dateFormat As String = "yyyy-MM-dd") As String
-        Return dtpDate.Value.Date.ToString(dateFormat) & " " & cmbHour.Text.PadLeft(2, "0") & ":" & cmbMinute.Text.PadLeft(2, "0")
-    End Function
+
+    Public Sub setDateTime(ByRef d As Date, ByRef h As String, ByRef m As String)
+        dtpDate.Value = d
+        cmbHour.SelectedText = h
+        cmbMinute.SelectedText = m
+    End Sub
+
 
     Public Sub setDateTime(ByRef dTime As Date)
 
@@ -38,6 +42,13 @@ Public Class UDataTimePicker
 
         cmbMinute.SelectedText = Minute(Now)
     End Sub
+
+
+    Public Function getDateTime(Optional dateFormat As String = "yyyy-MM-dd") As String
+        Return dtpDate.Value.Date.ToString(dateFormat) & " " & cmbHour.Text.PadLeft(2, "0") & ":" & cmbMinute.Text.PadLeft(2, "0")
+    End Function
+
+
     Public Function getDate(Optional dateFormat As String = "yyyy-MM-dd") As String
         Return dtpDate.Value.Date.ToString(dateFormat)
     End Function

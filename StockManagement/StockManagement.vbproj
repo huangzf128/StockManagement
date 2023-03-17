@@ -32,8 +32,8 @@
     <CreateWebPageOnPublish>true</CreateWebPageOnPublish>
     <WebPage>publish.htm</WebPage>
     <TrustUrlParameters>true</TrustUrlParameters>
-    <ApplicationRevision>4</ApplicationRevision>
-    <ApplicationVersion>1.0.1.4</ApplicationVersion>
+    <ApplicationRevision>7</ApplicationRevision>
+    <ApplicationVersion>1.0.1.7</ApplicationVersion>
     <UseApplicationTrust>false</UseApplicationTrust>
     <CreateDesktopShortcut>true</CreateDesktopShortcut>
     <PublishWizardCompleted>true</PublishWizardCompleted>
@@ -126,6 +126,15 @@
     <Compile Include="common\control\CheckBoxBase.vb">
       <SubType>Component</SubType>
     </Compile>
+    <Compile Include="common\control\DataGridViewBase.vb">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="common\control\SubFrmBase.Designer.vb">
+      <DependentUpon>SubFrmBase.vb</DependentUpon>
+    </Compile>
+    <Compile Include="common\control\SubFrmBase.vb">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="common\control\TextBoxBase.vb">
       <SubType>Component</SubType>
     </Compile>
@@ -157,15 +166,18 @@
     </Compile>
     <Compile Include="common\db\DbHandler.vb" />
     <Compile Include="common\db\DbParamEnt.vb" />
+    <Compile Include="common\control\LabelBase.vb">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="common\style\GridStyle.vb" />
     <Compile Include="common\style\Style.vb" />
     <Compile Include="common\utils\Async.vb" />
     <Compile Include="common\utils\Msg.vb" />
     <Compile Include="common\utils\Util.vb" />
-    <Compile Include="frmDairiImport.Designer.vb">
-      <DependentUpon>frmDairiImport.vb</DependentUpon>
+    <Compile Include="FrmStockIn.Designer.vb">
+      <DependentUpon>FrmStockIn.vb</DependentUpon>
     </Compile>
-    <Compile Include="frmDairiImport.vb">
+    <Compile Include="FrmStockIn.vb">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="FrmDashboard.Designer.vb">
@@ -174,16 +186,10 @@
     <Compile Include="FrmDashboard.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="frmErrorAlertTbl.Designer.vb">
-      <DependentUpon>frmErrorAlertTbl.vb</DependentUpon>
+    <Compile Include="FrmItemSearch.Designer.vb">
+      <DependentUpon>FrmItemSearch.vb</DependentUpon>
     </Compile>
-    <Compile Include="frmErrorAlertTbl.vb">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="frmItemSearch.Designer.vb">
-      <DependentUpon>frmItemSearch.vb</DependentUpon>
-    </Compile>
-    <Compile Include="frmItemSearch.vb">
+    <Compile Include="FrmItemSearch.vb">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="FrmStockListHistory.Designer.vb">
@@ -198,18 +204,6 @@
     <Compile Include="FrmRanking.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="frmStockIn.Designer.vb">
-      <DependentUpon>frmStockIn.vb</DependentUpon>
-    </Compile>
-    <Compile Include="frmStockIn.vb">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="frmStockInTbl.Designer.vb">
-      <DependentUpon>frmStockInTbl.vb</DependentUpon>
-    </Compile>
-    <Compile Include="frmStockInTbl.vb">
-      <SubType>Form</SubType>
-    </Compile>
     <Compile Include="FrmStockList.Designer.vb">
       <DependentUpon>FrmStockList.vb</DependentUpon>
     </Compile>
@@ -222,16 +216,10 @@
     <Compile Include="FrmStockOut.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="frmStockOutTbl.Designer.vb">
-      <DependentUpon>frmStockOutTbl.vb</DependentUpon>
+    <Compile Include="FrmLogin.Designer.vb">
+      <DependentUpon>FrmLogin.vb</DependentUpon>
     </Compile>
-    <Compile Include="frmStockOutTbl.vb">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="frmLogin.Designer.vb">
-      <DependentUpon>frmLogin.vb</DependentUpon>
-    </Compile>
-    <Compile Include="frmLogin.vb">
+    <Compile Include="FrmLogin.vb">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="FrmStockHistory.Designer.vb">
@@ -244,12 +232,6 @@
       <DependentUpon>FrmStockReserve.vb</DependentUpon>
     </Compile>
     <Compile Include="FrmStockReserve.vb">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="frmYahooImport.Designer.vb">
-      <DependentUpon>frmYahooImport.vb</DependentUpon>
-    </Compile>
-    <Compile Include="frmYahooImport.vb">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="FrmMenu.vb">
@@ -277,6 +259,9 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="common\control\SubFrmBase.resx">
+      <DependentUpon>SubFrmBase.vb</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="common\control\FrmBase.resx">
       <DependentUpon>FrmBase.vb</DependentUpon>
     </EmbeddedResource>
@@ -289,14 +274,14 @@
     <EmbeddedResource Include="common\control\LoadingForm.resx">
       <DependentUpon>LoadingForm.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="frmDairiImport.resx">
-      <DependentUpon>frmDairiImport.vb</DependentUpon>
+    <EmbeddedResource Include="FrmStockIn.resx">
+      <DependentUpon>FrmStockIn.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="FrmDashboard.resx">
       <DependentUpon>FrmDashboard.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="frmItemSearch.resx">
-      <DependentUpon>frmItemSearch.vb</DependentUpon>
+    <EmbeddedResource Include="FrmItemSearch.resx">
+      <DependentUpon>FrmItemSearch.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="FrmStockListHistory.resx">
       <DependentUpon>FrmStockListHistory.vb</DependentUpon>
@@ -304,26 +289,20 @@
     <EmbeddedResource Include="FrmRanking.resx">
       <DependentUpon>FrmRanking.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="frmStockIn.resx">
-      <DependentUpon>frmStockIn.vb</DependentUpon>
-    </EmbeddedResource>
     <EmbeddedResource Include="FrmStockList.resx">
       <DependentUpon>FrmStockList.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="FrmStockOut.resx">
       <DependentUpon>FrmStockOut.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="frmLogin.resx">
-      <DependentUpon>frmLogin.vb</DependentUpon>
+    <EmbeddedResource Include="FrmLogin.resx">
+      <DependentUpon>FrmLogin.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="FrmStockHistory.resx">
       <DependentUpon>FrmStockHistory.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="FrmStockReserve.resx">
       <DependentUpon>FrmStockReserve.vb</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="frmYahooImport.resx">
-      <DependentUpon>frmYahooImport.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="FrmMenu.resx">
       <DependentUpon>FrmMenu.vb</DependentUpon>
@@ -361,6 +340,9 @@
     </BootstrapperPackage>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="image\Dark Purple.jpg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="image\Dark Ocean.jpg">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
@@ -370,8 +352,16 @@
     <Content Include="image\loading_cat.gif">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Content Include="image\Dark Green.jpg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="image\Light Ocean.jpg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="view\StockList.sql" />
-    <None Include="Resources\Light_Ocean.bmp" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Resources\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
 </Project>
