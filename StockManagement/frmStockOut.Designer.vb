@@ -26,15 +26,8 @@ Partial Class FrmStockOut
         Dim DataGridViewCellStyle2 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Dim DataGridViewCellStyle4 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Dim DataGridViewCellStyle3 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Me.txtQty = New System.Windows.Forms.TextBox()
         Me.txtRemarks = New System.Windows.Forms.TextBox()
         Me.grd = New StockManagement.DataGridViewBase()
-        Me.chk = New System.Windows.Forms.DataGridViewCheckBoxColumn()
-        Me.ITEMCD = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.LOCATIONCD = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.LOCATIONNM = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.QTY = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.REMARKS = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.lblItemNameTitle = New System.Windows.Forms.Label()
         Me.lblQty = New System.Windows.Forms.Label()
         Me.lblRemarks = New System.Windows.Forms.Label()
@@ -49,12 +42,24 @@ Partial Class FrmStockOut
         Me.btnDelete = New StockManagement.ButtonBase()
         Me.btnItemSearch = New StockManagement.ButtonBase()
         Me.btnExecute = New StockManagement.ButtonBase()
+        Me.LabelBase1 = New StockManagement.LabelBase()
+        Me.txtQty = New StockManagement.TextBoxBase()
+        Me.btnPaste = New StockManagement.ButtonBase()
+        Me.chk = New System.Windows.Forms.DataGridViewCheckBoxColumn()
+        Me.ITEMCD = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.LOCATIONCD = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.LOCATIONNM = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.QTY = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.REMARKS = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.pnlCondition.SuspendLayout()
         CType(Me.grd, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
         'pnlCondition
         '
+        Me.pnlCondition.Controls.Add(Me.btnPaste)
+        Me.pnlCondition.Controls.Add(Me.txtQty)
+        Me.pnlCondition.Controls.Add(Me.LabelBase1)
         Me.pnlCondition.Controls.Add(Me.btnItemSearch)
         Me.pnlCondition.Controls.Add(Me.lblItemCd)
         Me.pnlCondition.Controls.Add(Me.lblActQty)
@@ -67,17 +72,8 @@ Partial Class FrmStockOut
         Me.pnlCondition.Controls.Add(Me.lblRemarks)
         Me.pnlCondition.Controls.Add(Me.lblQty)
         Me.pnlCondition.Controls.Add(Me.lblItemNameTitle)
-        Me.pnlCondition.Controls.Add(Me.txtQty)
         Me.pnlCondition.Controls.Add(Me.txtRemarks)
         Me.pnlCondition.Size = New System.Drawing.Size(910, 112)
-        '
-        'txtQty
-        '
-        Me.txtQty.Location = New System.Drawing.Point(90, 45)
-        Me.txtQty.Margin = New System.Windows.Forms.Padding(2)
-        Me.txtQty.Name = "txtQty"
-        Me.txtQty.Size = New System.Drawing.Size(41, 19)
-        Me.txtQty.TabIndex = 1
         '
         'txtRemarks
         '
@@ -97,7 +93,7 @@ Partial Class FrmStockOut
         Me.grd.ColumnHeadersBorderStyle = System.Windows.Forms.DataGridViewHeaderBorderStyle.None
         DataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.TopCenter
         DataGridViewCellStyle2.BackColor = System.Drawing.SystemColors.Highlight
-        DataGridViewCellStyle2.Font = New System.Drawing.Font("ＭＳ Ｐゴシック", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(134, Byte))
+        DataGridViewCellStyle2.Font = New System.Drawing.Font("ＭＳ Ｐゴシック", 9.0!)
         DataGridViewCellStyle2.ForeColor = System.Drawing.SystemColors.Window
         DataGridViewCellStyle2.Padding = New System.Windows.Forms.Padding(0, 4, 0, 4)
         DataGridViewCellStyle2.SelectionBackColor = System.Drawing.SystemColors.Highlight
@@ -125,52 +121,6 @@ Partial Class FrmStockOut
         Me.grd.Size = New System.Drawing.Size(888, 394)
         Me.grd.TabIndex = 12
         Me.grd.Type = 1
-        '
-        'chk
-        '
-        Me.chk.HeaderText = "選択"
-        Me.chk.Name = "chk"
-        Me.chk.Width = 40
-        '
-        'ITEMCD
-        '
-        Me.ITEMCD.DataPropertyName = "ITEMCD"
-        Me.ITEMCD.HeaderText = "変更商品名"
-        Me.ITEMCD.Name = "ITEMCD"
-        Me.ITEMCD.ReadOnly = True
-        Me.ITEMCD.Width = 180
-        '
-        'LOCATIONCD
-        '
-        Me.LOCATIONCD.DataPropertyName = "LOCATIONCD"
-        Me.LOCATIONCD.HeaderText = "ロケーション"
-        Me.LOCATIONCD.Name = "LOCATIONCD"
-        Me.LOCATIONCD.Visible = False
-        '
-        'LOCATIONNM
-        '
-        Me.LOCATIONNM.DataPropertyName = "LOCATIONNM"
-        Me.LOCATIONNM.HeaderText = "ロケーション名"
-        Me.LOCATIONNM.Name = "LOCATIONNM"
-        Me.LOCATIONNM.ReadOnly = True
-        Me.LOCATIONNM.Width = 150
-        '
-        'QTY
-        '
-        Me.QTY.DataPropertyName = "QTY"
-        DataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter
-        DataGridViewCellStyle3.NullValue = Nothing
-        Me.QTY.DefaultCellStyle = DataGridViewCellStyle3
-        Me.QTY.HeaderText = "数量"
-        Me.QTY.Name = "QTY"
-        Me.QTY.Width = 80
-        '
-        'REMARKS
-        '
-        Me.REMARKS.DataPropertyName = "REMARKS"
-        Me.REMARKS.HeaderText = "備考"
-        Me.REMARKS.Name = "REMARKS"
-        Me.REMARKS.Width = 420
         '
         'lblItemNameTitle
         '
@@ -290,7 +240,7 @@ Partial Class FrmStockOut
         Me.btnDelete.BackColor = System.Drawing.Color.DarkRed
         Me.btnDelete.Font = New System.Drawing.Font("ＭＳ Ｐゴシック", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(134, Byte))
         Me.btnDelete.ForeColor = System.Drawing.Color.WhiteSmoke
-        Me.btnDelete.Location = New System.Drawing.Point(700, 519)
+        Me.btnDelete.Location = New System.Drawing.Point(11, 518)
         Me.btnDelete.Name = "btnDelete"
         Me.btnDelete.Size = New System.Drawing.Size(70, 30)
         Me.btnDelete.TabIndex = 13
@@ -320,9 +270,89 @@ Partial Class FrmStockOut
         Me.btnExecute.Name = "btnExecute"
         Me.btnExecute.Size = New System.Drawing.Size(70, 30)
         Me.btnExecute.TabIndex = 14
-        Me.btnExecute.Text = "出庫処理"
+        Me.btnExecute.Text = "出庫"
         Me.btnExecute.Type = 5
         Me.btnExecute.UseVisualStyleBackColor = False
+        '
+        'LabelBase1
+        '
+        Me.LabelBase1.AutoSize = True
+        Me.LabelBase1.ForeColor = System.Drawing.Color.WhiteSmoke
+        Me.LabelBase1.Location = New System.Drawing.Point(694, 92)
+        Me.LabelBase1.Name = "LabelBase1"
+        Me.LabelBase1.Size = New System.Drawing.Size(186, 12)
+        Me.LabelBase1.TabIndex = 32
+        Me.LabelBase1.Text = "※数量と備考は直接編集できます。"
+        Me.LabelBase1.Type = 0
+        '
+        'txtQty
+        '
+        Me.txtQty.ImeMode = System.Windows.Forms.ImeMode.Disable
+        Me.txtQty.Location = New System.Drawing.Point(90, 45)
+        Me.txtQty.Name = "txtQty"
+        Me.txtQty.Size = New System.Drawing.Size(45, 19)
+        Me.txtQty.TabIndex = 33
+        Me.txtQty.Type = 1
+        '
+        'btnPaste
+        '
+        Me.btnPaste.BackColor = System.Drawing.Color.DimGray
+        Me.btnPaste.Font = New System.Drawing.Font("ＭＳ Ｐゴシック", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(134, Byte))
+        Me.btnPaste.ForeColor = System.Drawing.Color.WhiteSmoke
+        Me.btnPaste.Location = New System.Drawing.Point(810, 15)
+        Me.btnPaste.Name = "btnPaste"
+        Me.btnPaste.Size = New System.Drawing.Size(70, 30)
+        Me.btnPaste.TabIndex = 34
+        Me.btnPaste.Text = "貼付け"
+        Me.btnPaste.Type = 4
+        Me.btnPaste.UseVisualStyleBackColor = False
+        '
+        'chk
+        '
+        Me.chk.HeaderText = "選択"
+        Me.chk.Name = "chk"
+        Me.chk.Width = 40
+        '
+        'ITEMCD
+        '
+        Me.ITEMCD.DataPropertyName = "ITEMCD"
+        Me.ITEMCD.HeaderText = "変更商品名"
+        Me.ITEMCD.Name = "ITEMCD"
+        Me.ITEMCD.ReadOnly = True
+        Me.ITEMCD.Width = 180
+        '
+        'LOCATIONCD
+        '
+        Me.LOCATIONCD.DataPropertyName = "LOCATIONCD"
+        Me.LOCATIONCD.HeaderText = "Loc"
+        Me.LOCATIONCD.Name = "LOCATIONCD"
+        Me.LOCATIONCD.ReadOnly = True
+        Me.LOCATIONCD.Width = 50
+        '
+        'LOCATIONNM
+        '
+        Me.LOCATIONNM.DataPropertyName = "LOCATIONNM"
+        Me.LOCATIONNM.HeaderText = "ロケーション名"
+        Me.LOCATIONNM.Name = "LOCATIONNM"
+        Me.LOCATIONNM.ReadOnly = True
+        Me.LOCATIONNM.Width = 110
+        '
+        'QTY
+        '
+        Me.QTY.DataPropertyName = "QTY"
+        DataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter
+        DataGridViewCellStyle3.NullValue = Nothing
+        Me.QTY.DefaultCellStyle = DataGridViewCellStyle3
+        Me.QTY.HeaderText = "数量"
+        Me.QTY.Name = "QTY"
+        Me.QTY.Width = 70
+        '
+        'REMARKS
+        '
+        Me.REMARKS.DataPropertyName = "REMARKS"
+        Me.REMARKS.HeaderText = "備考"
+        Me.REMARKS.Name = "REMARKS"
+        Me.REMARKS.Width = 320
         '
         'FrmStockOut
         '
@@ -345,7 +375,6 @@ Partial Class FrmStockOut
         Me.ResumeLayout(False)
 
     End Sub
-    Friend WithEvents txtQty As TextBox
     Friend WithEvents txtRemarks As TextBox
     Friend WithEvents ITEMCDDataGridViewTextBoxColumn As DataGridViewTextBoxColumn
     Friend WithEvents LOCATIONCDDataGridViewTextBoxColumn As DataGridViewTextBoxColumn
@@ -364,13 +393,16 @@ Partial Class FrmStockOut
     Friend WithEvents lblActQty As Label
     Friend WithEvents lblItemCd As Label
     Friend WithEvents grd As DataGridViewBase
+    Friend WithEvents btnDelete As ButtonBase
+    Friend WithEvents btnItemSearch As ButtonBase
+    Protected Friend WithEvents btnExecute As ButtonBase
+    Friend WithEvents LabelBase1 As LabelBase
+    Friend WithEvents txtQty As TextBoxBase
+    Friend WithEvents btnPaste As ButtonBase
     Friend WithEvents chk As DataGridViewCheckBoxColumn
     Friend WithEvents ITEMCD As DataGridViewTextBoxColumn
     Friend WithEvents LOCATIONCD As DataGridViewTextBoxColumn
     Friend WithEvents LOCATIONNM As DataGridViewTextBoxColumn
     Friend WithEvents QTY As DataGridViewTextBoxColumn
     Friend WithEvents REMARKS As DataGridViewTextBoxColumn
-    Friend WithEvents btnDelete As ButtonBase
-    Friend WithEvents btnItemSearch As ButtonBase
-    Protected Friend WithEvents btnExecute As ButtonBase
 End Class

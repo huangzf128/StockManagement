@@ -37,6 +37,7 @@ Partial Class FrmItemSearch
         Me.btnClose = New StockManagement.ButtonBase()
         Me.lblLocation = New System.Windows.Forms.Label()
         Me.cmbLocation = New System.Windows.Forms.ComboBox()
+        Me.Label1 = New System.Windows.Forms.Label()
         Me.pnlCondition.SuspendLayout()
         CType(Me.grd, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
@@ -61,7 +62,7 @@ Partial Class FrmItemSearch
         Me.txtItemCd.Location = New System.Drawing.Point(92, 8)
         Me.txtItemCd.Margin = New System.Windows.Forms.Padding(2)
         Me.txtItemCd.Name = "txtItemCd"
-        Me.txtItemCd.Size = New System.Drawing.Size(116, 19)
+        Me.txtItemCd.Size = New System.Drawing.Size(131, 19)
         Me.txtItemCd.TabIndex = 1
         '
         'grd
@@ -70,12 +71,11 @@ Partial Class FrmItemSearch
         Me.grd.AllowUserToResizeRows = False
         DataGridViewCellStyle1.BackColor = System.Drawing.Color.WhiteSmoke
         Me.grd.AlternatingRowsDefaultCellStyle = DataGridViewCellStyle1
-        Me.grd.AutoGenerateColumns = False
         Me.grd.CellBorderStyle = System.Windows.Forms.DataGridViewCellBorderStyle.SingleHorizontal
         Me.grd.ColumnHeadersBorderStyle = System.Windows.Forms.DataGridViewHeaderBorderStyle.None
         DataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.TopCenter
         DataGridViewCellStyle2.BackColor = System.Drawing.SystemColors.Highlight
-        DataGridViewCellStyle2.Font = New System.Drawing.Font("ＭＳ Ｐゴシック", 9.0!)
+        DataGridViewCellStyle2.Font = New System.Drawing.Font("ＭＳ Ｐゴシック", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(134, Byte))
         DataGridViewCellStyle2.ForeColor = System.Drawing.SystemColors.Window
         DataGridViewCellStyle2.Padding = New System.Windows.Forms.Padding(0, 4, 0, 4)
         DataGridViewCellStyle2.SelectionBackColor = System.Drawing.SystemColors.Highlight
@@ -93,13 +93,13 @@ Partial Class FrmItemSearch
         DataGridViewCellStyle4.WrapMode = System.Windows.Forms.DataGridViewTriState.[False]
         Me.grd.DefaultCellStyle = DataGridViewCellStyle4
         Me.grd.EnableHeadersVisualStyles = False
-        Me.grd.Location = New System.Drawing.Point(10, 98)
+        Me.grd.Location = New System.Drawing.Point(10, 116)
         Me.grd.Margin = New System.Windows.Forms.Padding(2)
         Me.grd.Name = "grd"
         Me.grd.RowHeadersVisible = False
         Me.grd.RowHeadersWidth = 72
         Me.grd.RowTemplate.DefaultCellStyle.Padding = New System.Windows.Forms.Padding(3, 0, 3, 0)
-        Me.grd.Size = New System.Drawing.Size(394, 295)
+        Me.grd.Size = New System.Drawing.Size(394, 297)
         Me.grd.TabIndex = 2
         Me.grd.Type = 0
         '
@@ -187,11 +187,22 @@ Partial Class FrmItemSearch
         Me.cmbLocation.Size = New System.Drawing.Size(131, 20)
         Me.cmbLocation.TabIndex = 26
         '
+        'Label1
+        '
+        Me.Label1.AutoSize = True
+        Me.Label1.ForeColor = System.Drawing.Color.Red
+        Me.Label1.Location = New System.Drawing.Point(79, 99)
+        Me.Label1.Name = "Label1"
+        Me.Label1.Size = New System.Drawing.Size(324, 12)
+        Me.Label1.TabIndex = 3
+        Me.Label1.Text = "※商品を選択するには、該当明細をダブルクリックしてください。"
+        '
         'FrmItemSearch
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 12.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.ClientSize = New System.Drawing.Size(415, 404)
+        Me.ClientSize = New System.Drawing.Size(415, 426)
+        Me.Controls.Add(Me.Label1)
         Me.Controls.Add(Me.grd)
         Me.Margin = New System.Windows.Forms.Padding(2)
         Me.Name = "FrmItemSearch"
@@ -199,10 +210,12 @@ Partial Class FrmItemSearch
         Me.Text = "frmItemSearch"
         Me.Controls.SetChildIndex(Me.pnlCondition, 0)
         Me.Controls.SetChildIndex(Me.grd, 0)
+        Me.Controls.SetChildIndex(Me.Label1, 0)
         Me.pnlCondition.ResumeLayout(False)
         Me.pnlCondition.PerformLayout()
         CType(Me.grd, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)
+        Me.PerformLayout()
 
     End Sub
     Friend WithEvents txtItemCd As TextBox
@@ -216,4 +229,5 @@ Partial Class FrmItemSearch
     Friend WithEvents LOCATIONNM As DataGridViewTextBoxColumn
     Friend WithEvents ACTQTY As DataGridViewTextBoxColumn
     Friend WithEvents LOCATIONCD As DataGridViewTextBoxColumn
+    Friend WithEvents Label1 As Label
 End Class

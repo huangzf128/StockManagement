@@ -31,8 +31,6 @@ Partial Class FrmStockListHistory
         Me.txtItemCd = New System.Windows.Forms.TextBox()
         Me.btnSearch = New StockManagement.ButtonBase()
         Me.grd = New StockManagement.DataGridViewBase()
-        Me.btnCopy = New StockManagement.ButtonBase()
-        Me.btnSumSearch = New StockManagement.ButtonBase()
         Me.ITEMCD = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.LOCATIONNM = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.LOCATIONCD = New System.Windows.Forms.DataGridViewTextBoxColumn()
@@ -40,13 +38,13 @@ Partial Class FrmStockListHistory
         Me.CRTDT = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.QTYI = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.QTYO = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.btnCopy = New StockManagement.ButtonBase()
         Me.pnlCondition.SuspendLayout()
         CType(Me.grd, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
         'pnlCondition
         '
-        Me.pnlCondition.Controls.Add(Me.btnSumSearch)
         Me.pnlCondition.Controls.Add(Me.btnCopy)
         Me.pnlCondition.Controls.Add(Me.btnSearch)
         Me.pnlCondition.Controls.Add(Me.dtPickerFrom)
@@ -126,33 +124,6 @@ Partial Class FrmStockListHistory
         Me.grd.TabIndex = 1
         Me.grd.Type = 0
         '
-        'btnCopy
-        '
-        Me.btnCopy.BackColor = System.Drawing.Color.Sienna
-        Me.btnCopy.Font = New System.Drawing.Font("ＭＳ Ｐゴシック", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(134, Byte))
-        Me.btnCopy.ForeColor = System.Drawing.Color.WhiteSmoke
-        Me.btnCopy.Location = New System.Drawing.Point(810, 15)
-        Me.btnCopy.Name = "btnCopy"
-        Me.btnCopy.Size = New System.Drawing.Size(70, 30)
-        Me.btnCopy.TabIndex = 32
-        Me.btnCopy.Text = "全コピー"
-        Me.btnCopy.Type = 5
-        Me.btnCopy.UseVisualStyleBackColor = False
-        '
-        'btnSumSearch
-        '
-        Me.btnSumSearch.BackColor = System.Drawing.Color.DarkGreen
-        Me.btnSumSearch.Font = New System.Drawing.Font("ＭＳ Ｐゴシック", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(134, Byte))
-        Me.btnSumSearch.ForeColor = System.Drawing.Color.WhiteSmoke
-        Me.btnSumSearch.Location = New System.Drawing.Point(730, 52)
-        Me.btnSumSearch.Name = "btnSumSearch"
-        Me.btnSumSearch.Size = New System.Drawing.Size(70, 30)
-        Me.btnSumSearch.TabIndex = 33
-        Me.btnSumSearch.Text = "集計検索"
-        Me.btnSumSearch.Type = 3
-        Me.btnSumSearch.UseVisualStyleBackColor = False
-        Me.btnSumSearch.Visible = False
-        '
         'ITEMCD
         '
         Me.ITEMCD.DataPropertyName = "ITEMCD"
@@ -202,6 +173,19 @@ Partial Class FrmStockListHistory
         Me.QTYO.Name = "QTYO"
         Me.QTYO.Width = 110
         '
+        'btnCopy
+        '
+        Me.btnCopy.BackColor = System.Drawing.Color.Sienna
+        Me.btnCopy.Font = New System.Drawing.Font("ＭＳ Ｐゴシック", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(134, Byte))
+        Me.btnCopy.ForeColor = System.Drawing.Color.WhiteSmoke
+        Me.btnCopy.Location = New System.Drawing.Point(810, 15)
+        Me.btnCopy.Name = "btnCopy"
+        Me.btnCopy.Size = New System.Drawing.Size(70, 30)
+        Me.btnCopy.TabIndex = 32
+        Me.btnCopy.Text = "全コピー"
+        Me.btnCopy.Type = 5
+        Me.btnCopy.UseVisualStyleBackColor = False
+        '
         'FrmStockListHistory
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 12.0!)
@@ -225,7 +209,6 @@ Partial Class FrmStockListHistory
     Friend WithEvents btnSearch As ButtonBase
     Friend WithEvents grd As DataGridViewBase
     Friend WithEvents btnCopy As ButtonBase
-    Friend WithEvents btnSumSearch As ButtonBase
     Friend WithEvents ITEMCD As DataGridViewTextBoxColumn
     Friend WithEvents LOCATIONNM As DataGridViewTextBoxColumn
     Friend WithEvents LOCATIONCD As DataGridViewTextBoxColumn

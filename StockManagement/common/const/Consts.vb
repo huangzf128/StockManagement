@@ -31,4 +31,7 @@ Public Class Consts
     Public Shared ReadOnly DATA_INTERVAL As String = ConfigurationManager.AppSettings.Get("DATE_INTERVAL").ToString
 
     Public Const DATE_LONG = "yyyy-MM-dd HH:mm:ss"
+
+    Public Const PROGRAM_FOLDER = "SyoutenStockManage"
+    Public Const INFO_FILE_NAME = "info.txt"
 End Class

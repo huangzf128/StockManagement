@@ -1,5 +1,4 @@
 ﻿Imports System.Data.SqlClient
-Imports System.Reflection
 Imports System.Runtime.CompilerServices
 Imports System.Text
 
@@ -8,8 +7,6 @@ Public Class FrmStockList
     Private locationDt As DataTable = Nothing
 
 #Region "EVENT"
-
-
 
     Private Sub FrmStockList_Load(sender As Object, e As EventArgs) Handles Me.Load
 
@@ -42,7 +39,7 @@ Public Class FrmStockList
     Private Sub grd_Paint(sender As Object, e As PaintEventArgs) Handles grd.Paint
 
         If locationDt Is Nothing Then
-            locationDt = DbHandler.executeSelect(getSqlAndParamLocation())
+            locationDt = CommonService.GetLocation(False)
         End If
 
         If grd.Columns.Count <= 7 Then
@@ -103,6 +100,8 @@ Public Class FrmStockList
 
 #End Region
 
+
+#Region "METHOD"
 
     Private Function search() As AsyncVoidMethodBuilder
         Dim srchDt As DataTable = DbHandler.executeSelect(getSqlAndParam())
@@ -190,13 +189,10 @@ Public Class FrmStockList
 
     End Function
 
-
-#Region "SQL"
-
     Private Function createDt() As DataTable
 
         If locationDt Is Nothing Then
-            locationDt = DbHandler.executeSelect(getSqlAndParamLocation())
+            locationDt = CommonService.GetLocation(False)
         End If
 
         Dim dt As New DataTable
@@ -219,23 +215,10 @@ Public Class FrmStockList
         Return dt
     End Function
 
-    Private Function getSqlAndParamLocation() As DbParamEnt
+#End Region
 
-        Dim sb As New StringBuilder
-        sb.Append(" SELECT ")
-        sb.Append("     CODE ")
-        sb.Append("    ,M.VALUE1 AS LOCATIONNM ")
-        sb.Append(" ")
-        sb.Append(" FROM M_Code M ")
-        sb.Append(" WHERE ")
-        sb.Append("     CATEGORY = 'LOCATIONCD' ")
-        ' TODO: 倉庫 西京を除外
-        sb.Append(" AND CODE <> 2 ")
-        sb.Append(" ORDER BY ")
-        sb.Append("     CODE ")
 
-        Return New DbParamEnt(sb, Nothing)
-    End Function
+#Region "SQL"
 
     Private Function getSqlAndParam（） As DbParamEnt
 

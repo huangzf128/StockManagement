@@ -9,8 +9,6 @@ Public Class FrmStockListHistory
 #Region "EVENT"
     Private Sub FrmStockListHistory_Load(sender As Object, e As EventArgs) Handles Me.Load
         dtPickerFrom.setDateTime(Now)
-        btnSumSearch.Visible = FrmDashboard.isAuthUser
-
         search()
     End Sub
 
@@ -45,7 +43,7 @@ Public Class FrmStockListHistory
         Async.Process(
             Function()
                 Me.Invoke(Sub()
-                              Dim dt As DataTable = DbHandler.executeSelect(getSqlAndParam())
+                              Dim dt As DataTable = DbHandler.executeSelect(getSqlAndParamSum())
                               grd.DataSource = dt
                           End Sub)
             End Function,
@@ -161,22 +159,6 @@ Public Class FrmStockListHistory
         Return New DbParamEnt(sb, param.ToArray)
     End Function
 
-
-    Private Sub btnSumSearch_Click(sender As Object, e As EventArgs) Handles btnSumSearch.Click
-
-        ShowWaitForm()
-
-        Async.Process(
-            Function()
-                Me.Invoke(Sub()
-                              Dim dt As DataTable = DbHandler.executeSelect(getSqlAndParamSum())
-                              grd.DataSource = dt
-                          End Sub)
-            End Function,
-            Sub()
-                CloseLoadingForm()
-            End Sub)
-    End Sub
 
 #End Region
 

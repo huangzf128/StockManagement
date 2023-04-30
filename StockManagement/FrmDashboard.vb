@@ -24,6 +24,9 @@ Public Class FrmDashboard
 
     Private Sub FrmDashboard_Load(sender As Object, e As EventArgs) Handles Me.Load
 
+        ' create folder
+        Util.CreateFolder(Util.GetPgFolderPath())
+
         ' 未処理受注
         Dim dt As DataTable = getStockReservInfo()
         grdBacklogReserv.DataSource = dt
@@ -145,6 +148,29 @@ Public Class FrmDashboard
         'System.Diagnostics.Process.Start("http://www.bpoint-nouki.com/public/publish/updHistory.html")
         System.Diagnostics.Process.Start(Path.GetDirectoryName(My.Application.Log.DefaultFileLogWriter.FullLogFileName))
     End Sub
+
+    Private Sub btnLogin_Click(sender As Object, e As EventArgs) Handles btnLogin.Click
+        Using f = FrmLogin
+            f.ShowDialog()
+
+            If isAuthUser Then
+                btnStockIn.Visible = True
+                btnStockOut.Visible = True
+                btnLogin.Visible = False
+                btnLogout.Visible = True
+            End If
+        End Using
+
+    End Sub
+
+    Private Sub btnLogout_Click(sender As Object, e As EventArgs) Handles btnLogout.Click
+        btnStockIn.Visible = False
+        btnStockOut.Visible = False
+        btnLogin.Visible = True
+        btnLogout.Visible = False
+        isAuthUser = False
+    End Sub
+
 #End Region
 
 #Region "Overrides"
@@ -276,29 +302,6 @@ Public Class FrmDashboard
 
         Return New DbParamEnt(sb, param.ToArray)
     End Function
-
-    Private Sub btnLogin_Click(sender As Object, e As EventArgs) Handles btnLogin.Click
-        Using f = FrmLogin
-            f.ShowDialog()
-
-            If isAuthUser Then
-                btnStockIn.Visible = True
-                btnStockOut.Visible = True
-                btnLogin.Visible = False
-                btnLogout.Visible = True
-            End If
-        End Using
-
-
-    End Sub
-
-    Private Sub btnLogout_Click(sender As Object, e As EventArgs) Handles btnLogout.Click
-        btnStockIn.Visible = False
-        btnStockOut.Visible = False
-        btnLogin.Visible = True
-        btnLogout.Visible = False
-        isAuthUser = False
-    End Sub
 
 #End Region
 

@@ -2,6 +2,12 @@
 Imports System.Text
 
 Public Class FrmStockIn
+
+    Protected Overrides Function processName()
+        Return "入庫処理"
+    End Function
+
+
     Private Sub FrmStockIn_Load(sender As Object, e As EventArgs) Handles Me.Load
     End Sub
 

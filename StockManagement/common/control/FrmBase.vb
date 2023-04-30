@@ -79,6 +79,9 @@
     ''' <param name="popFrm"></param>
     ''' <param name="params"></param>
     Protected Sub OpenPop(popFrm As FrmBase, params As List(Of String))
+
+        returnParamsPop = Nothing
+
         popFrm.parentFrm = Me
         popFrm.paramsPop = params
         popFrm.ShowDialog()

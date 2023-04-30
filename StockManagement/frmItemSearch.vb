@@ -3,23 +3,16 @@ Imports System.Text
 
 Public Class FrmItemSearch
 
-
 #Region "EVENT"
 
     Private Sub frmItemSearch_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         Dim srchDt As DataTable = DbHandler.executeSelect(getSqlAndParam())
         grd.DataSource = srchDt
 
-        Dim cmdSrchDt As DataTable = DbHandler.executeSelect(getSqlAndParamLocation())
-
-        Dim dr As DataRow = cmdSrchDt.NewRow
-        dr("CODE") = -1
-        dr("NAME") = ""
-        cmdSrchDt.Rows.InsertAt(dr, 0)
-
-        cmbLocation.DataSource = cmdSrchDt
+        Dim cmdSrchDt As DataTable = CommonService.GetLocation()
         cmbLocation.DisplayMember = "NAME"
         cmbLocation.ValueMember = "CODE"
+        cmbLocation.DataSource = cmdSrchDt
 
     End Sub
 
@@ -45,6 +38,11 @@ Public Class FrmItemSearch
 
     Private Sub btnClose_Click(sender As Object, e As EventArgs) Handles btnClose.Click
         Me.Close()
+    End Sub
+
+    Private Sub cmbLocation_SelectedIndexChanged(sender As Object, e As EventArgs) Handles cmbLocation.SelectedIndexChanged
+        Dim srchDt As DataTable = DbHandler.executeSelect(getSqlAndParam())
+        grd.DataSource = srchDt
     End Sub
 
 #End Region
@@ -78,7 +76,7 @@ Public Class FrmItemSearch
             param.Add(New SqlParameter("@ITEMCD", "%" & Me.txtItemCd.Text & "%"))
         End If
 
-        If Me.cmbLocation.SelectedValue IsNot Nothing AndAlso Me.cmbLocation.SelectedValue <> -1 Then
+        If Me.cmbLocation.SelectedValue IsNot Nothing AndAlso Me.cmbLocation.SelectedValue <> String.Empty Then
             sb.Append(" AND ACTST.LOCATIONCD = @LOCATIONCD ")
             param.Add(New SqlParameter("@LOCATIONCD", Me.cmbLocation.SelectedValue))
         Else
@@ -91,21 +89,6 @@ Public Class FrmItemSearch
         sb.Append("     ,ACTST.LOCATIONCD ")
 
         Return New DbParamEnt(sb, param.ToArray)
-    End Function
-
-    Private Function getSqlAndParamLocation() As DbParamEnt
-
-        Dim sb As New StringBuilder
-        sb.Append(" SELECT  ")
-        sb.Append("   CODE ")
-        sb.Append("  ,CODE + '-' + VALUE1 AS NAME ")
-        sb.Append(" FROM M_Code ")
-        sb.Append(" WHERE CATEGORY = 'LOCATIONCD' ")
-        sb.Append(" AND   CODE NOT IN (1, 2) ")
-        sb.Append(" ORDER BY CODE ")
-
-        Return New DbParamEnt(sb, Nothing)
-
     End Function
 
 #End Region

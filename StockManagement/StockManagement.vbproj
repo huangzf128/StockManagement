@@ -32,8 +32,8 @@
     <CreateWebPageOnPublish>true</CreateWebPageOnPublish>
     <WebPage>publish.htm</WebPage>
     <TrustUrlParameters>true</TrustUrlParameters>
-    <ApplicationRevision>7</ApplicationRevision>
-    <ApplicationVersion>1.0.1.7</ApplicationVersion>
+    <ApplicationRevision>1</ApplicationRevision>
+    <ApplicationVersion>1.0.2.1</ApplicationVersion>
     <UseApplicationTrust>false</UseApplicationTrust>
     <CreateDesktopShortcut>true</CreateDesktopShortcut>
     <PublishWizardCompleted>true</PublishWizardCompleted>
@@ -169,6 +169,8 @@
     <Compile Include="common\control\LabelBase.vb">
       <SubType>Component</SubType>
     </Compile>
+    <Compile Include="common\entity\Info.vb" />
+    <Compile Include="common\service\CommonService.vb" />
     <Compile Include="common\style\GridStyle.vb" />
     <Compile Include="common\style\Style.vb" />
     <Compile Include="common\utils\Async.vb" />

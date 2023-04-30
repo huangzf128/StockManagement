@@ -1,11 +1,18 @@
 ﻿Imports System.Data.SqlClient
+Imports System.IO
 Imports System.Text
+Imports Microsoft.VisualBasic.ApplicationServices
 
 Public Class FrmLogin
 
-
     Private Sub Login_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         txtUser.Select()
+
+        Dim info As Info = Util.LoadXml(IO.Path.Combine(Util.GetPgFolderPath(), Consts.INFO_FILE_NAME))
+        If info IsNot Nothing Then
+            txtUser.Text = info.userId
+            txtPass.Select()
+        End If
     End Sub
 
     Private Sub btnClose_Click(sender As Object, e As EventArgs) Handles btnClose.Click
@@ -29,8 +36,10 @@ Public Class FrmLogin
         Dim dbParamEnt As DbParamEnt = getSqlAndParam()
         Dim dt As DataTable = DbHandler.executeSelect(dbParamEnt)
         If dt.Rows.Count > 0 Then
-            If dt.Rows(0).Item("AUTHLV") = 99 And txtUser.Text = "liu liwei" Then
+            If dt.Rows(0).Item("AUTHLV") = 99 Then
                 FrmDashboard.isAuthUser = True
+
+                Util.Write2Xml(IO.Path.Combine(Util.GetPgFolderPath(), Consts.INFO_FILE_NAME), New Info With {.userId = txtUser.Text})
                 Me.Close()
             Else
                 Msg.warning("管理者しかログインできません。", "ログインエラー")

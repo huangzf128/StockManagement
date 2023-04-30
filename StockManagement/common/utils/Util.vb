@@ -1,4 +1,5 @@
-﻿Imports Microsoft.VisualBasic.FileIO
+﻿Imports System.Windows.Forms.VisualStyles.VisualStyleElement
+Imports Microsoft.VisualBasic.FileIO
 
 Public Class Util
 
@@ -13,12 +14,11 @@ Public Class Util
         Return value
     End Function
 
-    Public Shared Function obj2String(ByVal obj As String, ByVal defVal As String)
-        Dim rtn As String = obj
+    Public Shared Function obj2String(ByVal obj As Object, ByVal defVal As String)
         If obj Is Nothing OrElse IsDBNull(obj) Then
-            rtn = defVal
+            Return defVal
         End If
-        Return rtn
+        Return obj.ToString
     End Function
 
     Public Shared Function obj2Date(ByVal obj As Object)
@@ -27,7 +27,11 @@ Public Class Util
         End If
         Return CDate(obj)
     End Function
+
 #End Region
+
+
+#Region "CSV"
 
 
     Public Shared Function readCsv(ByVal filePath As String) As DataTable
@@ -54,16 +58,8 @@ Public Class Util
         Return dt
     End Function
 
-    Public Shared Sub CopyDataGridView(_dgv As DataGridView)
-        _dgv.SelectAll()
-        'Copy to clipboard
-        _dgv.ClipboardCopyMode = DataGridViewClipboardCopyMode.EnableAlwaysIncludeHeaderText
-        Dim dataObj As DataObject = _dgv.GetClipboardContent()
-        If dataObj IsNot Nothing Then
-            Clipboard.SetDataObject(dataObj, True)
-        End If
-        _dgv.ClearSelection()
-    End Sub
+#End Region
+
 
 #Region "日付"
 
@@ -88,8 +84,66 @@ Public Class Util
     End Function
 #End Region
 
+
     Public Shared Function getPcName() As String
         Return My.Computer.Name
     End Function
+
+    Public Shared Sub CopyDataGridView(_dgv As DataGridView)
+        _dgv.SelectAll()
+        'Copy to clipboard
+        _dgv.ClipboardCopyMode = DataGridViewClipboardCopyMode.EnableAlwaysIncludeHeaderText
+        Dim dataObj As DataObject = _dgv.GetClipboardContent()
+        If dataObj IsNot Nothing Then
+            Clipboard.SetDataObject(dataObj, True)
+        End If
+        _dgv.ClearSelection()
+    End Sub
+
+
+#Region "File"
+
+    Public Shared Function GetPgFolderPath() As String
+        Return IO.Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), Consts.PROGRAM_FOLDER)
+    End Function
+
+    Public Shared Sub WriteFile(filePath As String, content As String)
+        Dim sw As New IO.StreamWriter(filePath, False, Text.Encoding.GetEncoding("shift_jis"))
+        sw.Write(content)
+        sw.Close()
+    End Sub
+
+    Public Shared Sub CreateFolder(path As String)
+        If Not System.IO.Directory.Exists(path) Then
+            System.IO.Directory.CreateDirectory(path)
+        End If
+    End Sub
+
+    Public Shared Sub Write2Xml(file As String, obj As Info)
+        'XmlSerializerオブジェクトを作成
+        Dim serializer As New System.Xml.Serialization.XmlSerializer(GetType(Info))
+        '書き込むファイルを開く（UTF-8 BOM無し）
+        Dim sw As New System.IO.StreamWriter(file, False, New System.Text.UTF8Encoding(False))
+        'シリアル化し、XMLファイルに保存する
+        serializer.Serialize(sw, obj)
+        sw.Close()
+    End Sub
+
+    Public Shared Function LoadXml(file As String) As Info
+
+        If Not System.IO.File.Exists(file) Then
+            Return Nothing
+        End If
+
+        Dim serializer As New System.Xml.Serialization.XmlSerializer(GetType(Info))
+        '読み込むファイルを開く
+        Dim sr As New System.IO.StreamReader(file, New System.Text.UTF8Encoding(False))
+        'XMLファイルから読み込み、逆シリアル化する
+        Dim obj As Info = DirectCast(serializer.Deserialize(sr), Info)
+        sr.Close()
+        Return obj
+    End Function
+
+#End Region
 
 End Class

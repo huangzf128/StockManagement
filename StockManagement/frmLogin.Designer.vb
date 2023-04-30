@@ -50,7 +50,7 @@ Partial Class FrmLogin
         Me.txtPass.Name = "txtPass"
         Me.txtPass.PasswordChar = Global.Microsoft.VisualBasic.ChrW(42)
         Me.txtPass.Size = New System.Drawing.Size(113, 19)
-        Me.txtPass.TabIndex = 0
+        Me.txtPass.TabIndex = 2
         Me.txtPass.Type = 0
         '
         'txtUser
@@ -68,7 +68,7 @@ Partial Class FrmLogin
         Me.btnClose.Location = New System.Drawing.Point(5, 146)
         Me.btnClose.Name = "btnClose"
         Me.btnClose.Size = New System.Drawing.Size(70, 30)
-        Me.btnClose.TabIndex = 2
+        Me.btnClose.TabIndex = 4
         Me.btnClose.Text = "閉じる"
         Me.btnClose.Type = 1
         Me.btnClose.UseVisualStyleBackColor = False
@@ -112,6 +112,8 @@ Partial Class FrmLogin
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 12.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
+        Me.BackColor = System.Drawing.Color.DarkSlateBlue
+        Me.BackgroundImage = Nothing
         Me.ClientSize = New System.Drawing.Size(300, 181)
         Me.Controls.Add(Me.btnLogin)
         Me.Controls.Add(Me.btnClose)

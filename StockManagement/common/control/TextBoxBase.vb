@@ -21,6 +21,7 @@ Public Class TextBoxBase
 
     Public Sub initVisualStyle() Implements IControl.initVisualStyle
         If Me._type = Consts.TextBoxType.NUMBER Then
+            Me.ImeMode = ImeMode.Disable
             AddHandler Me.KeyPress, AddressOf TextBox_KeyPress
         End If
     End Sub
@@ -32,15 +33,10 @@ Public Class TextBoxBase
     ''' <param name="e"></param>
     Private Sub TextBox_KeyPress(ByVal sender As Object, ByVal e As System.Windows.Forms.KeyPressEventArgs)
 
-        '97 - 122 = Ascii codes for simple letters
-        '65 - 90  = Ascii codes for capital letters
-        '48 - 57  = Ascii codes for numbers
-
-        If Asc(e.KeyChar) <> 8 Then
-            If Asc(e.KeyChar) < 48 Or Asc(e.KeyChar) > 57 Then
-                e.Handled = True
-            End If
+        If (e.KeyChar < "0"c OrElse "9"c < e.KeyChar) AndAlso
+            e.KeyChar <> ControlChars.Back Then
+            '押されたキーが 0～9でない場合は、イベントをキャンセルする
+            e.Handled = True
         End If
-
     End Sub
 End Class
