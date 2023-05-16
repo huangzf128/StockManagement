@@ -22,10 +22,12 @@ Partial Class FrmDashboard
     '不要使用代码编辑器修改它。
     <System.Diagnostics.DebuggerStepThrough()>
     Private Sub InitializeComponent()
-        Dim DataGridViewCellStyle1 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle2 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle4 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle5 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle6 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Me.pnlDashboard = New System.Windows.Forms.Panel()
-        Me.lblShowMoving = New System.Windows.Forms.Label()
+        Me.GroupBox1 = New System.Windows.Forms.GroupBox()
+        Me.LinkLabel1 = New System.Windows.Forms.LinkLabel()
         Me.lblServerLastUpdatedTime = New System.Windows.Forms.Label()
         Me.lbl1 = New System.Windows.Forms.Label()
         Me.lblSystemTitle = New System.Windows.Forms.Label()
@@ -40,6 +42,8 @@ Partial Class FrmDashboard
         Me.btnMin = New System.Windows.Forms.Button()
         Me.btnClose = New System.Windows.Forms.Button()
         Me.pnlMenu = New System.Windows.Forms.Panel()
+        Me.btnLogout = New StockManagement.ButtonBase()
+        Me.btnLogin = New StockManagement.ButtonBase()
         Me.linkVersion = New System.Windows.Forms.LinkLabel()
         Me.btnStockListHistory = New System.Windows.Forms.Button()
         Me.btnRanking = New System.Windows.Forms.Button()
@@ -50,9 +54,8 @@ Partial Class FrmDashboard
         Me.btnDashboard = New System.Windows.Forms.Button()
         Me.btnStockReserve = New System.Windows.Forms.Button()
         Me.btnStockHistory = New System.Windows.Forms.Button()
-        Me.btnLogout = New StockManagement.ButtonBase()
-        Me.btnLogin = New StockManagement.ButtonBase()
         Me.pnlDashboard.SuspendLayout()
+        Me.GroupBox1.SuspendLayout()
         CType(Me.grdBacklogReserv, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.pnlHeader.SuspendLayout()
         Me.pnlMenu.SuspendLayout()
@@ -60,7 +63,8 @@ Partial Class FrmDashboard
         '
         'pnlDashboard
         '
-        Me.pnlDashboard.Controls.Add(Me.lblShowMoving)
+        Me.pnlDashboard.BackColor = System.Drawing.Color.Bisque
+        Me.pnlDashboard.Controls.Add(Me.GroupBox1)
         Me.pnlDashboard.Controls.Add(Me.lblServerLastUpdatedTime)
         Me.pnlDashboard.Controls.Add(Me.lbl1)
         Me.pnlDashboard.Controls.Add(Me.lblSystemTitle)
@@ -72,20 +76,34 @@ Partial Class FrmDashboard
         Me.pnlDashboard.Size = New System.Drawing.Size(924, 575)
         Me.pnlDashboard.TabIndex = 3
         '
-        'lblShowMoving
+        'GroupBox1
         '
-        Me.lblShowMoving.AutoSize = True
-        Me.lblShowMoving.Font = New System.Drawing.Font("メイリオ", 11.25!, System.Drawing.FontStyle.Bold)
-        Me.lblShowMoving.Location = New System.Drawing.Point(13, 276)
-        Me.lblShowMoving.Name = "lblShowMoving"
-        Me.lblShowMoving.Size = New System.Drawing.Size(0, 23)
-        Me.lblShowMoving.TabIndex = 5
+        Me.GroupBox1.Controls.Add(Me.LinkLabel1)
+        Me.GroupBox1.ForeColor = System.Drawing.SystemColors.Control
+        Me.GroupBox1.Location = New System.Drawing.Point(17, 464)
+        Me.GroupBox1.Name = "GroupBox1"
+        Me.GroupBox1.Size = New System.Drawing.Size(316, 75)
+        Me.GroupBox1.TabIndex = 5
+        Me.GroupBox1.TabStop = False
+        Me.GroupBox1.Text = "システムツール"
+        Me.GroupBox1.Visible = False
+        '
+        'LinkLabel1
+        '
+        Me.LinkLabel1.AutoSize = True
+        Me.LinkLabel1.Location = New System.Drawing.Point(21, 21)
+        Me.LinkLabel1.Name = "LinkLabel1"
+        Me.LinkLabel1.Size = New System.Drawing.Size(65, 12)
+        Me.LinkLabel1.TabIndex = 0
+        Me.LinkLabel1.TabStop = True
+        Me.LinkLabel1.Text = "マニュアル"
         '
         'lblServerLastUpdatedTime
         '
         Me.lblServerLastUpdatedTime.AutoSize = True
         Me.lblServerLastUpdatedTime.Font = New System.Drawing.Font("メイリオ", 10.0!)
-        Me.lblServerLastUpdatedTime.Location = New System.Drawing.Point(197, 72)
+        Me.lblServerLastUpdatedTime.ForeColor = System.Drawing.Color.DarkSlateBlue
+        Me.lblServerLastUpdatedTime.Location = New System.Drawing.Point(213, 73)
         Me.lblServerLastUpdatedTime.Name = "lblServerLastUpdatedTime"
         Me.lblServerLastUpdatedTime.Size = New System.Drawing.Size(165, 21)
         Me.lblServerLastUpdatedTime.TabIndex = 4
@@ -94,23 +112,24 @@ Partial Class FrmDashboard
         'lbl1
         '
         Me.lbl1.AutoSize = True
-        Me.lbl1.Font = New System.Drawing.Font("メイリオ", 10.0!)
-        Me.lbl1.Location = New System.Drawing.Point(9, 72)
+        Me.lbl1.Font = New System.Drawing.Font("メイリオ", 11.0!)
+        Me.lbl1.ForeColor = System.Drawing.Color.DarkSlateBlue
+        Me.lbl1.Location = New System.Drawing.Point(16, 72)
         Me.lbl1.Name = "lbl1"
-        Me.lbl1.Size = New System.Drawing.Size(192, 21)
+        Me.lbl1.Size = New System.Drawing.Size(205, 23)
         Me.lbl1.TabIndex = 3
         Me.lbl1.Text = "サーバー最終自動処理日時："
         '
         'lblSystemTitle
         '
         Me.lblSystemTitle.AutoSize = True
-        Me.lblSystemTitle.BackColor = System.Drawing.SystemColors.HotTrack
-        Me.lblSystemTitle.Font = New System.Drawing.Font("メイリオ", 16.0!, System.Drawing.FontStyle.Bold)
-        Me.lblSystemTitle.ForeColor = System.Drawing.SystemColors.Control
+        Me.lblSystemTitle.BackColor = System.Drawing.Color.Transparent
+        Me.lblSystemTitle.Font = New System.Drawing.Font("メイリオ", 22.0!, System.Drawing.FontStyle.Bold)
+        Me.lblSystemTitle.ForeColor = System.Drawing.Color.Brown
         Me.lblSystemTitle.Location = New System.Drawing.Point(5, 5)
         Me.lblSystemTitle.Name = "lblSystemTitle"
         Me.lblSystemTitle.Padding = New System.Windows.Forms.Padding(10, 10, 150, 6)
-        Me.lblSystemTitle.Size = New System.Drawing.Size(461, 49)
+        Me.lblSystemTitle.Size = New System.Drawing.Size(570, 61)
         Me.lblSystemTitle.TabIndex = 2
         Me.lblSystemTitle.Text = "承天貿易　在庫管理システム"
         '
@@ -135,9 +154,9 @@ Partial Class FrmDashboard
         'dateFrom
         '
         Me.dateFrom.DataPropertyName = "dateFrom"
-        DataGridViewCellStyle1.Format = "d"
-        DataGridViewCellStyle1.NullValue = Nothing
-        Me.dateFrom.DefaultCellStyle = DataGridViewCellStyle1
+        DataGridViewCellStyle4.Format = "d"
+        DataGridViewCellStyle4.NullValue = Nothing
+        Me.dateFrom.DefaultCellStyle = DataGridViewCellStyle4
         Me.dateFrom.HeaderText = "開始日"
         Me.dateFrom.Name = "dateFrom"
         Me.dateFrom.Width = 80
@@ -145,9 +164,9 @@ Partial Class FrmDashboard
         'dateTo
         '
         Me.dateTo.DataPropertyName = "dateTo"
-        DataGridViewCellStyle2.Format = "d"
-        DataGridViewCellStyle2.NullValue = Nothing
-        Me.dateTo.DefaultCellStyle = DataGridViewCellStyle2
+        DataGridViewCellStyle5.Format = "d"
+        DataGridViewCellStyle5.NullValue = Nothing
+        Me.dateTo.DefaultCellStyle = DataGridViewCellStyle5
         Me.dateTo.HeaderText = "終了日"
         Me.dateTo.Name = "dateTo"
         Me.dateTo.Width = 80
@@ -155,6 +174,8 @@ Partial Class FrmDashboard
         'dataCount
         '
         Me.dataCount.DataPropertyName = "dataCount"
+        DataGridViewCellStyle6.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight
+        Me.dataCount.DefaultCellStyle = DataGridViewCellStyle6
         Me.dataCount.HeaderText = "未処理件数"
         Me.dataCount.Name = "dataCount"
         Me.dataCount.Width = 90
@@ -163,6 +184,7 @@ Partial Class FrmDashboard
         '
         Me.lblUntreated.AutoSize = True
         Me.lblUntreated.Font = New System.Drawing.Font("メイリオ", 11.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(128, Byte))
+        Me.lblUntreated.ForeColor = System.Drawing.Color.DarkGreen
         Me.lblUntreated.Location = New System.Drawing.Point(13, 129)
         Me.lblUntreated.Name = "lblUntreated"
         Me.lblUntreated.Size = New System.Drawing.Size(85, 23)
@@ -198,7 +220,7 @@ Partial Class FrmDashboard
         Me.btnMin.BackColor = System.Drawing.Color.FromArgb(CType(CType(128, Byte), Integer), CType(CType(128, Byte), Integer), CType(CType(255, Byte), Integer))
         Me.btnMin.FlatAppearance.BorderSize = 0
         Me.btnMin.FlatStyle = System.Windows.Forms.FlatStyle.Flat
-        Me.btnMin.Font = New System.Drawing.Font("SimSun", 12.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(134, Byte))
+        Me.btnMin.Font = New System.Drawing.Font("宋体", 12.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(134, Byte))
         Me.btnMin.ForeColor = System.Drawing.SystemColors.Control
         Me.btnMin.Location = New System.Drawing.Point(988, 8)
         Me.btnMin.Name = "btnMin"
@@ -215,7 +237,7 @@ Partial Class FrmDashboard
         Me.btnClose.BackColor = System.Drawing.Color.Goldenrod
         Me.btnClose.FlatAppearance.BorderSize = 0
         Me.btnClose.FlatStyle = System.Windows.Forms.FlatStyle.Flat
-        Me.btnClose.Font = New System.Drawing.Font("SimSun", 12.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(134, Byte))
+        Me.btnClose.Font = New System.Drawing.Font("宋体", 12.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(134, Byte))
         Me.btnClose.ForeColor = System.Drawing.SystemColors.Control
         Me.btnClose.Location = New System.Drawing.Point(1024, 8)
         Me.btnClose.Name = "btnClose"
@@ -246,6 +268,33 @@ Partial Class FrmDashboard
         Me.pnlMenu.Name = "pnlMenu"
         Me.pnlMenu.Size = New System.Drawing.Size(140, 575)
         Me.pnlMenu.TabIndex = 0
+        '
+        'btnLogout
+        '
+        Me.btnLogout.BackColor = System.Drawing.Color.DimGray
+        Me.btnLogout.Font = New System.Drawing.Font("ＭＳ Ｐゴシック", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(134, Byte))
+        Me.btnLogout.ForeColor = System.Drawing.Color.WhiteSmoke
+        Me.btnLogout.Location = New System.Drawing.Point(58, 464)
+        Me.btnLogout.Name = "btnLogout"
+        Me.btnLogout.Size = New System.Drawing.Size(70, 30)
+        Me.btnLogout.TabIndex = 12
+        Me.btnLogout.Text = "ログアウト"
+        Me.btnLogout.Type = 4
+        Me.btnLogout.UseVisualStyleBackColor = False
+        Me.btnLogout.Visible = False
+        '
+        'btnLogin
+        '
+        Me.btnLogin.BackColor = System.Drawing.Color.DarkGreen
+        Me.btnLogin.Font = New System.Drawing.Font("ＭＳ Ｐゴシック", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(134, Byte))
+        Me.btnLogin.ForeColor = System.Drawing.Color.WhiteSmoke
+        Me.btnLogin.Location = New System.Drawing.Point(58, 463)
+        Me.btnLogin.Name = "btnLogin"
+        Me.btnLogin.Size = New System.Drawing.Size(70, 30)
+        Me.btnLogin.TabIndex = 11
+        Me.btnLogin.Text = "ログイン"
+        Me.btnLogin.Type = 3
+        Me.btnLogin.UseVisualStyleBackColor = False
         '
         'linkVersion
         '
@@ -364,33 +413,6 @@ Partial Class FrmDashboard
         Me.btnStockHistory.Text = "入出庫履歴"
         Me.btnStockHistory.UseVisualStyleBackColor = True
         '
-        'btnLogout
-        '
-        Me.btnLogout.BackColor = System.Drawing.Color.DimGray
-        Me.btnLogout.Font = New System.Drawing.Font("ＭＳ Ｐゴシック", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(134, Byte))
-        Me.btnLogout.ForeColor = System.Drawing.Color.WhiteSmoke
-        Me.btnLogout.Location = New System.Drawing.Point(58, 464)
-        Me.btnLogout.Name = "btnLogout"
-        Me.btnLogout.Size = New System.Drawing.Size(70, 30)
-        Me.btnLogout.TabIndex = 12
-        Me.btnLogout.Text = "ログアウト"
-        Me.btnLogout.Type = 4
-        Me.btnLogout.UseVisualStyleBackColor = False
-        Me.btnLogout.Visible = False
-        '
-        'btnLogin
-        '
-        Me.btnLogin.BackColor = System.Drawing.Color.DarkGreen
-        Me.btnLogin.Font = New System.Drawing.Font("ＭＳ Ｐゴシック", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(134, Byte))
-        Me.btnLogin.ForeColor = System.Drawing.Color.WhiteSmoke
-        Me.btnLogin.Location = New System.Drawing.Point(58, 463)
-        Me.btnLogin.Name = "btnLogin"
-        Me.btnLogin.Size = New System.Drawing.Size(70, 30)
-        Me.btnLogin.TabIndex = 11
-        Me.btnLogin.Text = "ログイン"
-        Me.btnLogin.Type = 3
-        Me.btnLogin.UseVisualStyleBackColor = False
-        '
         'FrmDashboard
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 12.0!)
@@ -407,6 +429,8 @@ Partial Class FrmDashboard
         Me.Text = "ダッシュボード"
         Me.pnlDashboard.ResumeLayout(False)
         Me.pnlDashboard.PerformLayout()
+        Me.GroupBox1.ResumeLayout(False)
+        Me.GroupBox1.PerformLayout()
         CType(Me.grdBacklogReserv, System.ComponentModel.ISupportInitialize).EndInit()
         Me.pnlHeader.ResumeLayout(False)
         Me.pnlHeader.PerformLayout()
@@ -432,16 +456,17 @@ Partial Class FrmDashboard
     Friend WithEvents btnRanking As Button
     Friend WithEvents grdBacklogReserv As DataGridView
     Friend WithEvents lblUntreated As Label
-    Friend WithEvents interval As DataGridViewTextBoxColumn
-    Friend WithEvents dateFrom As DataGridViewTextBoxColumn
-    Friend WithEvents dateTo As DataGridViewTextBoxColumn
-    Friend WithEvents dataCount As DataGridViewTextBoxColumn
     Friend WithEvents btnStockListHistory As Button
     Friend WithEvents lblSystemTitle As Label
     Friend WithEvents lbl1 As Label
     Friend WithEvents lblServerLastUpdatedTime As Label
-    Friend WithEvents lblShowMoving As Label
     Friend WithEvents linkVersion As LinkLabel
     Friend WithEvents btnLogin As ButtonBase
     Friend WithEvents btnLogout As ButtonBase
+    Friend WithEvents GroupBox1 As GroupBox
+    Friend WithEvents LinkLabel1 As LinkLabel
+    Friend WithEvents interval As DataGridViewTextBoxColumn
+    Friend WithEvents dateFrom As DataGridViewTextBoxColumn
+    Friend WithEvents dateTo As DataGridViewTextBoxColumn
+    Friend WithEvents dataCount As DataGridViewTextBoxColumn
 End Class

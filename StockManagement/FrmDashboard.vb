@@ -65,15 +65,6 @@ Public Class FrmDashboard
     End Sub
 
 
-    Private Sub btnDashboard_Click(sender As Object, e As EventArgs) Handles btnDashboard.Click
-        Me.lblTitle.Text = Me.Text
-        Me.pnlDashboard.Visible = True
-
-        If Me.ActiveMdiChild IsNot Nothing Then
-            Me.ActiveMdiChild.Close()
-        End If
-    End Sub
-
     Private Sub btnClose_Click(sender As Object, e As EventArgs) Handles btnClose.Click, btnCloseMenu.Click
         Me.Close()
     End Sub
@@ -146,7 +137,10 @@ Public Class FrmDashboard
 
     Private Sub linkVersion_LinkClicked(sender As Object, e As LinkLabelLinkClickedEventArgs) Handles linkVersion.LinkClicked
         'System.Diagnostics.Process.Start("http://www.bpoint-nouki.com/public/publish/updHistory.html")
+
         System.Diagnostics.Process.Start(Path.GetDirectoryName(My.Application.Log.DefaultFileLogWriter.FullLogFileName))
+
+        'System.Diagnostics.Process.Start("help\menu.html")
     End Sub
 
     Private Sub btnLogin_Click(sender As Object, e As EventArgs) Handles btnLogin.Click
@@ -163,12 +157,23 @@ Public Class FrmDashboard
 
     End Sub
 
+    Private Sub btnDashboard_Click(sender As Object, e As EventArgs) Handles btnDashboard.Click
+        Me.lblTitle.Text = Me.Text
+        Me.pnlDashboard.Visible = True
+
+        If Me.ActiveMdiChild IsNot Nothing Then
+            Me.ActiveMdiChild.Close()
+        End If
+    End Sub
+
     Private Sub btnLogout_Click(sender As Object, e As EventArgs) Handles btnLogout.Click
         btnStockIn.Visible = False
         btnStockOut.Visible = False
         btnLogin.Visible = True
         btnLogout.Visible = False
         isAuthUser = False
+
+        btnDashboard.PerformClick()
     End Sub
 
 #End Region

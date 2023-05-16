@@ -239,6 +239,11 @@ Public Class FrmStockList
             sb.Append(" AND ITEMNAME Like @ITEMNAME")
             param.Add(New SqlParameter("@ITEMNAME", "%" & Me.txtItemNm.Text & "%"))
         End If
+        If Me.txtSCode.Text <> "" Then
+            sb.Append(" AND SCODE Like @SCODE")
+            param.Add(New SqlParameter("@SCODE", "%" & Me.txtSCode.Text & "%"))
+        End If
+
         ' TODO: 倉庫  西京を除外
         sb.Append(" AND LOCATIONCD <> 2 ")
 

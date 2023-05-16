@@ -22,14 +22,14 @@ Partial Class FrmStockList
     '不要使用代码编辑器修改它。
     <System.Diagnostics.DebuggerStepThrough()>
     Private Sub InitializeComponent()
-        Dim DataGridViewCellStyle1 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle2 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle8 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle3 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle4 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle5 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle6 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle7 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle9 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle10 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle16 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle11 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle12 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle13 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle14 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle15 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Me.lblItemName = New System.Windows.Forms.Label()
         Me.txtItemCd = New System.Windows.Forms.TextBox()
         Me.btnSearch = New StockManagement.ButtonBase()
@@ -48,12 +48,16 @@ Partial Class FrmStockList
         Me.bindingNavi = New StockManagement.UBindingNavigator()
         Me.lblRemainQty = New System.Windows.Forms.Label()
         Me.txtRemainQty = New StockManagement.TextBoxBase()
+        Me.lblSCode = New StockManagement.LabelBase()
+        Me.txtSCode = New StockManagement.TextBoxBase()
         Me.pnlCondition.SuspendLayout()
         CType(Me.grd, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
         'pnlCondition
         '
+        Me.pnlCondition.Controls.Add(Me.txtSCode)
+        Me.pnlCondition.Controls.Add(Me.lblSCode)
         Me.pnlCondition.Controls.Add(Me.txtRemainQty)
         Me.pnlCondition.Controls.Add(Me.lblRemainQty)
         Me.pnlCondition.Controls.Add(Me.btnCopy)
@@ -98,29 +102,29 @@ Partial Class FrmStockList
         '
         Me.grd.AllowUserToAddRows = False
         Me.grd.AllowUserToResizeRows = False
-        DataGridViewCellStyle1.BackColor = System.Drawing.Color.WhiteSmoke
-        Me.grd.AlternatingRowsDefaultCellStyle = DataGridViewCellStyle1
+        DataGridViewCellStyle9.BackColor = System.Drawing.Color.WhiteSmoke
+        Me.grd.AlternatingRowsDefaultCellStyle = DataGridViewCellStyle9
         Me.grd.CellBorderStyle = System.Windows.Forms.DataGridViewCellBorderStyle.SingleHorizontal
         Me.grd.ColumnHeadersBorderStyle = System.Windows.Forms.DataGridViewHeaderBorderStyle.None
-        DataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.TopCenter
-        DataGridViewCellStyle2.BackColor = System.Drawing.SystemColors.Highlight
-        DataGridViewCellStyle2.Font = New System.Drawing.Font("ＭＳ Ｐゴシック", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(134, Byte))
-        DataGridViewCellStyle2.ForeColor = System.Drawing.SystemColors.Window
-        DataGridViewCellStyle2.Padding = New System.Windows.Forms.Padding(0, 4, 0, 4)
-        DataGridViewCellStyle2.SelectionBackColor = System.Drawing.SystemColors.Highlight
-        DataGridViewCellStyle2.SelectionForeColor = System.Drawing.SystemColors.HighlightText
-        DataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
-        Me.grd.ColumnHeadersDefaultCellStyle = DataGridViewCellStyle2
+        DataGridViewCellStyle10.Alignment = System.Windows.Forms.DataGridViewContentAlignment.TopCenter
+        DataGridViewCellStyle10.BackColor = System.Drawing.SystemColors.Highlight
+        DataGridViewCellStyle10.Font = New System.Drawing.Font("ＭＳ Ｐゴシック", 9.0!)
+        DataGridViewCellStyle10.ForeColor = System.Drawing.SystemColors.Window
+        DataGridViewCellStyle10.Padding = New System.Windows.Forms.Padding(0, 4, 0, 4)
+        DataGridViewCellStyle10.SelectionBackColor = System.Drawing.SystemColors.Highlight
+        DataGridViewCellStyle10.SelectionForeColor = System.Drawing.SystemColors.HighlightText
+        DataGridViewCellStyle10.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
+        Me.grd.ColumnHeadersDefaultCellStyle = DataGridViewCellStyle10
         Me.grd.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
         Me.grd.Columns.AddRange(New System.Windows.Forms.DataGridViewColumn() {Me.ITEMCD, Me.SCODE, Me.ITEMNAME, Me.SAFEQTY, Me.SUMACTQTY, Me.SUMRESERVTOTALQTY, Me.SUMRemainQTY})
-        DataGridViewCellStyle8.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
-        DataGridViewCellStyle8.BackColor = System.Drawing.SystemColors.Window
-        DataGridViewCellStyle8.Font = New System.Drawing.Font("ＭＳ Ｐゴシック", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(134, Byte))
-        DataGridViewCellStyle8.ForeColor = System.Drawing.SystemColors.ControlText
-        DataGridViewCellStyle8.SelectionBackColor = System.Drawing.Color.FromArgb(CType(CType(218, Byte), Integer), CType(CType(242, Byte), Integer), CType(CType(222, Byte), Integer))
-        DataGridViewCellStyle8.SelectionForeColor = System.Drawing.Color.Black
-        DataGridViewCellStyle8.WrapMode = System.Windows.Forms.DataGridViewTriState.[False]
-        Me.grd.DefaultCellStyle = DataGridViewCellStyle8
+        DataGridViewCellStyle16.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
+        DataGridViewCellStyle16.BackColor = System.Drawing.SystemColors.Window
+        DataGridViewCellStyle16.Font = New System.Drawing.Font("ＭＳ Ｐゴシック", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(134, Byte))
+        DataGridViewCellStyle16.ForeColor = System.Drawing.SystemColors.ControlText
+        DataGridViewCellStyle16.SelectionBackColor = System.Drawing.Color.FromArgb(CType(CType(218, Byte), Integer), CType(CType(242, Byte), Integer), CType(CType(222, Byte), Integer))
+        DataGridViewCellStyle16.SelectionForeColor = System.Drawing.Color.Black
+        DataGridViewCellStyle16.WrapMode = System.Windows.Forms.DataGridViewTriState.[False]
+        Me.grd.DefaultCellStyle = DataGridViewCellStyle16
         Me.grd.EnableHeadersVisualStyles = False
         Me.grd.Location = New System.Drawing.Point(10, 90)
         Me.grd.Name = "grd"
@@ -141,8 +145,8 @@ Partial Class FrmStockList
         'SCODE
         '
         Me.SCODE.DataPropertyName = "SCODE"
-        DataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter
-        Me.SCODE.DefaultCellStyle = DataGridViewCellStyle3
+        DataGridViewCellStyle11.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter
+        Me.SCODE.DefaultCellStyle = DataGridViewCellStyle11
         Me.SCODE.HeaderText = "S-Code"
         Me.SCODE.Name = "SCODE"
         Me.SCODE.Width = 65
@@ -157,9 +161,9 @@ Partial Class FrmStockList
         'SAFEQTY
         '
         Me.SAFEQTY.DataPropertyName = "SAFEQTY"
-        DataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter
-        DataGridViewCellStyle4.NullValue = Nothing
-        Me.SAFEQTY.DefaultCellStyle = DataGridViewCellStyle4
+        DataGridViewCellStyle12.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter
+        DataGridViewCellStyle12.NullValue = Nothing
+        Me.SAFEQTY.DefaultCellStyle = DataGridViewCellStyle12
         Me.SAFEQTY.HeaderText = "安全在庫数"
         Me.SAFEQTY.Name = "SAFEQTY"
         Me.SAFEQTY.Width = 46
@@ -167,8 +171,8 @@ Partial Class FrmStockList
         'SUMACTQTY
         '
         Me.SUMACTQTY.DataPropertyName = "SUMACTQTY"
-        DataGridViewCellStyle5.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter
-        Me.SUMACTQTY.DefaultCellStyle = DataGridViewCellStyle5
+        DataGridViewCellStyle13.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter
+        Me.SUMACTQTY.DefaultCellStyle = DataGridViewCellStyle13
         Me.SUMACTQTY.HeaderText = "実在庫数"
         Me.SUMACTQTY.Name = "SUMACTQTY"
         Me.SUMACTQTY.Width = 60
@@ -176,8 +180,8 @@ Partial Class FrmStockList
         'SUMRESERVTOTALQTY
         '
         Me.SUMRESERVTOTALQTY.DataPropertyName = "SUMRESERVTOTALQTY"
-        DataGridViewCellStyle6.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter
-        Me.SUMRESERVTOTALQTY.DefaultCellStyle = DataGridViewCellStyle6
+        DataGridViewCellStyle14.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter
+        Me.SUMRESERVTOTALQTY.DefaultCellStyle = DataGridViewCellStyle14
         Me.SUMRESERVTOTALQTY.HeaderText = "引当数"
         Me.SUMRESERVTOTALQTY.Name = "SUMRESERVTOTALQTY"
         Me.SUMRESERVTOTALQTY.Width = 50
@@ -185,8 +189,8 @@ Partial Class FrmStockList
         'SUMRemainQTY
         '
         Me.SUMRemainQTY.DataPropertyName = "SUMRemainQTY"
-        DataGridViewCellStyle7.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter
-        Me.SUMRemainQTY.DefaultCellStyle = DataGridViewCellStyle7
+        DataGridViewCellStyle15.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter
+        Me.SUMRemainQTY.DefaultCellStyle = DataGridViewCellStyle15
         Me.SUMRemainQTY.HeaderText = "有効在庫数"
         Me.SUMRemainQTY.Name = "SUMRemainQTY"
         Me.SUMRemainQTY.Width = 70
@@ -207,7 +211,7 @@ Partial Class FrmStockList
         Me.txtItemNm.Margin = New System.Windows.Forms.Padding(2)
         Me.txtItemNm.Name = "txtItemNm"
         Me.txtItemNm.Size = New System.Drawing.Size(120, 19)
-        Me.txtItemNm.TabIndex = 5
+        Me.txtItemNm.TabIndex = 4
         '
         'chkWarning
         '
@@ -216,7 +220,7 @@ Partial Class FrmStockList
         Me.chkWarning.Location = New System.Drawing.Point(233, 48)
         Me.chkWarning.Name = "chkWarning"
         Me.chkWarning.Size = New System.Drawing.Size(271, 16)
-        Me.chkWarning.TabIndex = 6
+        Me.chkWarning.TabIndex = 5
         Me.chkWarning.Text = "有効在庫が安全在庫数を下回った商品のみ表示"
         Me.chkWarning.UseVisualStyleBackColor = True
         '
@@ -253,12 +257,31 @@ Partial Class FrmStockList
         '
         'txtRemainQty
         '
+        Me.txtRemainQty.ImeMode = System.Windows.Forms.ImeMode.Disable
         Me.txtRemainQty.Location = New System.Drawing.Point(302, 15)
         Me.txtRemainQty.MaxLength = 4
         Me.txtRemainQty.Name = "txtRemainQty"
         Me.txtRemainQty.Size = New System.Drawing.Size(51, 19)
-        Me.txtRemainQty.TabIndex = 27
+        Me.txtRemainQty.TabIndex = 2
         Me.txtRemainQty.Type = 1
+        '
+        'lblSCode
+        '
+        Me.lblSCode.AutoSize = True
+        Me.lblSCode.Location = New System.Drawing.Point(376, 18)
+        Me.lblSCode.Name = "lblSCode"
+        Me.lblSCode.Size = New System.Drawing.Size(44, 12)
+        Me.lblSCode.TabIndex = 28
+        Me.lblSCode.Text = "S-Code"
+        Me.lblSCode.Type = 0
+        '
+        'txtSCode
+        '
+        Me.txtSCode.Location = New System.Drawing.Point(427, 15)
+        Me.txtSCode.Name = "txtSCode"
+        Me.txtSCode.Size = New System.Drawing.Size(100, 19)
+        Me.txtSCode.TabIndex = 3
+        Me.txtSCode.Type = 0
         '
         'FrmStockList
         '
@@ -297,4 +320,6 @@ Partial Class FrmStockList
     Friend WithEvents SUMACTQTY As DataGridViewTextBoxColumn
     Friend WithEvents SUMRESERVTOTALQTY As DataGridViewTextBoxColumn
     Friend WithEvents SUMRemainQTY As DataGridViewTextBoxColumn
+    Friend WithEvents lblSCode As LabelBase
+    Friend WithEvents txtSCode As TextBoxBase
 End Class

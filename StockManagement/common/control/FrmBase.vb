@@ -120,19 +120,22 @@
         _loadingForm.Refresh()
 
         ' force the wait window to display for at least 700ms so it doesn't just flash on the screen
-        System.Threading.Thread.Sleep(100)
+        System.Threading.Thread.Sleep(800)
 
         ' 注释理由：改为由他线程调用CloseForm关闭
         'AddHandler Application.Idle, AddressOf OnLoaded
     End Sub
 
     Protected Sub CloseLoadingForm()
-        _loadingForm.Invoke(New CloseDelegate(Sub()
-                                                  If _loadingForm IsNot Nothing AndAlso _loadingForm.Visible Then
-                                                      _loadingForm.Close()
-                                                      _loadingForm = Nothing
-                                                  End If
-                                              End Sub))
+        If _loadingForm IsNot Nothing Then
+            _loadingForm.Invoke(New CloseDelegate(
+                                Sub()
+                                    If _loadingForm IsNot Nothing AndAlso _loadingForm.Visible Then
+                                        _loadingForm.Close()
+                                        _loadingForm = Nothing
+                                    End If
+                                End Sub))
+        End If
     End Sub
 
     Private Sub OnLoaded(sender As Object, e As EventArgs)

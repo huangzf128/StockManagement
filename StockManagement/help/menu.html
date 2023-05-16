@@ -1,0 +1,130 @@
+<! DOCTYPE html>
+<html>
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta charset="UTF-8">
+<title> jQuery tree menu </title>
+<style>
+	body {
+		background: #e39900;
+		overflow: hidden;
+		overflow-y: auto;
+		color: black;
+		font-size: 20px;
+		font-weight: 2px solid;
+		text-align: center;
+	}
+
+	p {
+		position: relative;
+		padding: 0;
+		margin: 20;
+		font-family: "Raleway", sans-serif;
+		font-weight: 100;
+		font-size: 20px;
+		color: white;
+		-webkit-transition: all 0.4s ease 0s;
+		-o-transition: all 0.4s ease 0s;
+		transition: all 0.4s ease 0s;
+	}
+
+	ul {
+		list-style-type: none;
+		text-transform: uppercase;
+		font-weight: 500;
+		text-align: left;
+	}
+	
+	#myUL {
+		list-style-type: none;
+	}
+
+	#myUL {
+		margin: 0;
+		padding: 0;
+	}
+
+	.box {
+		cursor: pointer;
+		-webkit-user-select: none;
+		-moz-user-select: none;
+		-ms-user-select: none;
+		user-select: none;
+	}
+
+	h2 {
+		position: relative;
+		padding: 0;
+		margin: 10;
+		font-family: "Raleway", sans-serif;
+		font-weight: 300;
+		font-size: 40px;
+		color: #080808;
+		-webkit-transition: all 0.4s ease 0s;
+		-o-transition: all 0.4s ease 0s;
+		transition: all 0.4s ease 0s;
+	}
+
+	.box::before {
+		/* content: "\2610"; */
+		content: "\271A";
+		color: black;
+		display: inline-block;
+		margin-right: 6px;
+	}
+
+	.check-box::before {
+		/* content: "\2611"; */
+		content: "\268A";
+		color: dodgerblue;
+	}
+
+	.nested {
+		display: none;
+	}
+
+	.active {
+		display: block;
+	}
+</style>
+</head>
+
+<body>
+	<h2> Example </h2>
+	<p> A tree view represents a hierarchical view of information, where each item can have a number of subitems. </p>
+	<p> Click on the box(es) to open or close the tree branches. </p>
+	<ul id="myUL">
+		<li> <span class="box"> Beverages </span>
+			<ul class="nested">
+				<li> Water </li>
+				<li> Coffee </li>
+				<li> <span class="box"> Tea </span>
+					<ul class="nested">
+						<li> Black Tea </li>
+						<li> White Tea </li>
+						<li> <span class="box"> Green Tea </span>
+							<ul class="nested">
+								<li> Sencha </li>
+								<li> Gyokuro </li>
+								<li> Matcha </li>
+								<li> Pi Lo Chun </li>
+							</ul>
+						</li>
+					</ul>
+				</li>
+			</ul>
+		</li>
+	</ul>
+	<script>
+		var toggler = document.getElementsByClassName("box");
+		var i;
+		for (i = 0; i < toggler.length; i++) {
+			toggler[i].addEventListener("click", function () {
+				this.parentElement.querySelector(".nested").classList.toggle("active");
+				this.classList.toggle("check-box");
+			});
+		} 
+	</script>
+</body>
+
+</html>
