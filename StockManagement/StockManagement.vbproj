@@ -6,11 +6,11 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectGuid>{A281D9BB-0B07-4257-B838-E1154FE83C18}</ProjectGuid>
     <OutputType>WinExe</OutputType>
-    <StartupObject>StockManagement.My.MyApplication</StartupObject>
+    <StartupObject>Sub Main</StartupObject>
     <RootNamespace>StockManagement</RootNamespace>
     <AssemblyName>StockManagement</AssemblyName>
     <FileAlignment>512</FileAlignment>
-    <MyType>WindowsForms</MyType>
+    <MyType>WindowsFormsWithCustomSubMain</MyType>
     <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
     <AutoGenerateBindingRedirects>false</AutoGenerateBindingRedirects>
     <Deterministic>true</Deterministic>
@@ -32,8 +32,8 @@
     <CreateWebPageOnPublish>true</CreateWebPageOnPublish>
     <WebPage>publish.htm</WebPage>
     <TrustUrlParameters>true</TrustUrlParameters>
-    <ApplicationRevision>4</ApplicationRevision>
-    <ApplicationVersion>1.0.2.4</ApplicationVersion>
+    <ApplicationRevision>8</ApplicationRevision>
+    <ApplicationVersion>1.0.2.8</ApplicationVersion>
     <UseApplicationTrust>false</UseApplicationTrust>
     <CreateDesktopShortcut>true</CreateDesktopShortcut>
     <PublishWizardCompleted>true</PublishWizardCompleted>
@@ -89,20 +89,28 @@
   <PropertyGroup>
     <ApplicationManifest>My Project\app.manifest</ApplicationManifest>
   </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationIcon>favicon.ico</ApplicationIcon>
+  </PropertyGroup>
   <ItemGroup>
+    <Reference Include="PresentationCore" />
+    <Reference Include="PresentationFramework" />
     <Reference Include="System" />
     <Reference Include="System.Configuration" />
     <Reference Include="System.Configuration.Install" />
     <Reference Include="System.Data" />
     <Reference Include="System.Deployment" />
     <Reference Include="System.Drawing" />
+    <Reference Include="System.ServiceProcess" />
     <Reference Include="System.Web.Extensions" />
     <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xaml" />
     <Reference Include="System.Xml" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="System.Net.Http" />
+    <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
     <Import Include="Microsoft.VisualBasic" />
@@ -127,6 +135,9 @@
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="common\control\DataGridViewBase.vb">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="common\control\LinkBase.vb">
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="common\control\SubFrmBase.Designer.vb">
@@ -156,7 +167,6 @@
     <Compile Include="common\control\FrmBase.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Cm.vb" />
     <Compile Include="common\control\IControl.vb" />
     <Compile Include="common\control\LoadingForm.Designer.vb">
       <DependentUpon>LoadingForm.vb</DependentUpon>
@@ -171,9 +181,11 @@
     </Compile>
     <Compile Include="common\entity\Info.vb" />
     <Compile Include="common\service\CommonService.vb" />
+    <Compile Include="common\service\Session.vb" />
     <Compile Include="common\style\GridStyle.vb" />
     <Compile Include="common\style\Style.vb" />
     <Compile Include="common\utils\Async.vb" />
+    <Compile Include="common\utils\Log.vb" />
     <Compile Include="common\utils\Msg.vb" />
     <Compile Include="common\utils\Util.vb" />
     <Compile Include="FrmStockIn.Designer.vb">
@@ -236,13 +248,6 @@
     <Compile Include="FrmStockReserve.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="FrmMenu.vb">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="FrmMenu.Designer.vb">
-      <DependentUpon>FrmMenu.vb</DependentUpon>
-      <SubType>Form</SubType>
-    </Compile>
     <Compile Include="My Project\AssemblyInfo.vb" />
     <Compile Include="My Project\Application.Designer.vb">
       <AutoGen>True</AutoGen>
@@ -259,6 +264,7 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
+    <Compile Include="Program.vb" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="common\control\SubFrmBase.resx">
@@ -306,9 +312,6 @@
     <EmbeddedResource Include="FrmStockReserve.resx">
       <DependentUpon>FrmStockReserve.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="FrmMenu.resx">
-      <DependentUpon>FrmMenu.vb</DependentUpon>
-    </EmbeddedResource>
     <EmbeddedResource Include="My Project\Resources.resx">
       <Generator>VbMyResourcesResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.vb</LastGenOutput>
@@ -342,6 +345,7 @@
     </BootstrapperPackage>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="favicon.ico" />
     <Content Include="help\menu.html">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
@@ -358,9 +362,6 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="image\Dark Green.jpg">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="image\Light Ocean.jpg">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="view\StockList.sql" />

@@ -40,4 +40,9 @@ Public Class SubFrmBase
         ControlPaint.DrawBorder(e.Graphics, Me.ClientRectangle, Color.WhiteSmoke, ButtonBorderStyle.Solid)
     End Sub
 
+    Private Sub SubFrmBase_Load(sender As Object, e As EventArgs) Handles Me.Load
+        If Session.darkMode Then
+            Me.FormBorderStyle = FormBorderStyle.None
+        End If
+    End Sub
 End Class

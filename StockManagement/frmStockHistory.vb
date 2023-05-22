@@ -1,6 +1,7 @@
 ﻿Imports System.ComponentModel
 Imports System.Data.SqlClient
 Imports System.Text
+Imports StockManagement.Consts
 
 Public Class FrmStockHistory
 

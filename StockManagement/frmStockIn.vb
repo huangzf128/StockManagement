@@ -9,6 +9,8 @@ Public Class FrmStockIn
 
 
     Private Sub FrmStockIn_Load(sender As Object, e As EventArgs) Handles Me.Load
+        Me.pnlCondition.BackColor = Color.Transparent
+        Me.BackgroundImage = My.Resources.ResourceManager.GetObject("Dark_Green")
     End Sub
 
     Protected Overrides Function getSqlAndParamStockHistory(row As DataRow) As DbParamEnt

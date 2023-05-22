@@ -22,15 +22,14 @@ Partial Class FrmStockList
     '不要使用代码编辑器修改它。
     <System.Diagnostics.DebuggerStepThrough()>
     Private Sub InitializeComponent()
-        Dim DataGridViewCellStyle9 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle10 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle16 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle11 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle12 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle13 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle14 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle15 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Me.lblItemName = New System.Windows.Forms.Label()
+        Dim DataGridViewCellStyle1 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle2 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle8 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle3 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle4 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle5 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle6 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle7 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Me.txtItemCd = New System.Windows.Forms.TextBox()
         Me.btnSearch = New StockManagement.ButtonBase()
         Me.grd = New StockManagement.DataGridViewBase()
@@ -41,42 +40,33 @@ Partial Class FrmStockList
         Me.SUMACTQTY = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.SUMRESERVTOTALQTY = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.SUMRemainQTY = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.lblItemNm = New System.Windows.Forms.Label()
         Me.txtItemNm = New System.Windows.Forms.TextBox()
-        Me.chkWarning = New System.Windows.Forms.CheckBox()
         Me.btnCopy = New StockManagement.ButtonBase()
         Me.bindingNavi = New StockManagement.UBindingNavigator()
-        Me.lblRemainQty = New System.Windows.Forms.Label()
         Me.txtRemainQty = New StockManagement.TextBoxBase()
         Me.lblSCode = New StockManagement.LabelBase()
         Me.txtSCode = New StockManagement.TextBoxBase()
+        Me.lblRemainQty = New StockManagement.LabelBase()
+        Me.lblItemName = New StockManagement.LabelBase()
+        Me.lblItemNm = New StockManagement.LabelBase()
+        Me.chkWarning = New StockManagement.CheckBoxBase()
         Me.pnlCondition.SuspendLayout()
         CType(Me.grd, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
         'pnlCondition
         '
+        Me.pnlCondition.Controls.Add(Me.chkWarning)
+        Me.pnlCondition.Controls.Add(Me.lblItemNm)
+        Me.pnlCondition.Controls.Add(Me.lblItemName)
+        Me.pnlCondition.Controls.Add(Me.lblRemainQty)
         Me.pnlCondition.Controls.Add(Me.txtSCode)
         Me.pnlCondition.Controls.Add(Me.lblSCode)
         Me.pnlCondition.Controls.Add(Me.txtRemainQty)
-        Me.pnlCondition.Controls.Add(Me.lblRemainQty)
         Me.pnlCondition.Controls.Add(Me.btnCopy)
-        Me.pnlCondition.Controls.Add(Me.chkWarning)
         Me.pnlCondition.Controls.Add(Me.txtItemNm)
-        Me.pnlCondition.Controls.Add(Me.lblItemNm)
         Me.pnlCondition.Controls.Add(Me.btnSearch)
-        Me.pnlCondition.Controls.Add(Me.lblItemName)
         Me.pnlCondition.Controls.Add(Me.txtItemCd)
-        '
-        'lblItemName
-        '
-        Me.lblItemName.AutoSize = True
-        Me.lblItemName.ForeColor = System.Drawing.SystemColors.Control
-        Me.lblItemName.Location = New System.Drawing.Point(20, 18)
-        Me.lblItemName.Name = "lblItemName"
-        Me.lblItemName.Size = New System.Drawing.Size(65, 12)
-        Me.lblItemName.TabIndex = 21
-        Me.lblItemName.Text = "変更商品名"
         '
         'txtItemCd
         '
@@ -89,7 +79,7 @@ Partial Class FrmStockList
         'btnSearch
         '
         Me.btnSearch.BackColor = System.Drawing.Color.DeepSkyBlue
-        Me.btnSearch.Font = New System.Drawing.Font("ＭＳ Ｐゴシック", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(134, Byte))
+        Me.btnSearch.Font = New System.Drawing.Font("MS PGothic", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(134, Byte))
         Me.btnSearch.Location = New System.Drawing.Point(730, 15)
         Me.btnSearch.Name = "btnSearch"
         Me.btnSearch.Size = New System.Drawing.Size(70, 30)
@@ -102,35 +92,36 @@ Partial Class FrmStockList
         '
         Me.grd.AllowUserToAddRows = False
         Me.grd.AllowUserToResizeRows = False
-        DataGridViewCellStyle9.BackColor = System.Drawing.Color.WhiteSmoke
-        Me.grd.AlternatingRowsDefaultCellStyle = DataGridViewCellStyle9
+        DataGridViewCellStyle1.BackColor = System.Drawing.Color.WhiteSmoke
+        Me.grd.AlternatingRowsDefaultCellStyle = DataGridViewCellStyle1
         Me.grd.CellBorderStyle = System.Windows.Forms.DataGridViewCellBorderStyle.SingleHorizontal
         Me.grd.ColumnHeadersBorderStyle = System.Windows.Forms.DataGridViewHeaderBorderStyle.None
-        DataGridViewCellStyle10.Alignment = System.Windows.Forms.DataGridViewContentAlignment.TopCenter
-        DataGridViewCellStyle10.BackColor = System.Drawing.SystemColors.Highlight
-        DataGridViewCellStyle10.Font = New System.Drawing.Font("ＭＳ Ｐゴシック", 9.0!)
-        DataGridViewCellStyle10.ForeColor = System.Drawing.SystemColors.Window
-        DataGridViewCellStyle10.Padding = New System.Windows.Forms.Padding(0, 4, 0, 4)
-        DataGridViewCellStyle10.SelectionBackColor = System.Drawing.SystemColors.Highlight
-        DataGridViewCellStyle10.SelectionForeColor = System.Drawing.SystemColors.HighlightText
-        DataGridViewCellStyle10.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
-        Me.grd.ColumnHeadersDefaultCellStyle = DataGridViewCellStyle10
+        DataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.TopCenter
+        DataGridViewCellStyle2.BackColor = System.Drawing.SystemColors.Highlight
+        DataGridViewCellStyle2.Font = New System.Drawing.Font("MS PGothic", 9.0!)
+        DataGridViewCellStyle2.ForeColor = System.Drawing.SystemColors.Window
+        DataGridViewCellStyle2.Padding = New System.Windows.Forms.Padding(0, 4, 0, 4)
+        DataGridViewCellStyle2.SelectionBackColor = System.Drawing.SystemColors.Highlight
+        DataGridViewCellStyle2.SelectionForeColor = System.Drawing.SystemColors.HighlightText
+        DataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
+        Me.grd.ColumnHeadersDefaultCellStyle = DataGridViewCellStyle2
         Me.grd.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
         Me.grd.Columns.AddRange(New System.Windows.Forms.DataGridViewColumn() {Me.ITEMCD, Me.SCODE, Me.ITEMNAME, Me.SAFEQTY, Me.SUMACTQTY, Me.SUMRESERVTOTALQTY, Me.SUMRemainQTY})
-        DataGridViewCellStyle16.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
-        DataGridViewCellStyle16.BackColor = System.Drawing.SystemColors.Window
-        DataGridViewCellStyle16.Font = New System.Drawing.Font("ＭＳ Ｐゴシック", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(134, Byte))
-        DataGridViewCellStyle16.ForeColor = System.Drawing.SystemColors.ControlText
-        DataGridViewCellStyle16.SelectionBackColor = System.Drawing.Color.FromArgb(CType(CType(218, Byte), Integer), CType(CType(242, Byte), Integer), CType(CType(222, Byte), Integer))
-        DataGridViewCellStyle16.SelectionForeColor = System.Drawing.Color.Black
-        DataGridViewCellStyle16.WrapMode = System.Windows.Forms.DataGridViewTriState.[False]
-        Me.grd.DefaultCellStyle = DataGridViewCellStyle16
+        DataGridViewCellStyle8.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
+        DataGridViewCellStyle8.BackColor = System.Drawing.SystemColors.Window
+        DataGridViewCellStyle8.Font = New System.Drawing.Font("MS PGothic", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(134, Byte))
+        DataGridViewCellStyle8.ForeColor = System.Drawing.SystemColors.ControlText
+        DataGridViewCellStyle8.SelectionBackColor = System.Drawing.Color.FromArgb(CType(CType(218, Byte), Integer), CType(CType(242, Byte), Integer), CType(CType(222, Byte), Integer))
+        DataGridViewCellStyle8.SelectionForeColor = System.Drawing.Color.Black
+        DataGridViewCellStyle8.WrapMode = System.Windows.Forms.DataGridViewTriState.[False]
+        Me.grd.DefaultCellStyle = DataGridViewCellStyle8
+        Me.grd.Dock = System.Windows.Forms.DockStyle.Fill
         Me.grd.EnableHeadersVisualStyles = False
-        Me.grd.Location = New System.Drawing.Point(10, 90)
+        Me.grd.Location = New System.Drawing.Point(0, 90)
         Me.grd.Name = "grd"
         Me.grd.RowHeadersVisible = False
         Me.grd.RowTemplate.DefaultCellStyle.Padding = New System.Windows.Forms.Padding(3, 0, 3, 0)
-        Me.grd.Size = New System.Drawing.Size(890, 440)
+        Me.grd.Size = New System.Drawing.Size(910, 445)
         Me.grd.TabIndex = 12
         Me.grd.Type = 0
         '
@@ -145,8 +136,8 @@ Partial Class FrmStockList
         'SCODE
         '
         Me.SCODE.DataPropertyName = "SCODE"
-        DataGridViewCellStyle11.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter
-        Me.SCODE.DefaultCellStyle = DataGridViewCellStyle11
+        DataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter
+        Me.SCODE.DefaultCellStyle = DataGridViewCellStyle3
         Me.SCODE.HeaderText = "S-Code"
         Me.SCODE.Name = "SCODE"
         Me.SCODE.Width = 65
@@ -161,9 +152,9 @@ Partial Class FrmStockList
         'SAFEQTY
         '
         Me.SAFEQTY.DataPropertyName = "SAFEQTY"
-        DataGridViewCellStyle12.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter
-        DataGridViewCellStyle12.NullValue = Nothing
-        Me.SAFEQTY.DefaultCellStyle = DataGridViewCellStyle12
+        DataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter
+        DataGridViewCellStyle4.NullValue = Nothing
+        Me.SAFEQTY.DefaultCellStyle = DataGridViewCellStyle4
         Me.SAFEQTY.HeaderText = "安全在庫数"
         Me.SAFEQTY.Name = "SAFEQTY"
         Me.SAFEQTY.Width = 46
@@ -171,8 +162,8 @@ Partial Class FrmStockList
         'SUMACTQTY
         '
         Me.SUMACTQTY.DataPropertyName = "SUMACTQTY"
-        DataGridViewCellStyle13.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter
-        Me.SUMACTQTY.DefaultCellStyle = DataGridViewCellStyle13
+        DataGridViewCellStyle5.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter
+        Me.SUMACTQTY.DefaultCellStyle = DataGridViewCellStyle5
         Me.SUMACTQTY.HeaderText = "実在庫数"
         Me.SUMACTQTY.Name = "SUMACTQTY"
         Me.SUMACTQTY.Width = 60
@@ -180,8 +171,8 @@ Partial Class FrmStockList
         'SUMRESERVTOTALQTY
         '
         Me.SUMRESERVTOTALQTY.DataPropertyName = "SUMRESERVTOTALQTY"
-        DataGridViewCellStyle14.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter
-        Me.SUMRESERVTOTALQTY.DefaultCellStyle = DataGridViewCellStyle14
+        DataGridViewCellStyle6.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter
+        Me.SUMRESERVTOTALQTY.DefaultCellStyle = DataGridViewCellStyle6
         Me.SUMRESERVTOTALQTY.HeaderText = "引当数"
         Me.SUMRESERVTOTALQTY.Name = "SUMRESERVTOTALQTY"
         Me.SUMRESERVTOTALQTY.Width = 50
@@ -189,21 +180,11 @@ Partial Class FrmStockList
         'SUMRemainQTY
         '
         Me.SUMRemainQTY.DataPropertyName = "SUMRemainQTY"
-        DataGridViewCellStyle15.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter
-        Me.SUMRemainQTY.DefaultCellStyle = DataGridViewCellStyle15
+        DataGridViewCellStyle7.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter
+        Me.SUMRemainQTY.DefaultCellStyle = DataGridViewCellStyle7
         Me.SUMRemainQTY.HeaderText = "有効在庫数"
         Me.SUMRemainQTY.Name = "SUMRemainQTY"
         Me.SUMRemainQTY.Width = 70
-        '
-        'lblItemNm
-        '
-        Me.lblItemNm.AutoSize = True
-        Me.lblItemNm.ForeColor = System.Drawing.SystemColors.Control
-        Me.lblItemNm.Location = New System.Drawing.Point(20, 48)
-        Me.lblItemNm.Name = "lblItemNm"
-        Me.lblItemNm.Size = New System.Drawing.Size(41, 12)
-        Me.lblItemNm.TabIndex = 23
-        Me.lblItemNm.Text = "商品名"
         '
         'txtItemNm
         '
@@ -213,21 +194,10 @@ Partial Class FrmStockList
         Me.txtItemNm.Size = New System.Drawing.Size(120, 19)
         Me.txtItemNm.TabIndex = 4
         '
-        'chkWarning
-        '
-        Me.chkWarning.AutoSize = True
-        Me.chkWarning.ForeColor = System.Drawing.SystemColors.Control
-        Me.chkWarning.Location = New System.Drawing.Point(233, 48)
-        Me.chkWarning.Name = "chkWarning"
-        Me.chkWarning.Size = New System.Drawing.Size(271, 16)
-        Me.chkWarning.TabIndex = 5
-        Me.chkWarning.Text = "有効在庫が安全在庫数を下回った商品のみ表示"
-        Me.chkWarning.UseVisualStyleBackColor = True
-        '
         'btnCopy
         '
         Me.btnCopy.BackColor = System.Drawing.Color.Sienna
-        Me.btnCopy.Font = New System.Drawing.Font("ＭＳ Ｐゴシック", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(134, Byte))
+        Me.btnCopy.Font = New System.Drawing.Font("MS PGothic", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(134, Byte))
         Me.btnCopy.ForeColor = System.Drawing.Color.WhiteSmoke
         Me.btnCopy.Location = New System.Drawing.Point(810, 15)
         Me.btnCopy.Name = "btnCopy"
@@ -244,16 +214,6 @@ Partial Class FrmStockList
         Me.bindingNavi.Name = "bindingNavi"
         Me.bindingNavi.Size = New System.Drawing.Size(910, 25)
         Me.bindingNavi.TabIndex = 6
-        '
-        'lblRemainQty
-        '
-        Me.lblRemainQty.AutoSize = True
-        Me.lblRemainQty.ForeColor = System.Drawing.SystemColors.Control
-        Me.lblRemainQty.Location = New System.Drawing.Point(231, 18)
-        Me.lblRemainQty.Name = "lblRemainQty"
-        Me.lblRemainQty.Size = New System.Drawing.Size(65, 12)
-        Me.lblRemainQty.TabIndex = 26
-        Me.lblRemainQty.Text = "有効在庫数"
         '
         'txtRemainQty
         '
@@ -283,35 +243,71 @@ Partial Class FrmStockList
         Me.txtSCode.TabIndex = 3
         Me.txtSCode.Type = 0
         '
+        'lblRemainQty
+        '
+        Me.lblRemainQty.AutoSize = True
+        Me.lblRemainQty.Location = New System.Drawing.Point(231, 18)
+        Me.lblRemainQty.Name = "lblRemainQty"
+        Me.lblRemainQty.Size = New System.Drawing.Size(65, 12)
+        Me.lblRemainQty.TabIndex = 29
+        Me.lblRemainQty.Text = "有効在庫数"
+        Me.lblRemainQty.Type = 0
+        '
+        'lblItemName
+        '
+        Me.lblItemName.AutoSize = True
+        Me.lblItemName.Location = New System.Drawing.Point(20, 18)
+        Me.lblItemName.Name = "lblItemName"
+        Me.lblItemName.Size = New System.Drawing.Size(65, 12)
+        Me.lblItemName.TabIndex = 30
+        Me.lblItemName.Text = "変更商品名"
+        Me.lblItemName.Type = 0
+        '
+        'lblItemNm
+        '
+        Me.lblItemNm.AutoSize = True
+        Me.lblItemNm.Location = New System.Drawing.Point(21, 49)
+        Me.lblItemNm.Name = "lblItemNm"
+        Me.lblItemNm.Size = New System.Drawing.Size(41, 12)
+        Me.lblItemNm.TabIndex = 31
+        Me.lblItemNm.Text = "商品名"
+        Me.lblItemNm.Type = 0
+        '
+        'chkWarning
+        '
+        Me.chkWarning.AutoSize = True
+        Me.chkWarning.Location = New System.Drawing.Point(233, 49)
+        Me.chkWarning.Name = "chkWarning"
+        Me.chkWarning.Size = New System.Drawing.Size(271, 16)
+        Me.chkWarning.TabIndex = 5
+        Me.chkWarning.Text = "有効在庫が安全在庫数を下回った商品のみ表示"
+        Me.chkWarning.Type = 0
+        Me.chkWarning.UseVisualStyleBackColor = True
+        '
         'FrmStockList
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 12.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.ClientSize = New System.Drawing.Size(910, 560)
-        Me.Controls.Add(Me.bindingNavi)
         Me.Controls.Add(Me.grd)
+        Me.Controls.Add(Me.bindingNavi)
         Me.Name = "FrmStockList"
         Me.Text = "在庫一覧"
         Me.Controls.SetChildIndex(Me.pnlCondition, 0)
-        Me.Controls.SetChildIndex(Me.grd, 0)
         Me.Controls.SetChildIndex(Me.bindingNavi, 0)
+        Me.Controls.SetChildIndex(Me.grd, 0)
         Me.pnlCondition.ResumeLayout(False)
         Me.pnlCondition.PerformLayout()
         CType(Me.grd, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)
 
     End Sub
-
-    Friend WithEvents lblItemName As Label
     Friend WithEvents txtItemCd As TextBox
     Friend WithEvents btnSearch As ButtonBase
     Friend WithEvents grd As DataGridViewBase
-    Friend WithEvents lblItemNm As Label
     Friend WithEvents txtItemNm As TextBox
-    Friend WithEvents chkWarning As CheckBox
     Friend WithEvents btnCopy As ButtonBase
     Friend WithEvents bindingNavi As UBindingNavigator
-    Friend WithEvents lblRemainQty As Label
     Friend WithEvents txtRemainQty As TextBoxBase
     Friend WithEvents ITEMCD As DataGridViewTextBoxColumn
     Friend WithEvents SCODE As DataGridViewTextBoxColumn
@@ -322,4 +318,8 @@ Partial Class FrmStockList
     Friend WithEvents SUMRemainQTY As DataGridViewTextBoxColumn
     Friend WithEvents lblSCode As LabelBase
     Friend WithEvents txtSCode As TextBoxBase
+    Friend WithEvents lblItemNm As LabelBase
+    Friend WithEvents lblItemName As LabelBase
+    Friend WithEvents lblRemainQty As LabelBase
+    Friend WithEvents chkWarning As CheckBoxBase
 End Class

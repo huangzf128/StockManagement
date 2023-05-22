@@ -1,14 +1,13 @@
 ﻿Imports System.ComponentModel
-Imports System.Reflection
 
-Public Class CheckBoxBase
-    Inherits CheckBox
+Public Class LinkBase
+    Inherits LinkLabel
     Implements IControl
 
     Private _type As Integer = 0
 
     <Category("Int"),
-    Description("Type of the CheckBox.")>
+    Description("Type of the LinkLabel.")>
     Public Property Type() As Integer Implements IControl.Type
         Get
             Return _type

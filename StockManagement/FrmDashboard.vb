@@ -1,12 +1,11 @@
 ﻿Imports System.Data.SqlClient
 Imports System.Deployment.Application
+Imports System.Diagnostics.Tracing
 Imports System.IO
 Imports System.Runtime.InteropServices
 Imports System.Text
 
 Public Class FrmDashboard
-
-    Public isAuthUser As Boolean = False
 
 #Region "API"
 
@@ -27,6 +26,16 @@ Public Class FrmDashboard
         ' create folder
         Util.CreateFolder(Util.GetPgFolderPath())
 
+        ' read setting file
+        Session.info = Util.LoadXml(IO.Path.Combine(Util.GetPgFolderPath(), Consts.INFO_FILE_NAME))
+        If Session.info Is Nothing Then
+            Session.info = New Info
+        End If
+
+        If Session.info.darkMode Then
+            chkDarkMode.Checked = True
+        End If
+
         ' 未処理受注
         Dim dt As DataTable = getStockReservInfo()
         grdBacklogReserv.DataSource = dt
@@ -44,7 +53,7 @@ Public Class FrmDashboard
 
         If ApplicationDeployment.IsNetworkDeployed Then
             Dim appVersion As Version = ApplicationDeployment.CurrentDeployment.CurrentVersion
-            linkVersion.Text = "AppVer:" & appVersion.ToString
+            lblVersion.Text = "AppVer:" & appVersion.ToString
         End If
 
     End Sub
@@ -64,8 +73,30 @@ Public Class FrmDashboard
         End If
     End Sub
 
+    Private Sub chkDarkMode_CheckedChanged(sender As Object, e As EventArgs) Handles chkDarkMode.CheckedChanged
+        Session.darkMode = chkDarkMode.Checked
+        pnlHeader.Visible = Session.darkMode
 
-    Private Sub btnClose_Click(sender As Object, e As EventArgs) Handles btnClose.Click, btnCloseMenu.Click
+        If chkDarkMode.Checked Then
+            Me.FormBorderStyle = FormBorderStyle.None
+            pnlMenu.BackgroundImage = My.Resources.ResourceManager.GetObject("Dark_Ocean")
+            pnlDashboard.BackColor = Color.CadetBlue
+            pnlFooter.BackColor = Color.SteelBlue
+
+            lblVersion.ForeColor = Color.WhiteSmoke
+        Else
+            Me.FormBorderStyle = FormBorderStyle.FixedSingle
+            pnlMenu.BackgroundImage = Nothing
+            pnlDashboard.BackColor = System.Drawing.SystemColors.Control
+            pnlFooter.BackColor = System.Drawing.SystemColors.Control
+            lblVersion.ForeColor = System.Drawing.SystemColors.ControlText
+        End If
+
+        Session.info.darkMode = chkDarkMode.Checked
+        Util.Write2Xml(IO.Path.Combine(Util.GetPgFolderPath(), Consts.INFO_FILE_NAME), Session.info)
+    End Sub
+
+    Private Sub btnClose_Click(sender As Object, e As EventArgs) Handles btnClose.Click
         Me.Close()
     End Sub
 
@@ -135,19 +166,11 @@ Public Class FrmDashboard
         switchForm(FrmStockListHistory)
     End Sub
 
-    Private Sub linkVersion_LinkClicked(sender As Object, e As LinkLabelLinkClickedEventArgs) Handles linkVersion.LinkClicked
-        'System.Diagnostics.Process.Start("http://www.bpoint-nouki.com/public/publish/updHistory.html")
-
-        System.Diagnostics.Process.Start(Path.GetDirectoryName(My.Application.Log.DefaultFileLogWriter.FullLogFileName))
-
-        'System.Diagnostics.Process.Start("help\menu.html")
-    End Sub
-
     Private Sub btnLogin_Click(sender As Object, e As EventArgs) Handles btnLogin.Click
         Using f = FrmLogin
             f.ShowDialog()
 
-            If isAuthUser Then
+            If Session.isAuthUser Then
                 btnStockIn.Visible = True
                 btnStockOut.Visible = True
                 btnLogin.Visible = False
@@ -171,9 +194,23 @@ Public Class FrmDashboard
         btnStockOut.Visible = False
         btnLogin.Visible = True
         btnLogout.Visible = False
-        isAuthUser = False
+        Session.isAuthUser = False
 
         btnDashboard.PerformClick()
+    End Sub
+
+    Private Sub btnCloseMenu_Click(sender As Object, e As EventArgs) Handles btnCloseMenu.Click
+        Me.Close()
+    End Sub
+
+    Private Sub lnkShowManual_LinkClicked(sender As Object, e As LinkLabelLinkClickedEventArgs) Handles lnkShowManual.LinkClicked
+        'System.Diagnostics.Process.Start("http://www.bpoint-nouki.com/public/publish/updHistory.html")
+
+        'System.Diagnostics.Process.Start("help\menu.html")
+    End Sub
+
+    Private Sub lnkShowLog_LinkClicked(sender As Object, e As LinkLabelLinkClickedEventArgs) Handles lnkShowLog.LinkClicked
+        System.Diagnostics.Process.Start(Util.GetPgFolderPath())
     End Sub
 
 #End Region
@@ -205,6 +242,7 @@ Public Class FrmDashboard
     Private Sub switchForm(ByVal frm As FrmBase)
 
         Me.pnlDashboard.Visible = False
+        Me.Text = lblTitle.Text
 
         If frm Is Me.ActiveMdiChild Then
             Return
@@ -215,10 +253,6 @@ Public Class FrmDashboard
                 f.Close()
             Next
         End If
-
-        'If Me.ActiveMdiChild IsNot Nothing Then
-        '    Me.ActiveMdiChild.Close()
-        'End If
 
         frm.TopLevel = False
         frm.MdiParent = Me
@@ -309,7 +343,5 @@ Public Class FrmDashboard
     End Function
 
 #End Region
-
-
 
 End Class

@@ -27,7 +27,7 @@ Partial Class FrmBase
         '
         'pnlCondition
         '
-        Me.pnlCondition.BackColor = System.Drawing.Color.Transparent
+        Me.pnlCondition.BackColor = System.Drawing.SystemColors.Control
         Me.pnlCondition.Dock = System.Windows.Forms.DockStyle.Top
         Me.pnlCondition.Location = New System.Drawing.Point(0, 0)
         Me.pnlCondition.Name = "pnlCondition"
@@ -38,12 +38,11 @@ Partial Class FrmBase
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(96.0!, 96.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi
-        Me.BackColor = System.Drawing.Color.CornflowerBlue
-        Me.BackgroundImage = Global.StockManagement.My.Resources.Resources.Dark_Ocean
+        Me.BackColor = System.Drawing.SystemColors.Control
         Me.ClientSize = New System.Drawing.Size(910, 560)
         Me.Controls.Add(Me.pnlCondition)
         Me.DoubleBuffered = True
-        Me.Font = New System.Drawing.Font("ＭＳ Ｐゴシック", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(134, Byte))
+        Me.Font = New System.Drawing.Font("MS PGothic", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(134, Byte))
         Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None
         Me.Name = "FrmBase"
         Me.Text = "Base"

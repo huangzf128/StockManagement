@@ -1,4 +1,5 @@
-﻿Imports System.Configuration
+﻿Imports System.Collections.ObjectModel
+Imports System.Configuration
 Imports System.Data.SqlClient
 Imports System.IO
 
@@ -60,7 +61,10 @@ Public Class DbHandler
     'トランザクションロールバック
     Public Sub rollback()
         If Not sqlTrn Is Nothing Then
-            sqlTrn.Rollback()
+            Try
+                sqlTrn.Rollback()
+            Catch ex As Exception
+            End Try
         End If
     End Sub
 
@@ -77,21 +81,14 @@ Public Class DbHandler
             End If
             Return command.ExecuteNonQuery()
 
-        Catch e As SqlException
-
-            rollback()
-            close()
-            Throw e
-
         Catch ex As Exception
 
+            Log.Write(ex.Message + vbNewLine + ex.StackTrace)
+            Msg.warning("DBエラーが発生しました。システム管理者に連絡してください。", "エラー")
+
             rollback()
             close()
-
-            My.Application.Log.WriteException(ex)
-            Msg.warning("エラーが発生しました。ログファイルを確認してください。", "エラー")
-            System.Diagnostics.Process.Start(Path.GetDirectoryName(My.Application.Log.DefaultFileLogWriter.FullLogFileName))
-            Application.Exit()
+            Environment.Exit(0)
         End Try
 
         Return -1
@@ -117,8 +114,6 @@ Public Class DbHandler
     End Sub
 
 
-
-
     ''' <summary>
     ''' トランザクションを伴わないSQLを実行(主にSELECT文)
     ''' </summary>
@@ -142,11 +137,27 @@ Public Class DbHandler
             End Using
 
         Catch ex As Exception
-            My.Application.Log.WriteException(ex)
-            Msg.warning("エラーが発生しました。ログファイルを確認してください。", "エラー")
-            System.Diagnostics.Process.Start(Path.GetDirectoryName(My.Application.Log.DefaultFileLogWriter.FullLogFileName))
-            Application.Exit()
+            Log.Write(ex.Message + vbNewLine + ex.StackTrace)
+            Msg.warning("DBエラーが発生しました。システム管理者に連絡してください。", "エラー")
+            Environment.Exit(0)
         End Try
+        'Try
+        '    Dim command As New SqlCommand(dbParamEnt.sbSql.ToString, connection)
+        '    command.Connection.Open()
+        '    If dbParamEnt.parameters IsNot Nothing AndAlso dbParamEnt.parameters.Length > 0 Then
+        '        command.Parameters.AddRange(dbParamEnt.parameters)
+        '    End If
+
+        '    Dim sqlAdp As SqlDataAdapter = New SqlDataAdapter(command)
+        '    sqlAdp.Fill(returnDt)
+
+        'Catch ex As Exception
+        '    Log.Write(ex.Message + vbNewLine + ex.StackTrace)
+        '    Msg.warning("DBエラーが発生しました。システム管理者に連絡してください。", "エラー")
+        '    Environment.Exit(0)
+        'Finally
+        '    connection.Dispose()
+        'End Try
 
         Return returnDt
     End Function

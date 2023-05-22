@@ -27,7 +27,6 @@ Partial Class FrmStockListHistory
         Dim DataGridViewCellStyle4 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Dim DataGridViewCellStyle3 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Me.dtPickerFrom = New StockManagement.UDataTimePicker()
-        Me.lblItemName = New System.Windows.Forms.Label()
         Me.txtItemCd = New System.Windows.Forms.TextBox()
         Me.btnSearch = New StockManagement.ButtonBase()
         Me.grd = New StockManagement.DataGridViewBase()
@@ -39,16 +38,17 @@ Partial Class FrmStockListHistory
         Me.QTYI = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.QTYO = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.btnCopy = New StockManagement.ButtonBase()
+        Me.lblItemName = New StockManagement.LabelBase()
         Me.pnlCondition.SuspendLayout()
         CType(Me.grd, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
         'pnlCondition
         '
+        Me.pnlCondition.Controls.Add(Me.lblItemName)
         Me.pnlCondition.Controls.Add(Me.btnCopy)
         Me.pnlCondition.Controls.Add(Me.btnSearch)
         Me.pnlCondition.Controls.Add(Me.dtPickerFrom)
-        Me.pnlCondition.Controls.Add(Me.lblItemName)
         Me.pnlCondition.Controls.Add(Me.txtItemCd)
         '
         'dtPickerFrom
@@ -56,17 +56,7 @@ Partial Class FrmStockListHistory
         Me.dtPickerFrom.Location = New System.Drawing.Point(20, 15)
         Me.dtPickerFrom.Name = "dtPickerFrom"
         Me.dtPickerFrom.Size = New System.Drawing.Size(190, 20)
-        Me.dtPickerFrom.TabIndex = 29
-        '
-        'lblItemName
-        '
-        Me.lblItemName.AutoSize = True
-        Me.lblItemName.ForeColor = System.Drawing.SystemColors.Control
-        Me.lblItemName.Location = New System.Drawing.Point(20, 48)
-        Me.lblItemName.Name = "lblItemName"
-        Me.lblItemName.Size = New System.Drawing.Size(65, 12)
-        Me.lblItemName.TabIndex = 27
-        Me.lblItemName.Text = "変更商品名"
+        Me.dtPickerFrom.TabIndex = 1
         '
         'txtItemCd
         '
@@ -74,16 +64,16 @@ Partial Class FrmStockListHistory
         Me.txtItemCd.Margin = New System.Windows.Forms.Padding(2)
         Me.txtItemCd.Name = "txtItemCd"
         Me.txtItemCd.Size = New System.Drawing.Size(223, 19)
-        Me.txtItemCd.TabIndex = 26
+        Me.txtItemCd.TabIndex = 2
         '
         'btnSearch
         '
         Me.btnSearch.BackColor = System.Drawing.Color.DeepSkyBlue
-        Me.btnSearch.Font = New System.Drawing.Font("ＭＳ Ｐゴシック", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(134, Byte))
+        Me.btnSearch.Font = New System.Drawing.Font("MS PGothic", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(134, Byte))
         Me.btnSearch.Location = New System.Drawing.Point(730, 15)
         Me.btnSearch.Name = "btnSearch"
         Me.btnSearch.Size = New System.Drawing.Size(70, 30)
-        Me.btnSearch.TabIndex = 31
+        Me.btnSearch.TabIndex = 10
         Me.btnSearch.Text = "検索"
         Me.btnSearch.Type = 2
         Me.btnSearch.UseVisualStyleBackColor = False
@@ -98,7 +88,7 @@ Partial Class FrmStockListHistory
         Me.grd.ColumnHeadersBorderStyle = System.Windows.Forms.DataGridViewHeaderBorderStyle.None
         DataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.TopCenter
         DataGridViewCellStyle2.BackColor = System.Drawing.SystemColors.Highlight
-        DataGridViewCellStyle2.Font = New System.Drawing.Font("ＭＳ Ｐゴシック", 9.0!)
+        DataGridViewCellStyle2.Font = New System.Drawing.Font("MS PGothic", 9.0!)
         DataGridViewCellStyle2.ForeColor = System.Drawing.SystemColors.Window
         DataGridViewCellStyle2.Padding = New System.Windows.Forms.Padding(0, 4, 0, 4)
         DataGridViewCellStyle2.SelectionBackColor = System.Drawing.SystemColors.Highlight
@@ -109,19 +99,20 @@ Partial Class FrmStockListHistory
         Me.grd.Columns.AddRange(New System.Windows.Forms.DataGridViewColumn() {Me.ITEMCD, Me.LOCATIONNM, Me.LOCATIONCD, Me.QTY, Me.CRTDT, Me.QTYI, Me.QTYO})
         DataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
         DataGridViewCellStyle4.BackColor = System.Drawing.SystemColors.Window
-        DataGridViewCellStyle4.Font = New System.Drawing.Font("ＭＳ Ｐゴシック", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(134, Byte))
+        DataGridViewCellStyle4.Font = New System.Drawing.Font("MS PGothic", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(134, Byte))
         DataGridViewCellStyle4.ForeColor = System.Drawing.SystemColors.ControlText
         DataGridViewCellStyle4.SelectionBackColor = System.Drawing.Color.FromArgb(CType(CType(218, Byte), Integer), CType(CType(242, Byte), Integer), CType(CType(222, Byte), Integer))
         DataGridViewCellStyle4.SelectionForeColor = System.Drawing.Color.Black
         DataGridViewCellStyle4.WrapMode = System.Windows.Forms.DataGridViewTriState.[False]
         Me.grd.DefaultCellStyle = DataGridViewCellStyle4
+        Me.grd.Dock = System.Windows.Forms.DockStyle.Fill
         Me.grd.EnableHeadersVisualStyles = False
-        Me.grd.Location = New System.Drawing.Point(10, 90)
+        Me.grd.Location = New System.Drawing.Point(0, 90)
         Me.grd.Name = "grd"
         Me.grd.RowHeadersVisible = False
         Me.grd.RowTemplate.DefaultCellStyle.Padding = New System.Windows.Forms.Padding(3, 0, 3, 0)
-        Me.grd.Size = New System.Drawing.Size(890, 440)
-        Me.grd.TabIndex = 1
+        Me.grd.Size = New System.Drawing.Size(910, 470)
+        Me.grd.TabIndex = 20
         Me.grd.Type = 0
         '
         'ITEMCD
@@ -176,15 +167,25 @@ Partial Class FrmStockListHistory
         'btnCopy
         '
         Me.btnCopy.BackColor = System.Drawing.Color.Sienna
-        Me.btnCopy.Font = New System.Drawing.Font("ＭＳ Ｐゴシック", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(134, Byte))
+        Me.btnCopy.Font = New System.Drawing.Font("MS PGothic", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(134, Byte))
         Me.btnCopy.ForeColor = System.Drawing.Color.WhiteSmoke
         Me.btnCopy.Location = New System.Drawing.Point(810, 15)
         Me.btnCopy.Name = "btnCopy"
         Me.btnCopy.Size = New System.Drawing.Size(70, 30)
-        Me.btnCopy.TabIndex = 32
+        Me.btnCopy.TabIndex = 11
         Me.btnCopy.Text = "全コピー"
         Me.btnCopy.Type = 5
         Me.btnCopy.UseVisualStyleBackColor = False
+        '
+        'lblItemName
+        '
+        Me.lblItemName.AutoSize = True
+        Me.lblItemName.Location = New System.Drawing.Point(18, 49)
+        Me.lblItemName.Name = "lblItemName"
+        Me.lblItemName.Size = New System.Drawing.Size(65, 12)
+        Me.lblItemName.TabIndex = 33
+        Me.lblItemName.Text = "変更商品名"
+        Me.lblItemName.Type = 0
         '
         'FrmStockListHistory
         '
@@ -204,7 +205,6 @@ Partial Class FrmStockListHistory
 
     End Sub
     Friend WithEvents dtPickerFrom As UDataTimePicker
-    Friend WithEvents lblItemName As Label
     Friend WithEvents txtItemCd As TextBox
     Friend WithEvents btnSearch As ButtonBase
     Friend WithEvents grd As DataGridViewBase
@@ -216,4 +216,5 @@ Partial Class FrmStockListHistory
     Friend WithEvents CRTDT As DataGridViewTextBoxColumn
     Friend WithEvents QTYI As DataGridViewTextBoxColumn
     Friend WithEvents QTYO As DataGridViewTextBoxColumn
+    Friend WithEvents lblItemName As LabelBase
 End Class

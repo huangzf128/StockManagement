@@ -254,8 +254,6 @@ Public Class FrmStockList
         Return New DbParamEnt(sb, param.ToArray)
     End Function
 
-
 #End Region
-
 
 End Class

@@ -29,7 +29,7 @@ Partial Class SubFrmBase
         '
         'pnlCondition
         '
-        Me.pnlCondition.Location = New System.Drawing.Point(2, 33)
+        Me.pnlCondition.Location = New System.Drawing.Point(2, 28)
         Me.pnlCondition.Size = New System.Drawing.Size(316, 60)
         '
         'pnlTitle
@@ -39,15 +39,15 @@ Partial Class SubFrmBase
         Me.pnlTitle.Dock = System.Windows.Forms.DockStyle.Top
         Me.pnlTitle.Location = New System.Drawing.Point(2, 2)
         Me.pnlTitle.Name = "pnlTitle"
-        Me.pnlTitle.Size = New System.Drawing.Size(316, 31)
+        Me.pnlTitle.Size = New System.Drawing.Size(316, 26)
         Me.pnlTitle.TabIndex = 1
         '
         'lblTitle
         '
         Me.lblTitle.AutoSize = True
-        Me.lblTitle.Font = New System.Drawing.Font("ＭＳ Ｐゴシック", 12.0!, System.Drawing.FontStyle.Bold)
+        Me.lblTitle.Font = New System.Drawing.Font("MS PGothic", 12.0!, System.Drawing.FontStyle.Bold)
         Me.lblTitle.ForeColor = System.Drawing.SystemColors.Control
-        Me.lblTitle.Location = New System.Drawing.Point(12, 8)
+        Me.lblTitle.Location = New System.Drawing.Point(12, 5)
         Me.lblTitle.Name = "lblTitle"
         Me.lblTitle.Size = New System.Drawing.Size(57, 16)
         Me.lblTitle.TabIndex = 0
@@ -57,12 +57,13 @@ Partial Class SubFrmBase
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 12.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.BackColor = System.Drawing.Color.Gold
-        Me.BackgroundImage = Global.StockManagement.My.Resources.Resources.Dark_Green
+        Me.BackColor = System.Drawing.SystemColors.Control
         Me.ClientSize = New System.Drawing.Size(320, 400)
         Me.Controls.Add(Me.pnlTitle)
+        Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedToolWindow
         Me.Name = "SubFrmBase"
         Me.Padding = New System.Windows.Forms.Padding(2)
+        Me.Text = ""
         Me.Controls.SetChildIndex(Me.pnlTitle, 0)
         Me.Controls.SetChildIndex(Me.pnlCondition, 0)
         Me.pnlTitle.ResumeLayout(False)

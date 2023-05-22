@@ -40,5 +40,8 @@
         'grd.AdvancedCellBorderStyle.Right = DataGridViewAdvancedCellBorderStyle.None
         grd.ColumnHeadersBorderStyle = DataGridViewHeaderBorderStyle.None
         grd.AllowUserToAddRows = False
+
+        grd.ColumnHeadersDefaultCellStyle.ForeColor = System.Drawing.SystemColors.ControlText
+        grd.ColumnHeadersDefaultCellStyle.BackColor = SystemColors.ControlLight
     End Sub
 End Class

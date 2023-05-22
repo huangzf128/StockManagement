@@ -23,9 +23,11 @@ Public Class LabelBase
 
 
     Public Sub initVisualStyle() Implements IControl.initVisualStyle
-        Me.ForeColor = System.Drawing.Color.WhiteSmoke
 
-        If Me._type = Consts.LabelType.COMMON Then
+        If Session.darkMode Then
+            Me.ForeColor = System.Drawing.Color.WhiteSmoke
+            Me.BackColor = Color.Transparent
         End If
+
     End Sub
 End Class

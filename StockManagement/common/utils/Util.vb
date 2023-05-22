@@ -108,8 +108,8 @@ Public Class Util
     End Function
 
     Public Shared Sub WriteFile(filePath As String, content As String)
-        Dim sw As New IO.StreamWriter(filePath, False, Text.Encoding.GetEncoding("shift_jis"))
-        sw.Write(content)
+        Dim sw As New IO.StreamWriter(filePath, True, Text.Encoding.GetEncoding("utf-8"))
+        sw.Write("" + content)
         sw.Close()
     End Sub
 
@@ -119,11 +119,11 @@ Public Class Util
         End If
     End Sub
 
-    Public Shared Sub Write2Xml(file As String, obj As Info)
+    Public Shared Sub Write2Xml(filePath As String, obj As Info)
         'XmlSerializerオブジェクトを作成
         Dim serializer As New System.Xml.Serialization.XmlSerializer(GetType(Info))
         '書き込むファイルを開く（UTF-8 BOM無し）
-        Dim sw As New System.IO.StreamWriter(file, False, New System.Text.UTF8Encoding(False))
+        Dim sw As New System.IO.StreamWriter(filePath, False, New System.Text.UTF8Encoding(False))
         'シリアル化し、XMLファイルに保存する
         serializer.Serialize(sw, obj)
         sw.Close()

@@ -8,11 +8,8 @@ Public Class FrmLogin
     Private Sub Login_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         txtUser.Select()
 
-        Dim info As Info = Util.LoadXml(IO.Path.Combine(Util.GetPgFolderPath(), Consts.INFO_FILE_NAME))
-        If info IsNot Nothing Then
-            txtUser.Text = info.userId
-            txtPass.Select()
-        End If
+        txtUser.Text = Session.info.userId
+        txtPass.Select()
     End Sub
 
     Private Sub btnClose_Click(sender As Object, e As EventArgs) Handles btnClose.Click
@@ -37,9 +34,10 @@ Public Class FrmLogin
         Dim dt As DataTable = DbHandler.executeSelect(dbParamEnt)
         If dt.Rows.Count > 0 Then
             If dt.Rows(0).Item("AUTHLV") = 99 Then
-                FrmDashboard.isAuthUser = True
+                Session.isAuthUser = True
 
-                Util.Write2Xml(IO.Path.Combine(Util.GetPgFolderPath(), Consts.INFO_FILE_NAME), New Info With {.userId = txtUser.Text})
+                Session.info.userId = txtUser.Text
+                Util.Write2Xml(IO.Path.Combine(Util.GetPgFolderPath(), Consts.INFO_FILE_NAME), Session.info)
                 Me.Close()
             Else
                 Msg.warning("管理者しかログインできません。", "ログインエラー")

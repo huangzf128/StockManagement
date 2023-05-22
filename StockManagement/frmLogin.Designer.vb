@@ -64,7 +64,7 @@ Partial Class FrmLogin
         'btnClose
         '
         Me.btnClose.BackColor = System.Drawing.Color.Goldenrod
-        Me.btnClose.Font = New System.Drawing.Font("ＭＳ Ｐゴシック", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(134, Byte))
+        Me.btnClose.Font = New System.Drawing.Font("MS PGothic", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(134, Byte))
         Me.btnClose.Location = New System.Drawing.Point(5, 146)
         Me.btnClose.Name = "btnClose"
         Me.btnClose.Size = New System.Drawing.Size(70, 30)
@@ -76,7 +76,7 @@ Partial Class FrmLogin
         'btnLogin
         '
         Me.btnLogin.BackColor = System.Drawing.Color.Sienna
-        Me.btnLogin.Font = New System.Drawing.Font("ＭＳ Ｐゴシック", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(134, Byte))
+        Me.btnLogin.Font = New System.Drawing.Font("MS PGothic", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(134, Byte))
         Me.btnLogin.ForeColor = System.Drawing.Color.WhiteSmoke
         Me.btnLogin.Location = New System.Drawing.Point(182, 99)
         Me.btnLogin.Name = "btnLogin"
@@ -89,7 +89,7 @@ Partial Class FrmLogin
         'lblUser
         '
         Me.lblUser.AutoSize = True
-        Me.lblUser.ForeColor = System.Drawing.Color.WhiteSmoke
+        Me.lblUser.ForeColor = System.Drawing.SystemColors.ControlText
         Me.lblUser.Location = New System.Drawing.Point(25, 15)
         Me.lblUser.Name = "lblUser"
         Me.lblUser.Size = New System.Drawing.Size(53, 12)
@@ -100,7 +100,7 @@ Partial Class FrmLogin
         'lblPass
         '
         Me.lblPass.AutoSize = True
-        Me.lblPass.ForeColor = System.Drawing.Color.WhiteSmoke
+        Me.lblPass.ForeColor = System.Drawing.SystemColors.ControlText
         Me.lblPass.Location = New System.Drawing.Point(25, 37)
         Me.lblPass.Name = "lblPass"
         Me.lblPass.Size = New System.Drawing.Size(59, 12)
@@ -112,15 +112,14 @@ Partial Class FrmLogin
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 12.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.BackColor = System.Drawing.Color.DarkSlateBlue
-        Me.BackgroundImage = Nothing
+        Me.BackColor = System.Drawing.SystemColors.Control
         Me.ClientSize = New System.Drawing.Size(300, 181)
         Me.Controls.Add(Me.btnLogin)
         Me.Controls.Add(Me.btnClose)
         Me.Margin = New System.Windows.Forms.Padding(2)
         Me.Name = "FrmLogin"
         Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent
-        Me.Text = "Login"
+        Me.Text = "ログイン"
         Me.Controls.SetChildIndex(Me.pnlCondition, 0)
         Me.Controls.SetChildIndex(Me.btnClose, 0)
         Me.Controls.SetChildIndex(Me.btnLogin, 0)

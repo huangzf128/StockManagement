@@ -34,4 +34,6 @@ Public Class Consts
 
     Public Const PROGRAM_FOLDER = "SyoutenStockManage"
     Public Const INFO_FILE_NAME = "info.txt"
+    Public Const LOG_FILE_NAME = "log.txt"
+
 End Class

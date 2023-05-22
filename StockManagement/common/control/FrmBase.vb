@@ -145,4 +145,13 @@
 
 #End Region
 
+
+    Private Sub FrmBase_Load(sender As Object, e As EventArgs) Handles Me.Load
+        If Session.darkMode Then
+            pnlCondition.BackColor = Color.Transparent
+            Me.BackgroundImage = My.Resources.ResourceManager.GetObject("Dark_Ocean")
+        End If
+
+    End Sub
+
 End Class

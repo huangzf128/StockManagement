@@ -32,12 +32,12 @@ Partial Class FrmItemSearch
         Me.LOCATIONNM = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.ACTQTY = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.LOCATIONCD = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.lblItemName = New System.Windows.Forms.Label()
         Me.btnSearch = New StockManagement.ButtonBase()
         Me.btnClose = New StockManagement.ButtonBase()
-        Me.lblLocation = New System.Windows.Forms.Label()
         Me.cmbLocation = New System.Windows.Forms.ComboBox()
         Me.Label1 = New System.Windows.Forms.Label()
+        Me.lblItemName = New StockManagement.LabelBase()
+        Me.lblLocation = New StockManagement.LabelBase()
         Me.pnlCondition.SuspendLayout()
         CType(Me.grd, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
@@ -50,10 +50,10 @@ Partial Class FrmItemSearch
         'pnlCondition
         '
         Me.pnlCondition.Controls.Add(Me.lblLocation)
+        Me.pnlCondition.Controls.Add(Me.lblItemName)
         Me.pnlCondition.Controls.Add(Me.cmbLocation)
         Me.pnlCondition.Controls.Add(Me.btnClose)
         Me.pnlCondition.Controls.Add(Me.btnSearch)
-        Me.pnlCondition.Controls.Add(Me.lblItemName)
         Me.pnlCondition.Controls.Add(Me.txtItemCd)
         Me.pnlCondition.Size = New System.Drawing.Size(411, 60)
         '
@@ -75,7 +75,7 @@ Partial Class FrmItemSearch
         Me.grd.ColumnHeadersBorderStyle = System.Windows.Forms.DataGridViewHeaderBorderStyle.None
         DataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.TopCenter
         DataGridViewCellStyle2.BackColor = System.Drawing.SystemColors.Highlight
-        DataGridViewCellStyle2.Font = New System.Drawing.Font("ＭＳ Ｐゴシック", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(134, Byte))
+        DataGridViewCellStyle2.Font = New System.Drawing.Font("MS PGothic", 9.0!)
         DataGridViewCellStyle2.ForeColor = System.Drawing.SystemColors.Window
         DataGridViewCellStyle2.Padding = New System.Windows.Forms.Padding(0, 4, 0, 4)
         DataGridViewCellStyle2.SelectionBackColor = System.Drawing.SystemColors.Highlight
@@ -86,7 +86,7 @@ Partial Class FrmItemSearch
         Me.grd.Columns.AddRange(New System.Windows.Forms.DataGridViewColumn() {Me.ITEMCD, Me.LOCATIONNM, Me.ACTQTY, Me.LOCATIONCD})
         DataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
         DataGridViewCellStyle4.BackColor = System.Drawing.SystemColors.Window
-        DataGridViewCellStyle4.Font = New System.Drawing.Font("ＭＳ Ｐゴシック", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(134, Byte))
+        DataGridViewCellStyle4.Font = New System.Drawing.Font("MS PGothic", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(134, Byte))
         DataGridViewCellStyle4.ForeColor = System.Drawing.SystemColors.ControlText
         DataGridViewCellStyle4.SelectionBackColor = System.Drawing.Color.FromArgb(CType(CType(218, Byte), Integer), CType(CType(242, Byte), Integer), CType(CType(222, Byte), Integer))
         DataGridViewCellStyle4.SelectionForeColor = System.Drawing.Color.Black
@@ -133,20 +133,10 @@ Partial Class FrmItemSearch
         Me.LOCATIONCD.Name = "LOCATIONCD"
         Me.LOCATIONCD.Visible = False
         '
-        'lblItemName
-        '
-        Me.lblItemName.AutoSize = True
-        Me.lblItemName.ForeColor = System.Drawing.SystemColors.Control
-        Me.lblItemName.Location = New System.Drawing.Point(15, 11)
-        Me.lblItemName.Name = "lblItemName"
-        Me.lblItemName.Size = New System.Drawing.Size(65, 12)
-        Me.lblItemName.TabIndex = 22
-        Me.lblItemName.Text = "変更商品名"
-        '
         'btnSearch
         '
         Me.btnSearch.BackColor = System.Drawing.Color.DeepSkyBlue
-        Me.btnSearch.Font = New System.Drawing.Font("ＭＳ Ｐゴシック", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(134, Byte))
+        Me.btnSearch.Font = New System.Drawing.Font("MS PGothic", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(134, Byte))
         Me.btnSearch.Location = New System.Drawing.Point(244, 18)
         Me.btnSearch.Name = "btnSearch"
         Me.btnSearch.Size = New System.Drawing.Size(70, 30)
@@ -158,7 +148,7 @@ Partial Class FrmItemSearch
         'btnClose
         '
         Me.btnClose.BackColor = System.Drawing.Color.Goldenrod
-        Me.btnClose.Font = New System.Drawing.Font("ＭＳ Ｐゴシック", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(134, Byte))
+        Me.btnClose.Font = New System.Drawing.Font("MS PGothic", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(134, Byte))
         Me.btnClose.Location = New System.Drawing.Point(327, 18)
         Me.btnClose.Name = "btnClose"
         Me.btnClose.Size = New System.Drawing.Size(70, 30)
@@ -166,16 +156,6 @@ Partial Class FrmItemSearch
         Me.btnClose.Text = "閉じる"
         Me.btnClose.Type = 1
         Me.btnClose.UseVisualStyleBackColor = False
-        '
-        'lblLocation
-        '
-        Me.lblLocation.AutoSize = True
-        Me.lblLocation.ForeColor = System.Drawing.SystemColors.Control
-        Me.lblLocation.Location = New System.Drawing.Point(15, 36)
-        Me.lblLocation.Name = "lblLocation"
-        Me.lblLocation.Size = New System.Drawing.Size(67, 12)
-        Me.lblLocation.TabIndex = 27
-        Me.lblLocation.Text = "ロケーション"
         '
         'cmbLocation
         '
@@ -197,17 +177,38 @@ Partial Class FrmItemSearch
         Me.Label1.TabIndex = 3
         Me.Label1.Text = "※商品を選択するには、該当明細をダブルクリックしてください。"
         '
+        'lblItemName
+        '
+        Me.lblItemName.AutoSize = True
+        Me.lblItemName.Location = New System.Drawing.Point(19, 12)
+        Me.lblItemName.Name = "lblItemName"
+        Me.lblItemName.Size = New System.Drawing.Size(65, 12)
+        Me.lblItemName.TabIndex = 28
+        Me.lblItemName.Text = "変更商品名"
+        Me.lblItemName.Type = 0
+        '
+        'lblLocation
+        '
+        Me.lblLocation.AutoSize = True
+        Me.lblLocation.Location = New System.Drawing.Point(19, 36)
+        Me.lblLocation.Name = "lblLocation"
+        Me.lblLocation.Size = New System.Drawing.Size(67, 12)
+        Me.lblLocation.TabIndex = 29
+        Me.lblLocation.Text = "ロケーション"
+        Me.lblLocation.Type = 0
+        '
         'FrmItemSearch
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 12.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
+        Me.BackColor = System.Drawing.SystemColors.Control
         Me.ClientSize = New System.Drawing.Size(415, 426)
         Me.Controls.Add(Me.Label1)
         Me.Controls.Add(Me.grd)
         Me.Margin = New System.Windows.Forms.Padding(2)
         Me.Name = "FrmItemSearch"
         Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent
-        Me.Text = "frmItemSearch"
+        Me.Text = "変更商品名検索"
         Me.Controls.SetChildIndex(Me.pnlCondition, 0)
         Me.Controls.SetChildIndex(Me.grd, 0)
         Me.Controls.SetChildIndex(Me.Label1, 0)
@@ -220,14 +221,14 @@ Partial Class FrmItemSearch
     End Sub
     Friend WithEvents txtItemCd As TextBox
     Friend WithEvents grd As DataGridViewBase
-    Friend WithEvents lblItemName As Label
     Friend WithEvents btnSearch As ButtonBase
     Friend WithEvents btnClose As ButtonBase
-    Friend WithEvents lblLocation As Label
     Friend WithEvents cmbLocation As ComboBox
     Friend WithEvents ITEMCD As DataGridViewTextBoxColumn
     Friend WithEvents LOCATIONNM As DataGridViewTextBoxColumn
     Friend WithEvents ACTQTY As DataGridViewTextBoxColumn
     Friend WithEvents LOCATIONCD As DataGridViewTextBoxColumn
     Friend WithEvents Label1 As Label
+    Friend WithEvents lblLocation As LabelBase
+    Friend WithEvents lblItemName As LabelBase
 End Class
