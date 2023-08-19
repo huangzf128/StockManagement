@@ -22,10 +22,10 @@ Partial Class FrmStockOut
     'コード エディターを使って変更しないでください。
     <System.Diagnostics.DebuggerStepThrough()>
     Private Sub InitializeComponent()
-        Dim DataGridViewCellStyle5 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle6 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle8 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle7 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle1 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle2 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle4 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle3 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Me.txtRemarks = New System.Windows.Forms.TextBox()
         Me.grd = New StockManagement.DataGridViewBase()
         Me.chk = New System.Windows.Forms.DataGridViewCheckBoxColumn()
@@ -87,29 +87,29 @@ Partial Class FrmStockOut
         '
         Me.grd.AllowUserToAddRows = False
         Me.grd.AllowUserToResizeRows = False
-        DataGridViewCellStyle5.BackColor = System.Drawing.Color.WhiteSmoke
-        Me.grd.AlternatingRowsDefaultCellStyle = DataGridViewCellStyle5
+        DataGridViewCellStyle1.BackColor = System.Drawing.Color.WhiteSmoke
+        Me.grd.AlternatingRowsDefaultCellStyle = DataGridViewCellStyle1
         Me.grd.CellBorderStyle = System.Windows.Forms.DataGridViewCellBorderStyle.SingleHorizontal
         Me.grd.ColumnHeadersBorderStyle = System.Windows.Forms.DataGridViewHeaderBorderStyle.None
-        DataGridViewCellStyle6.Alignment = System.Windows.Forms.DataGridViewContentAlignment.TopCenter
-        DataGridViewCellStyle6.BackColor = System.Drawing.SystemColors.Highlight
-        DataGridViewCellStyle6.Font = New System.Drawing.Font("MS PGothic", 9.0!)
-        DataGridViewCellStyle6.ForeColor = System.Drawing.SystemColors.Window
-        DataGridViewCellStyle6.Padding = New System.Windows.Forms.Padding(0, 4, 0, 4)
-        DataGridViewCellStyle6.SelectionBackColor = System.Drawing.SystemColors.Highlight
-        DataGridViewCellStyle6.SelectionForeColor = System.Drawing.SystemColors.HighlightText
-        DataGridViewCellStyle6.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
-        Me.grd.ColumnHeadersDefaultCellStyle = DataGridViewCellStyle6
+        DataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.TopCenter
+        DataGridViewCellStyle2.BackColor = System.Drawing.SystemColors.ControlLight
+        DataGridViewCellStyle2.Font = New System.Drawing.Font("MS PGothic", 9.0!)
+        DataGridViewCellStyle2.ForeColor = System.Drawing.SystemColors.ControlText
+        DataGridViewCellStyle2.Padding = New System.Windows.Forms.Padding(0, 4, 0, 4)
+        DataGridViewCellStyle2.SelectionBackColor = System.Drawing.SystemColors.Highlight
+        DataGridViewCellStyle2.SelectionForeColor = System.Drawing.SystemColors.HighlightText
+        DataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
+        Me.grd.ColumnHeadersDefaultCellStyle = DataGridViewCellStyle2
         Me.grd.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
         Me.grd.Columns.AddRange(New System.Windows.Forms.DataGridViewColumn() {Me.chk, Me.ITEMCD, Me.LOCATIONCD, Me.LOCATIONNM, Me.QTY, Me.REMARKS})
-        DataGridViewCellStyle8.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
-        DataGridViewCellStyle8.BackColor = System.Drawing.SystemColors.Window
-        DataGridViewCellStyle8.Font = New System.Drawing.Font("MS PGothic", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(134, Byte))
-        DataGridViewCellStyle8.ForeColor = System.Drawing.SystemColors.ControlText
-        DataGridViewCellStyle8.SelectionBackColor = System.Drawing.Color.FromArgb(CType(CType(218, Byte), Integer), CType(CType(242, Byte), Integer), CType(CType(222, Byte), Integer))
-        DataGridViewCellStyle8.SelectionForeColor = System.Drawing.Color.Black
-        DataGridViewCellStyle8.WrapMode = System.Windows.Forms.DataGridViewTriState.[False]
-        Me.grd.DefaultCellStyle = DataGridViewCellStyle8
+        DataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
+        DataGridViewCellStyle4.BackColor = System.Drawing.SystemColors.Window
+        DataGridViewCellStyle4.Font = New System.Drawing.Font("MS PGothic", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(134, Byte))
+        DataGridViewCellStyle4.ForeColor = System.Drawing.SystemColors.ControlText
+        DataGridViewCellStyle4.SelectionBackColor = System.Drawing.Color.FromArgb(CType(CType(218, Byte), Integer), CType(CType(242, Byte), Integer), CType(CType(222, Byte), Integer))
+        DataGridViewCellStyle4.SelectionForeColor = System.Drawing.Color.Black
+        DataGridViewCellStyle4.WrapMode = System.Windows.Forms.DataGridViewTriState.[False]
+        Me.grd.DefaultCellStyle = DataGridViewCellStyle4
         Me.grd.EditMode = System.Windows.Forms.DataGridViewEditMode.EditOnEnter
         Me.grd.EnableHeadersVisualStyles = False
         Me.grd.Location = New System.Drawing.Point(11, 117)
@@ -141,7 +141,6 @@ Partial Class FrmStockOut
         Me.LOCATIONCD.DataPropertyName = "LOCATIONCD"
         Me.LOCATIONCD.HeaderText = "Loc"
         Me.LOCATIONCD.Name = "LOCATIONCD"
-        Me.LOCATIONCD.ReadOnly = True
         Me.LOCATIONCD.Width = 50
         '
         'LOCATIONNM
@@ -155,9 +154,9 @@ Partial Class FrmStockOut
         'QTY
         '
         Me.QTY.DataPropertyName = "QTY"
-        DataGridViewCellStyle7.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter
-        DataGridViewCellStyle7.NullValue = Nothing
-        Me.QTY.DefaultCellStyle = DataGridViewCellStyle7
+        DataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter
+        DataGridViewCellStyle3.NullValue = Nothing
+        Me.QTY.DefaultCellStyle = DataGridViewCellStyle3
         Me.QTY.HeaderText = "数量"
         Me.QTY.Name = "QTY"
         Me.QTY.Width = 70
@@ -171,9 +170,9 @@ Partial Class FrmStockOut
         '
         'btnAdd
         '
-        Me.btnAdd.BackColor = System.Drawing.Color.Sienna
+        Me.btnAdd.BackColor = System.Drawing.Color.DeepSkyBlue
         Me.btnAdd.Font = New System.Drawing.Font("MS PGothic", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(134, Byte))
-        Me.btnAdd.ForeColor = System.Drawing.Color.WhiteSmoke
+        Me.btnAdd.ForeColor = System.Drawing.SystemColors.ControlText
         Me.btnAdd.Location = New System.Drawing.Point(731, 15)
         Me.btnAdd.Name = "btnAdd"
         Me.btnAdd.Size = New System.Drawing.Size(70, 30)
@@ -184,9 +183,9 @@ Partial Class FrmStockOut
         '
         'btnDelete
         '
-        Me.btnDelete.BackColor = System.Drawing.Color.DarkRed
+        Me.btnDelete.BackColor = System.Drawing.Color.DeepSkyBlue
         Me.btnDelete.Font = New System.Drawing.Font("MS PGothic", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(134, Byte))
-        Me.btnDelete.ForeColor = System.Drawing.Color.WhiteSmoke
+        Me.btnDelete.ForeColor = System.Drawing.SystemColors.ControlText
         Me.btnDelete.Location = New System.Drawing.Point(11, 518)
         Me.btnDelete.Name = "btnDelete"
         Me.btnDelete.Size = New System.Drawing.Size(70, 30)
@@ -199,7 +198,7 @@ Partial Class FrmStockOut
         '
         Me.btnItemSearch.BackColor = System.Drawing.Color.DeepSkyBlue
         Me.btnItemSearch.Font = New System.Drawing.Font("MS PGothic", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(134, Byte))
-        Me.btnItemSearch.ForeColor = System.Drawing.Color.WhiteSmoke
+        Me.btnItemSearch.ForeColor = System.Drawing.SystemColors.ControlText
         Me.btnItemSearch.Location = New System.Drawing.Point(20, 10)
         Me.btnItemSearch.Name = "btnItemSearch"
         Me.btnItemSearch.Size = New System.Drawing.Size(70, 30)
@@ -210,9 +209,9 @@ Partial Class FrmStockOut
         '
         'btnExecute
         '
-        Me.btnExecute.BackColor = System.Drawing.Color.Sienna
+        Me.btnExecute.BackColor = System.Drawing.Color.DeepSkyBlue
         Me.btnExecute.Font = New System.Drawing.Font("MS PGothic", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(134, Byte))
-        Me.btnExecute.ForeColor = System.Drawing.Color.WhiteSmoke
+        Me.btnExecute.ForeColor = System.Drawing.SystemColors.ControlText
         Me.btnExecute.Location = New System.Drawing.Point(810, 519)
         Me.btnExecute.Name = "btnExecute"
         Me.btnExecute.Size = New System.Drawing.Size(70, 30)
@@ -243,9 +242,9 @@ Partial Class FrmStockOut
         '
         'btnPaste
         '
-        Me.btnPaste.BackColor = System.Drawing.Color.DimGray
+        Me.btnPaste.BackColor = System.Drawing.Color.DeepSkyBlue
         Me.btnPaste.Font = New System.Drawing.Font("MS PGothic", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(134, Byte))
-        Me.btnPaste.ForeColor = System.Drawing.Color.WhiteSmoke
+        Me.btnPaste.ForeColor = System.Drawing.SystemColors.ControlText
         Me.btnPaste.Location = New System.Drawing.Point(810, 15)
         Me.btnPaste.Name = "btnPaste"
         Me.btnPaste.Size = New System.Drawing.Size(70, 30)
@@ -389,12 +388,6 @@ Partial Class FrmStockOut
     Friend WithEvents LabelBase1 As LabelBase
     Friend WithEvents txtQty As TextBoxBase
     Friend WithEvents btnPaste As ButtonBase
-    Friend WithEvents chk As DataGridViewCheckBoxColumn
-    Friend WithEvents ITEMCD As DataGridViewTextBoxColumn
-    Friend WithEvents LOCATIONCD As DataGridViewTextBoxColumn
-    Friend WithEvents LOCATIONNM As DataGridViewTextBoxColumn
-    Friend WithEvents QTY As DataGridViewTextBoxColumn
-    Friend WithEvents REMARKS As DataGridViewTextBoxColumn
     Friend WithEvents lblQty As LabelBase
     Friend WithEvents lblRemarks As LabelBase
     Friend WithEvents LabelBase2 As LabelBase
@@ -405,4 +398,10 @@ Partial Class FrmStockOut
     Friend WithEvents lblBar As LabelBase
     Friend WithEvents lblItemCd As LabelBase
     Friend WithEvents LabelBase3 As LabelBase
+    Friend WithEvents chk As DataGridViewCheckBoxColumn
+    Friend WithEvents ITEMCD As DataGridViewTextBoxColumn
+    Friend WithEvents LOCATIONCD As DataGridViewTextBoxColumn
+    Friend WithEvents LOCATIONNM As DataGridViewTextBoxColumn
+    Friend WithEvents QTY As DataGridViewTextBoxColumn
+    Friend WithEvents REMARKS As DataGridViewTextBoxColumn
 End Class

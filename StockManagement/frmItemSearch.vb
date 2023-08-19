@@ -22,10 +22,10 @@ Public Class FrmItemSearch
 
             Me.lblTitle.Text = FrmStockReserve.Text
 
-            Dim param = New List(Of String) From {selectedRow.Cells.Item("ITEMCD").Value,
-                                                    selectedRow.Cells.Item("LOCATIONCD").Value,
-                                                    selectedRow.Cells.Item("LOCATIONNM").Value,
-                                                    selectedRow.Cells.Item("ACTQTY").Value}
+            Dim param = New List(Of String) From {Util.obj2String(selectedRow.Cells.Item("ITEMCD").Value, ""),
+                                                    Util.obj2String(selectedRow.Cells.Item("LOCATIONCD").Value, ""),
+                                                    Util.obj2String(selectedRow.Cells.Item("LOCATIONNM").Value, ""),
+                                                    Util.obj2String(selectedRow.Cells.Item("ACTQTY").Value, "")}
             ClosePop(param)
         End If
     End Sub
@@ -81,7 +81,7 @@ Public Class FrmItemSearch
             param.Add(New SqlParameter("@LOCATIONCD", Me.cmbLocation.SelectedValue))
         Else
             ' TODO: 倉庫  西京を除外
-            sb.Append(" AND ACTST.LOCATIONCD <> 2 ")
+            sb.Append(" AND (ACTST.LOCATIONCD <> 2 OR ACTST.LOCATIONCD is null)")
         End If
 
         sb.Append(" ORDER BY ")

@@ -26,6 +26,11 @@ Public Class FrmStockOut
         dt.Columns.Add("REMARKS", GetType(String))
 
         grd.DataSource = dt
+
+        If locationDt Is Nothing Then
+            locationDt = CommonService.GetLocation()
+        End If
+
     End Sub
 
     Private Sub btnAdd_Click(sender As Object, e As EventArgs) Handles btnAdd.Click
@@ -113,10 +118,10 @@ Public Class FrmStockOut
                 Msg.info("ロケーションCDは必須入力項目です。", "入力エラー")
                 grd(2, i).Selected = True
                 Return False
-            ElseIf Util.isEmpty(row("LOCATIONNM")) Then
-                Msg.info("ロケーションCDは登録されていません。", "入力エラー")
-                grd(3, i).Selected = True
-                Return False
+                'ElseIf Util.isEmpty(row("LOCATIONNM")) Then
+                '    Msg.info("ロケーションCDは登録されていません。", "入力エラー")
+                '    grd(3, i).Selected = True
+                '    Return False
             End If
 
             If Util.isEmpty(row("QTY")) Then
@@ -163,7 +168,6 @@ Public Class FrmStockOut
             Exit Sub
         End If
 
-
         Using db = New DbHandler
 
             Try
@@ -192,9 +196,6 @@ Public Class FrmStockOut
     Private Sub btnPaste_Click(sender As Object, e As EventArgs) Handles btnPaste.Click
 
         Dim dt As DataTable = grd.DataSource
-        If locationDt Is Nothing Then
-            locationDt = CommonService.GetLocation()
-        End If
 
         Try
             For Each line As String In Clipboard.GetText.Split(vbNewLine)
@@ -206,7 +207,7 @@ Public Class FrmStockOut
                     Dim row As DataRow = dt.NewRow
                     row("ITEMCD") = item(0).Trim
                     row("LOCATIONCD") = item(1).Trim
-                    row("LOCATIONNM") = CommonService.GetLocationName(locationDt, item(1))
+                    row("LOCATIONNM") = CommonService.GetLocationCdName(locationDt, item(1))
                     row("QTY") = IIf(item(2).Trim = "", DBNull.Value, item(2).Trim)
                     If item.Count > 3 Then
                         row("REMARKS") = item(3).Trim
@@ -335,6 +336,15 @@ Public Class FrmStockOut
         End If
 
         e.Cancel = False
+    End Sub
+
+    Private Sub grd_CellValidated(sender As Object, e As DataGridViewCellEventArgs) Handles grd.CellValidated
+        If e.ColumnIndex = 2 Then
+            Dim ds As DataTable = grd.DataSource
+            Dim locationCd As String = ds.Rows(e.RowIndex).Item(e.ColumnIndex - 1)
+            Dim locationNm As String = CommonService.GetLocationName(locationDt, locationCd)
+            ds.Rows(e.RowIndex).Item(e.ColumnIndex) = locationNm
+        End If
     End Sub
 
 

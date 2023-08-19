@@ -34,7 +34,7 @@ Public Class CommonService
 
     End Function
 
-    Public Shared Function GetLocationName(ByRef dt As DataTable, ByVal cd As String) As String
+    Public Shared Function GetLocationCdName(ByRef dt As DataTable, ByVal cd As String) As String
 
         If dt Is Nothing OrElse Util.isEmpty(cd) Then
             Return ""
@@ -43,6 +43,21 @@ Public Class CommonService
         For Each row As DataRow In dt.Rows
             If row("CODE") = cd Then
                 Return row("NAME")
+            End If
+        Next
+
+        Return ""
+    End Function
+
+    Public Shared Function GetLocationName(ByRef dt As DataTable, ByVal cd As String) As String
+
+        If dt Is Nothing OrElse Util.isEmpty(cd) Then
+            Return ""
+        End If
+
+        For Each row As DataRow In dt.Rows
+            If row("CODE") = cd Then
+                Return row("LOCATIONNM")
             End If
         Next
 
