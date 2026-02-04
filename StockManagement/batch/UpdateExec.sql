@@ -40,7 +40,7 @@ Distinct RECVDAT.商品CODE,
 '商品管理コードが商品管理コードマスタに登録されていません。登録して下さい。', 
 GETDATE() 
 FROM 
-(Select * From JPONDATA.dbo.ORDERDAT Where (状況 = '確定' Or 状況 = '完了後クレカ待ち' Or 状況 = '欠品連絡中' Or 状況 = '入金待ち' Or 状況 = '入金不足') And OrderDate > '2018/02/01' And OrderDate > DATEADD(day, -360, GETDATE())) As ORDERDAT 
+(Select * From JPONDATA.dbo.ORDERDAT Where (状況 = '確定' Or 状況 = '完了後クレカ待ち' Or 状況 = '欠品連絡中' Or 状況 = '入金待ち' Or 状況 = '入金不足' Or 状況 = 'チャータ発送待ち') And OrderDate > '2018/02/01' And OrderDate > DATEADD(day, -360, GETDATE())) As ORDERDAT 
 LEFT JOIN JPONDATA.dbo.RECVDAT As RECVDAT 
  ON ORDERDAT.ID = RECVDAT.ID 
 LEFT JOIN dbo.M_ConvItem As M_ConvItem 
@@ -131,7 +131,7 @@ FROM (
 
     WHERE 
         -- A. 【受注条件】 対象となるステータスと期間の絞り込み
-        ORDERDAT.状況 IN ('確定', '完了後クレカ待ち', '欠品連絡中', '入金待ち', '入金不足')
+        ORDERDAT.状況 IN ('確定', '完了後クレカ待ち', '欠品連絡中', '入金待ち', '入金不足', 'チャータ発送待ち')
         AND ORDERDAT.OrderDate > '2018/02/01'
         AND ORDERDAT.OrderDate > DATEADD(day, -360, GETDATE())
         
@@ -229,7 +229,7 @@ INNER JOIN (
 	 (select ''+X.ITEMCD
 	  from (Select T1.ID, M_ConvItem.ITEMCD 
 	        From (Select Distinct ID From JPONDATA.dbo.ORDERDAT 
-	              Where (状況 = '確定' Or 状況 = '完了後クレカ待ち' Or 状況 = '欠品連絡中' Or 状況 = '入金待ち' Or 状況 = '入金不足') And OrderDate > '2018/02/01' And OrderDate > DATEADD(day, -360, GETDATE())
+	              Where (状況 = '確定' Or 状況 = '完了後クレカ待ち' Or 状況 = '欠品連絡中' Or 状況 = '入金待ち' Or 状況 = '入金不足' Or 状況 = 'チャータ発送待ち') And OrderDate > '2018/02/01' And OrderDate > DATEADD(day, -360, GETDATE())
 	              And ID In (Select ORDERID From dbo.T_StockReserv Where DELFLG = 0)) As T1 
 	              LEFT JOIN (Select ID, 商品CODE, Sum(数量) As 合計数量 From JPONDATA.dbo.RECVDAT Group By ID, 商品CODE) As RECVDAT 
 	               ON T1.ID = RECVDAT.ID 
@@ -244,7 +244,7 @@ INNER JOIN (
 	 From 
 	 (Select T1.ID, M_ConvItem.ITEMCD 
 	 From (Select Distinct ID From JPONDATA.dbo.ORDERDAT 
-	  Where (状況 = '確定' Or 状況 = '完了後クレカ待ち' Or 状況 = '欠品連絡中' Or 状況 = '入金待ち' Or 状況 = '入金不足') And OrderDate > '2018/02/01' And OrderDate > DATEADD(day, -360, GETDATE())
+	  Where (状況 = '確定' Or 状況 = '完了後クレカ待ち' Or 状況 = '欠品連絡中' Or 状況 = '入金待ち' Or 状況 = '入金不足' Or 状況 = 'チャータ発送待ち') And OrderDate > '2018/02/01' And OrderDate > DATEADD(day, -360, GETDATE())
 	  And ID In (Select ORDERID From dbo.T_StockReserv Where DELFLG = 0)) As T1 
 	 LEFT JOIN (Select ID, 商品CODE, Sum(数量) As 合計数量 From JPONDATA.dbo.RECVDAT Group By ID, 商品CODE) As RECVDAT 
 	  ON T1.ID = RECVDAT.ID 
@@ -299,7 +299,7 @@ FROM
 FROM 
     (SELECT ORDERID FROM (SELECT ORDERID FROM dbo.T_StockReserv WHERE DELFLG = 0 AND ORDERSTATUS = 4) AS T GROUP BY ORDERID) AS T_StockReserv 
 INNER JOIN 
-    (SELECT * FROM JPONDATA.dbo.ORDERDAT WHERE (状況 = '確定' OR 状況 = '完了後クレカ待ち' OR 状況 = '欠品連絡中' OR 状況 = '入金待ち' OR 状況 = '入金不足') AND OrderDate > '2018/02/01' AND OrderDate > DATEADD(DAY, -360, GETDATE())) AS ORDERDAT 
+    (SELECT * FROM JPONDATA.dbo.ORDERDAT WHERE (状況 = '確定' OR 状況 = '完了後クレカ待ち' OR 状況 = '欠品連絡中' OR 状況 = '入金待ち' OR 状況 = '入金不足' OR 状況 = 'チャータ発送待ち') AND OrderDate > '2018/02/01' AND OrderDate > DATEADD(DAY, -360, GETDATE())) AS ORDERDAT 
      ON T_StockReserv.ORDERID = ORDERDAT.ID 
 LEFT JOIN (SELECT ID, 商品CODE, SUM(数量) AS 合計数量 FROM JPONDATA.dbo.RECVDAT GROUP BY ID, 商品CODE) AS RECVDAT 
      ON ORDERDAT.ID = RECVDAT.ID 
