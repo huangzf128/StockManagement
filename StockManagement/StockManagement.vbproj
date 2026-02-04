@@ -355,6 +355,8 @@
     </BootstrapperPackage>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="batch\UpdateExec.sql" />
+    <Content Include="batch\UpdateExec1800.sql" />
     <Content Include="favicon.ico" />
     <Content Include="help\menu.html">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
