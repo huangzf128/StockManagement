@@ -6,7 +6,7 @@ Public Class UDataTimePicker
 
 #Region "EVENT"
     Private Sub UDataTimePicker_Load(sender As Object, e As EventArgs) Handles Me.Load
-        cmbHour.Items.AddRange(New Object() {"08", "09", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19"})
+        cmbHour.Items.AddRange(New Object() {"08", "09", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20", "21", "22", "23"})
         cmbMinute.Items.AddRange(New Object() {"00", "15", "30", "45"})
     End Sub
 
@@ -34,10 +34,10 @@ Public Class UDataTimePicker
         Select Case Hour(Now)
             Case 0, 1, 2, 3, 4, 5, 6
                 cmbHour.SelectedText = "08"
-            Case 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18
+            Case 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19
                 cmbHour.SelectedText = Strings.Right("0" & Hour(Now), 2)
-            Case 19, 20, 21, 22, 23
-                cmbHour.SelectedText = "19"
+            Case 20, 21, 22, 23
+                cmbHour.SelectedText = "23"
         End Select
 
         cmbMinute.SelectedText = Minute(Now)

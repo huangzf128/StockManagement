@@ -22,19 +22,13 @@ Partial Class FrmDashboard
     '不要使用代码编辑器修改它。
     <System.Diagnostics.DebuggerStepThrough()>
     Private Sub InitializeComponent()
+        Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(FrmDashboard))
         Dim DataGridViewCellStyle1 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Dim DataGridViewCellStyle2 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Dim DataGridViewCellStyle3 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(FrmDashboard))
         Me.pnlDashboard = New System.Windows.Forms.Panel()
         Me.grpSrvTime = New System.Windows.Forms.GroupBox()
-        Me.lblSrvTime = New StockManagement.LabelBase()
-        Me.lblServerLastUpdatedTime = New StockManagement.LabelBase()
-        Me.lblUntreated = New StockManagement.LabelBase()
-        Me.lblSystemTitle = New StockManagement.LabelBase()
         Me.grp = New System.Windows.Forms.GroupBox()
-        Me.lnkShowLog = New StockManagement.LinkBase()
-        Me.chkDarkMode = New StockManagement.CheckBoxBase()
         Me.lnkShowManual = New System.Windows.Forms.LinkLabel()
         Me.grdBacklogReserv = New System.Windows.Forms.DataGridView()
         Me.interval = New System.Windows.Forms.DataGridViewTextBoxColumn()
@@ -46,9 +40,7 @@ Partial Class FrmDashboard
         Me.btnMin = New System.Windows.Forms.Button()
         Me.btnClose = New System.Windows.Forms.Button()
         Me.pnlMenu = New System.Windows.Forms.Panel()
-        Me.btnCloseMenu = New StockManagement.ButtonBase()
-        Me.btnLogout = New StockManagement.ButtonBase()
-        Me.btnLogin = New StockManagement.ButtonBase()
+        Me.btnConvItem = New System.Windows.Forms.Button()
         Me.btnStockListHistory = New System.Windows.Forms.Button()
         Me.btnRanking = New System.Windows.Forms.Button()
         Me.btnStockList = New System.Windows.Forms.Button()
@@ -57,8 +49,17 @@ Partial Class FrmDashboard
         Me.btnDashboard = New System.Windows.Forms.Button()
         Me.btnStockReserve = New System.Windows.Forms.Button()
         Me.btnStockHistory = New System.Windows.Forms.Button()
-        Me.lblVersion = New StockManagement.LabelBase()
         Me.pnlFooter = New System.Windows.Forms.Panel()
+        Me.lblSrvTime = New StockManagement.LabelBase()
+        Me.lblServerLastUpdatedTime = New StockManagement.LabelBase()
+        Me.lblUntreated = New StockManagement.LabelBase()
+        Me.lblSystemTitle = New StockManagement.LabelBase()
+        Me.lnkShowLog = New StockManagement.LinkBase()
+        Me.chkDarkMode = New StockManagement.CheckBoxBase()
+        Me.btnCloseMenu = New StockManagement.ButtonBase()
+        Me.btnLogout = New StockManagement.ButtonBase()
+        Me.btnLogin = New StockManagement.ButtonBase()
+        Me.lblVersion = New StockManagement.LabelBase()
         Me.pnlDashboard.SuspendLayout()
         Me.grpSrvTime.SuspendLayout()
         Me.grp.SuspendLayout()
@@ -71,6 +72,8 @@ Partial Class FrmDashboard
         'pnlDashboard
         '
         Me.pnlDashboard.BackColor = System.Drawing.SystemColors.Control
+        Me.pnlDashboard.BackgroundImage = CType(resources.GetObject("pnlDashboard.BackgroundImage"), System.Drawing.Image)
+        Me.pnlDashboard.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center
         Me.pnlDashboard.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D
         Me.pnlDashboard.Controls.Add(Me.grpSrvTime)
         Me.pnlDashboard.Controls.Add(Me.lblUntreated)
@@ -85,6 +88,7 @@ Partial Class FrmDashboard
         '
         'grpSrvTime
         '
+        Me.grpSrvTime.BackColor = System.Drawing.SystemColors.Control
         Me.grpSrvTime.Controls.Add(Me.lblSrvTime)
         Me.grpSrvTime.Controls.Add(Me.lblServerLastUpdatedTime)
         Me.grpSrvTime.Location = New System.Drawing.Point(17, 67)
@@ -92,51 +96,6 @@ Partial Class FrmDashboard
         Me.grpSrvTime.Size = New System.Drawing.Size(429, 50)
         Me.grpSrvTime.TabIndex = 11
         Me.grpSrvTime.TabStop = False
-        '
-        'lblSrvTime
-        '
-        Me.lblSrvTime.AutoSize = True
-        Me.lblSrvTime.Font = New System.Drawing.Font("Meiryo", 11.0!)
-        Me.lblSrvTime.Location = New System.Drawing.Point(6, 17)
-        Me.lblSrvTime.Name = "lblSrvTime"
-        Me.lblSrvTime.Size = New System.Drawing.Size(205, 23)
-        Me.lblSrvTime.TabIndex = 8
-        Me.lblSrvTime.Text = "サーバー最終自動処理日時："
-        Me.lblSrvTime.Type = 0
-        '
-        'lblServerLastUpdatedTime
-        '
-        Me.lblServerLastUpdatedTime.AutoSize = True
-        Me.lblServerLastUpdatedTime.Font = New System.Drawing.Font("Meiryo", 10.0!)
-        Me.lblServerLastUpdatedTime.Location = New System.Drawing.Point(206, 18)
-        Me.lblServerLastUpdatedTime.Name = "lblServerLastUpdatedTime"
-        Me.lblServerLastUpdatedTime.Size = New System.Drawing.Size(165, 21)
-        Me.lblServerLastUpdatedTime.TabIndex = 9
-        Me.lblServerLastUpdatedTime.Text = "2001/01/01 01:01:01"
-        Me.lblServerLastUpdatedTime.Type = 0
-        '
-        'lblUntreated
-        '
-        Me.lblUntreated.AutoSize = True
-        Me.lblUntreated.Font = New System.Drawing.Font("Meiryo", 11.25!, System.Drawing.FontStyle.Bold)
-        Me.lblUntreated.Location = New System.Drawing.Point(19, 148)
-        Me.lblUntreated.Name = "lblUntreated"
-        Me.lblUntreated.Size = New System.Drawing.Size(85, 23)
-        Me.lblUntreated.TabIndex = 10
-        Me.lblUntreated.Text = "未処理受注"
-        Me.lblUntreated.Type = 0
-        '
-        'lblSystemTitle
-        '
-        Me.lblSystemTitle.AutoSize = True
-        Me.lblSystemTitle.Font = New System.Drawing.Font("Meiryo", 21.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.lblSystemTitle.ForeColor = System.Drawing.SystemColors.HotTrack
-        Me.lblSystemTitle.Location = New System.Drawing.Point(3, 4)
-        Me.lblSystemTitle.Name = "lblSystemTitle"
-        Me.lblSystemTitle.Size = New System.Drawing.Size(396, 44)
-        Me.lblSystemTitle.TabIndex = 7
-        Me.lblSystemTitle.Text = "承天貿易　在庫管理システム"
-        Me.lblSystemTitle.Type = 0
         '
         'grp
         '
@@ -150,28 +109,6 @@ Partial Class FrmDashboard
         Me.grp.TabIndex = 5
         Me.grp.TabStop = False
         Me.grp.Text = "システムツール"
-        '
-        'lnkShowLog
-        '
-        Me.lnkShowLog.AutoSize = True
-        Me.lnkShowLog.Location = New System.Drawing.Point(14, 61)
-        Me.lnkShowLog.Name = "lnkShowLog"
-        Me.lnkShowLog.Size = New System.Drawing.Size(53, 12)
-        Me.lnkShowLog.TabIndex = 7
-        Me.lnkShowLog.TabStop = True
-        Me.lnkShowLog.Text = "ログ表示"
-        Me.lnkShowLog.Type = 0
-        '
-        'chkDarkMode
-        '
-        Me.chkDarkMode.AutoSize = True
-        Me.chkDarkMode.Location = New System.Drawing.Point(16, 25)
-        Me.chkDarkMode.Name = "chkDarkMode"
-        Me.chkDarkMode.Size = New System.Drawing.Size(96, 16)
-        Me.chkDarkMode.TabIndex = 6
-        Me.chkDarkMode.Text = "ダークテーマ"
-        Me.chkDarkMode.Type = 0
-        Me.chkDarkMode.UseVisualStyleBackColor = True
         '
         'lnkShowManual
         '
@@ -296,6 +233,7 @@ Partial Class FrmDashboard
         'pnlMenu
         '
         Me.pnlMenu.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D
+        Me.pnlMenu.Controls.Add(Me.btnConvItem)
         Me.pnlMenu.Controls.Add(Me.btnCloseMenu)
         Me.pnlMenu.Controls.Add(Me.btnLogout)
         Me.pnlMenu.Controls.Add(Me.btnLogin)
@@ -313,45 +251,15 @@ Partial Class FrmDashboard
         Me.pnlMenu.Size = New System.Drawing.Size(140, 561)
         Me.pnlMenu.TabIndex = 0
         '
-        'btnCloseMenu
+        'btnConvItem
         '
-        Me.btnCloseMenu.BackColor = System.Drawing.Color.DeepSkyBlue
-        Me.btnCloseMenu.Font = New System.Drawing.Font("MS PGothic", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(134, Byte))
-        Me.btnCloseMenu.ForeColor = System.Drawing.SystemColors.ControlText
-        Me.btnCloseMenu.Location = New System.Drawing.Point(50, 488)
-        Me.btnCloseMenu.Name = "btnCloseMenu"
-        Me.btnCloseMenu.Size = New System.Drawing.Size(70, 30)
-        Me.btnCloseMenu.TabIndex = 13
-        Me.btnCloseMenu.Text = "終　了"
-        Me.btnCloseMenu.Type = 1
-        Me.btnCloseMenu.UseVisualStyleBackColor = False
-        '
-        'btnLogout
-        '
-        Me.btnLogout.BackColor = System.Drawing.Color.DeepSkyBlue
-        Me.btnLogout.Font = New System.Drawing.Font("MS PGothic", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(134, Byte))
-        Me.btnLogout.ForeColor = System.Drawing.SystemColors.ControlText
-        Me.btnLogout.Location = New System.Drawing.Point(50, 452)
-        Me.btnLogout.Name = "btnLogout"
-        Me.btnLogout.Size = New System.Drawing.Size(70, 30)
-        Me.btnLogout.TabIndex = 12
-        Me.btnLogout.Text = "ログアウト"
-        Me.btnLogout.Type = 4
-        Me.btnLogout.UseVisualStyleBackColor = False
-        Me.btnLogout.Visible = False
-        '
-        'btnLogin
-        '
-        Me.btnLogin.BackColor = System.Drawing.Color.DeepSkyBlue
-        Me.btnLogin.Font = New System.Drawing.Font("MS PGothic", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(134, Byte))
-        Me.btnLogin.ForeColor = System.Drawing.SystemColors.ControlText
-        Me.btnLogin.Location = New System.Drawing.Point(50, 451)
-        Me.btnLogin.Name = "btnLogin"
-        Me.btnLogin.Size = New System.Drawing.Size(70, 30)
-        Me.btnLogin.TabIndex = 11
-        Me.btnLogin.Text = "ログイン"
-        Me.btnLogin.Type = 3
-        Me.btnLogin.UseVisualStyleBackColor = False
+        Me.btnConvItem.Font = New System.Drawing.Font("MS PGothic", 9.0!)
+        Me.btnConvItem.Location = New System.Drawing.Point(12, 296)
+        Me.btnConvItem.Name = "btnConvItem"
+        Me.btnConvItem.Size = New System.Drawing.Size(117, 25)
+        Me.btnConvItem.TabIndex = 14
+        Me.btnConvItem.Text = "商品名登録チェック"
+        Me.btnConvItem.UseVisualStyleBackColor = False
         '
         'btnStockListHistory
         '
@@ -440,6 +348,124 @@ Partial Class FrmDashboard
         Me.btnStockHistory.Text = "入出庫履歴"
         Me.btnStockHistory.UseVisualStyleBackColor = False
         '
+        'pnlFooter
+        '
+        Me.pnlFooter.BackColor = System.Drawing.SystemColors.Control
+        Me.pnlFooter.Controls.Add(Me.lblVersion)
+        Me.pnlFooter.Dock = System.Windows.Forms.DockStyle.Bottom
+        Me.pnlFooter.Location = New System.Drawing.Point(0, 593)
+        Me.pnlFooter.Name = "pnlFooter"
+        Me.pnlFooter.Size = New System.Drawing.Size(1064, 22)
+        Me.pnlFooter.TabIndex = 12
+        '
+        'lblSrvTime
+        '
+        Me.lblSrvTime.AutoSize = True
+        Me.lblSrvTime.Font = New System.Drawing.Font("Meiryo", 11.0!)
+        Me.lblSrvTime.Location = New System.Drawing.Point(6, 17)
+        Me.lblSrvTime.Name = "lblSrvTime"
+        Me.lblSrvTime.Size = New System.Drawing.Size(205, 23)
+        Me.lblSrvTime.TabIndex = 8
+        Me.lblSrvTime.Text = "サーバー最終自動処理日時："
+        Me.lblSrvTime.Type = 0
+        '
+        'lblServerLastUpdatedTime
+        '
+        Me.lblServerLastUpdatedTime.AutoSize = True
+        Me.lblServerLastUpdatedTime.Font = New System.Drawing.Font("Meiryo", 10.0!)
+        Me.lblServerLastUpdatedTime.Location = New System.Drawing.Point(206, 18)
+        Me.lblServerLastUpdatedTime.Name = "lblServerLastUpdatedTime"
+        Me.lblServerLastUpdatedTime.Size = New System.Drawing.Size(165, 21)
+        Me.lblServerLastUpdatedTime.TabIndex = 9
+        Me.lblServerLastUpdatedTime.Text = "2001/01/01 01:01:01"
+        Me.lblServerLastUpdatedTime.Type = 0
+        '
+        'lblUntreated
+        '
+        Me.lblUntreated.AutoSize = True
+        Me.lblUntreated.Font = New System.Drawing.Font("Meiryo", 11.25!, System.Drawing.FontStyle.Bold)
+        Me.lblUntreated.ForeColor = System.Drawing.SystemColors.HotTrack
+        Me.lblUntreated.Location = New System.Drawing.Point(19, 148)
+        Me.lblUntreated.Name = "lblUntreated"
+        Me.lblUntreated.Size = New System.Drawing.Size(85, 23)
+        Me.lblUntreated.TabIndex = 10
+        Me.lblUntreated.Text = "未処理受注"
+        Me.lblUntreated.Type = 0
+        '
+        'lblSystemTitle
+        '
+        Me.lblSystemTitle.AutoSize = True
+        Me.lblSystemTitle.Font = New System.Drawing.Font("Meiryo", 21.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.lblSystemTitle.ForeColor = System.Drawing.SystemColors.HotTrack
+        Me.lblSystemTitle.Location = New System.Drawing.Point(3, 4)
+        Me.lblSystemTitle.Name = "lblSystemTitle"
+        Me.lblSystemTitle.Size = New System.Drawing.Size(396, 44)
+        Me.lblSystemTitle.TabIndex = 7
+        Me.lblSystemTitle.Text = "承天貿易　在庫管理システム"
+        Me.lblSystemTitle.Type = 0
+        '
+        'lnkShowLog
+        '
+        Me.lnkShowLog.AutoSize = True
+        Me.lnkShowLog.Location = New System.Drawing.Point(14, 61)
+        Me.lnkShowLog.Name = "lnkShowLog"
+        Me.lnkShowLog.Size = New System.Drawing.Size(53, 12)
+        Me.lnkShowLog.TabIndex = 7
+        Me.lnkShowLog.TabStop = True
+        Me.lnkShowLog.Text = "ログ表示"
+        Me.lnkShowLog.Type = 0
+        '
+        'chkDarkMode
+        '
+        Me.chkDarkMode.AutoSize = True
+        Me.chkDarkMode.Location = New System.Drawing.Point(16, 25)
+        Me.chkDarkMode.Name = "chkDarkMode"
+        Me.chkDarkMode.Size = New System.Drawing.Size(96, 16)
+        Me.chkDarkMode.TabIndex = 6
+        Me.chkDarkMode.Text = "ダークテーマ"
+        Me.chkDarkMode.Type = 0
+        Me.chkDarkMode.UseVisualStyleBackColor = True
+        '
+        'btnCloseMenu
+        '
+        Me.btnCloseMenu.BackColor = System.Drawing.Color.DeepSkyBlue
+        Me.btnCloseMenu.Font = New System.Drawing.Font("MS PGothic", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(134, Byte))
+        Me.btnCloseMenu.ForeColor = System.Drawing.SystemColors.ControlText
+        Me.btnCloseMenu.Location = New System.Drawing.Point(50, 488)
+        Me.btnCloseMenu.Name = "btnCloseMenu"
+        Me.btnCloseMenu.Size = New System.Drawing.Size(70, 30)
+        Me.btnCloseMenu.TabIndex = 13
+        Me.btnCloseMenu.Text = "終　了"
+        Me.btnCloseMenu.Type = 1
+        Me.btnCloseMenu.UseVisualStyleBackColor = False
+        '
+        'btnLogout
+        '
+        Me.btnLogout.BackColor = System.Drawing.Color.DeepSkyBlue
+        Me.btnLogout.Font = New System.Drawing.Font("MS PGothic", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(134, Byte))
+        Me.btnLogout.ForeColor = System.Drawing.SystemColors.ControlText
+        Me.btnLogout.Location = New System.Drawing.Point(50, 452)
+        Me.btnLogout.Name = "btnLogout"
+        Me.btnLogout.Size = New System.Drawing.Size(70, 30)
+        Me.btnLogout.TabIndex = 12
+        Me.btnLogout.Text = "ログアウト"
+        Me.btnLogout.Type = 4
+        Me.btnLogout.UseVisualStyleBackColor = False
+        Me.btnLogout.Visible = False
+        '
+        'btnLogin
+        '
+        Me.btnLogin.BackColor = System.Drawing.Color.DeepSkyBlue
+        Me.btnLogin.Font = New System.Drawing.Font("MS PGothic", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(134, Byte))
+        Me.btnLogin.ForeColor = System.Drawing.SystemColors.ControlText
+        Me.btnLogin.Location = New System.Drawing.Point(50, 451)
+        Me.btnLogin.Name = "btnLogin"
+        Me.btnLogin.Size = New System.Drawing.Size(70, 30)
+        Me.btnLogin.TabIndex = 11
+        Me.btnLogin.Text = "ログイン"
+        Me.btnLogin.Type = 3
+        Me.btnLogin.UseVisualStyleBackColor = False
+        '
         'lblVersion
         '
         Me.lblVersion.AutoSize = True
@@ -450,16 +476,6 @@ Partial Class FrmDashboard
         Me.lblVersion.TabIndex = 14
         Me.lblVersion.Text = "0.0.0.0"
         Me.lblVersion.Type = 0
-        '
-        'pnlFooter
-        '
-        Me.pnlFooter.BackColor = System.Drawing.SystemColors.Control
-        Me.pnlFooter.Controls.Add(Me.lblVersion)
-        Me.pnlFooter.Dock = System.Windows.Forms.DockStyle.Bottom
-        Me.pnlFooter.Location = New System.Drawing.Point(0, 593)
-        Me.pnlFooter.Name = "pnlFooter"
-        Me.pnlFooter.Size = New System.Drawing.Size(1064, 22)
-        Me.pnlFooter.TabIndex = 12
         '
         'FrmDashboard
         '
@@ -526,4 +542,5 @@ Partial Class FrmDashboard
     Friend WithEvents lblVersion As LabelBase
     Friend WithEvents pnlFooter As Panel
     Friend WithEvents lnkShowLog As LinkBase
+    Friend WithEvents btnConvItem As Button
 End Class

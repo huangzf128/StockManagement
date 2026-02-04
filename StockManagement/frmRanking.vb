@@ -18,6 +18,9 @@ Public Class FrmRanking
         dtPickerFrom.setDateTime(Now.AddMonths(-1 * Consts.DATA_INTERVAL))
         dtPickerTo.setDateTime(Now)
 
+        chkExact.Checked = True
+        rdoShip.Checked = True
+
         initCombo()
 
         search()
@@ -45,16 +48,21 @@ Public Class FrmRanking
             .Items.Add("ヤフオク丸美")
             .Items.Add("楽天GLMALL")
             .Items.Add("楽天ガジガジ")
-            .Items.Add("承天貿易")
+            '.Items.Add("承天貿易")
             .Items.Add("直販")
-            .Items.Add("(株)フルクリエーション")
-            .Items.Add("DISCOM")
-            .Items.Add("オオトモ")
-            .Items.Add("株式会社C&J")
-            .Items.Add("株式会社創能")
-            .Items.Add("興和貿易株式会社")
-            .Items.Add("大友株式会社")
-            .Items.Add("中哲商事株式会社")
+            '.Items.Add("(株)フルクリエーション")
+            '.Items.Add("DISCOM")
+            '.Items.Add("オオトモ")
+            '.Items.Add("株式会社C&J")
+            '.Items.Add("株式会社創能")
+            '.Items.Add("興和貿易株式会社")
+            '.Items.Add("大友株式会社")
+            '.Items.Add("中哲商事株式会社")
+
+            .Items.Add("昌隆Amazon")
+            .Items.Add("楽天GLJAPAN-2")
+            .Items.Add("ラクマGL")
+            .Items.Add("メルカリ承天貿易")
         End With
     End Sub
 
@@ -141,6 +149,11 @@ Public Class FrmRanking
         Next
     End Sub
 
+    ''' <summary>
+    ''' 店舗名入力あり
+    ''' </summary>
+    ''' <param name="srchDt"></param>
+    ''' <returns></returns>
     Private Function editDataSourceItem(ByRef srchDt As DataTable) As DataTable
 
         grd.Columns.Item("SumQTY").Visible = True
@@ -150,6 +163,11 @@ Public Class FrmRanking
         Return srchDt
     End Function
 
+    ''' <summary>
+    ''' 店舗名入力なし
+    ''' </summary>
+    ''' <param name="srchDt"></param>
+    ''' <returns></returns>
     Private Function editDataSource(ByRef srchDt As DataTable) As DataTable
         Dim lastItemCd As String = ""
         Dim dt As DataTable = createDt()
@@ -193,7 +211,7 @@ Public Class FrmRanking
         grd.Columns.Item("SumQTY").Visible = False
         grd.Columns.Item("分類2").Visible = False
         grd.Columns.Item("ITEMCD").Visible = True
-        grd.Columns.Item("SumSumQTY").Visible = True
+        grd.Columns.Item("SumSumQTY").Visible = Util.isEmpty(Me.cmbTenpo.Text)
         Return dt
     End Function
 
@@ -241,8 +259,13 @@ Public Class FrmRanking
             param.Add(New SqlParameter("@CRTDTTO", dtPickerTo.getDateTime))
         End If
         sb.Append(" ) ")
-        If Me.txtItemCd.Text <> "" Then
-            sb.Append(" AND M.ITEMCD Like @ITEMCD")
+        If Not Util.isEmpty(Me.txtItemCd.Text) Then
+            If Me.chkExact.Checked Then
+                sb.Append(" AND M.ITEMCD = @ITEMCD")
+            Else
+                sb.Append(" AND M.ITEMCD Like @ITEMCD")
+            End If
+
         End If
         sb.Append(" ) T ")
         sb.Append(" WHERE T.SumSumQTY <= 5 ")
@@ -272,21 +295,37 @@ Public Class FrmRanking
         sb.Append(" And T1.分類2 Is Not Null ")
         sb.Append(" And T3.ITEMCD Is Not Null ")
         If dtPickerFrom.getDateTime <> "" Then
-            sb.Append(" AND T1.OrderDate >= @ORDERFROM ")
+            If Me.rdoConfirm.Checked Then
+                sb.Append(" AND T1.OrderDate >= @ORDERFROM ")
+            ElseIf Me.rdoShip.Checked Then
+                sb.Append(" AND T1.発送日 is not null AND T1.発送日 >= @ORDERFROM ")
+            End If
             param.Add(New SqlParameter("@ORDERFROM", dtPickerFrom.getDateTime))
         End If
         If dtPickerTo.getDateTime <> "" Then
-            sb.Append(" AND T1.OrderDate <= @ORDERTO ")
+
+            If Me.rdoConfirm.Checked Then
+                sb.Append(" AND T1.OrderDate <= @ORDERTO ")
+            ElseIf Me.rdoShip.Checked Then
+                sb.Append(" AND T1.発送日 is not null AND T1.発送日 <= @ORDERTO ")
+            End If
             param.Add(New SqlParameter("@ORDERTO", dtPickerTo.getDateTime))
         End If
+
         If Not Util.isEmpty(Me.txtItemCd.Text) Then
-            sb.Append(" AND T3.ITEMCD Like @ITEMCD")
-            param.Add(New SqlParameter("@ITEMCD", "%" & Me.txtItemCd.Text & "%"))
+            If chkExact.Checked Then
+                sb.Append(" AND T3.ITEMCD = @ITEMCD")
+                param.Add(New SqlParameter("@ITEMCD", Me.txtItemCd.Text))
+            Else
+                sb.Append(" AND T3.ITEMCD Like @ITEMCD")
+                param.Add(New SqlParameter("@ITEMCD", "%" & Me.txtItemCd.Text & "%"))
+            End If
         End If
         If Not Util.isEmpty(cmbTenpo.Text) Then
             sb.Append(" AND T1.分類2 Like @分類2")
             param.Add(New SqlParameter("@分類2", Me.cmbTenpo.Text & "%"))
         End If
+
         sb.Append(" GROUP BY ")
         sb.Append("  T3.ITEMCD")
         sb.Append(" ,T1.分類2 ")
@@ -307,7 +346,11 @@ Public Class FrmRanking
             sb.Append(" AND T1.CRTDT <= @ORDERTO ")
         End If
         If Not Util.isEmpty(Me.txtItemCd.Text) Then
-            sb.Append(" AND T1.ITEMCD Like @ITEMCD")
+            If Me.chkExact.Checked Then
+                sb.Append(" AND T1.ITEMCD = @ITEMCD")
+            Else
+                sb.Append(" AND T1.ITEMCD Like @ITEMCD")
+            End If
         End If
         If Not Util.isEmpty(cmbTenpo.Text) Then
             sb.Append(" AND T1.ORDERKBN Like @ORDERKBN")
@@ -319,7 +362,6 @@ Public Class FrmRanking
 
         sb.Append(" ORDER BY ")
         sb.Append("     SumSumQTY DESC, ITEMCD, 分類2 ")
-        sb.Append(" OFFSET 0 ROWS ")
 
         Return New DbParamEnt(sb, param.ToArray)
     End Function

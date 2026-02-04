@@ -2,6 +2,9 @@
 Imports System.Runtime.CompilerServices
 Imports System.Text
 
+''' <summary>
+''' 在庫一覧
+''' </summary>
 Public Class FrmStockList
 
     Private locationDt As DataTable = Nothing
@@ -224,32 +227,33 @@ Public Class FrmStockList
 
         Dim sb As New StringBuilder
         sb.Append(" SELECT ")
-        sb.Append("     * ")
-        sb.Append(" ")
-        sb.Append(" FROM V_StockQty ")
+        sb.Append("     StockQty.* ")
+        sb.Append(" FROM ")
+        sb.Append(ViewManager.V_StockQty())
+        sb.Append(" AS StockQty ") ' 必须起别名
         sb.Append(" WHERE ")
         sb.Append(" 1 = 1 ")
 
         Dim param As New List(Of SqlParameter)
         If Me.txtItemCd.Text <> "" Then
-            sb.Append(" AND ITEMCD Like @ITEMCD")
+            sb.Append(" AND StockQty.ITEMCD Like @ITEMCD")
             param.Add(New SqlParameter("@ITEMCD", "%" & Me.txtItemCd.Text & "%"))
         End If
         If Me.txtItemNm.Text <> "" Then
-            sb.Append(" AND ITEMNAME Like @ITEMNAME")
+            sb.Append(" AND StockQty.ITEMNAME Like @ITEMNAME")
             param.Add(New SqlParameter("@ITEMNAME", "%" & Me.txtItemNm.Text & "%"))
         End If
         If Me.txtSCode.Text <> "" Then
-            sb.Append(" AND SCODE Like @SCODE")
+            sb.Append(" AND StockQty.SCODE Like @SCODE")
             param.Add(New SqlParameter("@SCODE", "%" & Me.txtSCode.Text & "%"))
         End If
 
         ' TODO: 倉庫  西京を除外
-        sb.Append(" AND LOCATIONCD <> 2 ")
+        sb.Append(" AND StockQty.LOCATIONCD <> 2 ")
 
         sb.Append(" ORDER BY ")
-        sb.Append("     ITEMCD ")
-        sb.Append("    ,LOCATIONCD ")
+        sb.Append("     StockQty.ITEMCD ")
+        sb.Append("    ,StockQty.LOCATIONCD ")
 
         Return New DbParamEnt(sb, param.ToArray)
     End Function

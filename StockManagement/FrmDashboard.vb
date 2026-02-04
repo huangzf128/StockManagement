@@ -56,6 +56,15 @@ Public Class FrmDashboard
             lblVersion.Text = "AppVer:" & appVersion.ToString
         End If
 
+        lblSystemTitle.BackColor = Color.Transparent
+        grpSrvTime.BackColor = Color.Transparent
+        lblSrvTime.ForeColor = Color.White
+        lblServerLastUpdatedTime.ForeColor = Color.Goldenrod
+        lblUntreated.BackColor = Color.Transparent
+        grp.BackColor = Color.Transparent
+        grp.ForeColor = Color.White
+        chkDarkMode.ForeColor = Color.White
+
     End Sub
 
     ''' <summary>
@@ -166,6 +175,10 @@ Public Class FrmDashboard
         switchForm(FrmStockListHistory)
     End Sub
 
+    Private Sub btnConvItem_Click(sender As Object, e As EventArgs) Handles btnConvItem.Click
+        Me.lblTitle.Text = FrmConvItemCheck.Text
+        switchForm(FrmConvItemCheck)
+    End Sub
     Private Sub btnLogin_Click(sender As Object, e As EventArgs) Handles btnLogin.Click
         Using f = FrmLogin
             f.ShowDialog()

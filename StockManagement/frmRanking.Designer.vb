@@ -44,12 +44,19 @@ Partial Class FrmRanking
         Me.lblTenpo = New StockManagement.LabelBase()
         Me.lblWavy = New StockManagement.LabelBase()
         Me.lblQty = New StockManagement.LabelBase()
+        Me.chkExact = New StockManagement.CheckBoxBase()
+        Me.rdoConfirm = New System.Windows.Forms.RadioButton()
+        Me.grpDate = New System.Windows.Forms.GroupBox()
+        Me.rdoShip = New System.Windows.Forms.RadioButton()
         Me.pnlCondition.SuspendLayout()
         CType(Me.grd, System.ComponentModel.ISupportInitialize).BeginInit()
+        Me.grpDate.SuspendLayout()
         Me.SuspendLayout()
         '
         'pnlCondition
         '
+        Me.pnlCondition.Controls.Add(Me.grpDate)
+        Me.pnlCondition.Controls.Add(Me.chkExact)
         Me.pnlCondition.Controls.Add(Me.lblQty)
         Me.pnlCondition.Controls.Add(Me.lblWavy)
         Me.pnlCondition.Controls.Add(Me.lblTenpo)
@@ -89,6 +96,7 @@ Partial Class FrmRanking
         '
         Me.btnSearch.BackColor = System.Drawing.Color.DeepSkyBlue
         Me.btnSearch.Font = New System.Drawing.Font("MS PGothic", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(134, Byte))
+        Me.btnSearch.ForeColor = System.Drawing.SystemColors.ControlText
         Me.btnSearch.Location = New System.Drawing.Point(730, 15)
         Me.btnSearch.Name = "btnSearch"
         Me.btnSearch.Size = New System.Drawing.Size(70, 30)
@@ -106,9 +114,9 @@ Partial Class FrmRanking
         Me.grd.CellBorderStyle = System.Windows.Forms.DataGridViewCellBorderStyle.SingleHorizontal
         Me.grd.ColumnHeadersBorderStyle = System.Windows.Forms.DataGridViewHeaderBorderStyle.None
         DataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.TopCenter
-        DataGridViewCellStyle2.BackColor = System.Drawing.SystemColors.Highlight
-        DataGridViewCellStyle2.Font = New System.Drawing.Font("MS PGothic", 9.0!)
-        DataGridViewCellStyle2.ForeColor = System.Drawing.SystemColors.Window
+        DataGridViewCellStyle2.BackColor = System.Drawing.SystemColors.ControlLight
+        DataGridViewCellStyle2.Font = New System.Drawing.Font("MS PGothic", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(134, Byte))
+        DataGridViewCellStyle2.ForeColor = System.Drawing.SystemColors.ControlText
         DataGridViewCellStyle2.Padding = New System.Windows.Forms.Padding(0, 4, 0, 4)
         DataGridViewCellStyle2.SelectionBackColor = System.Drawing.SystemColors.Highlight
         DataGridViewCellStyle2.SelectionForeColor = System.Drawing.SystemColors.HighlightText
@@ -160,14 +168,14 @@ Partial Class FrmRanking
         'SumQTY
         '
         Me.SumQTY.DataPropertyName = "SumQTY"
-        Me.SumQTY.HeaderText = "SumQTY"
+        Me.SumQTY.HeaderText = "合计数量"
         Me.SumQTY.Name = "SumQTY"
         '
         'btnStaying
         '
-        Me.btnStaying.BackColor = System.Drawing.Color.DarkGreen
+        Me.btnStaying.BackColor = System.Drawing.Color.DeepSkyBlue
         Me.btnStaying.Font = New System.Drawing.Font("MS PGothic", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(134, Byte))
-        Me.btnStaying.ForeColor = System.Drawing.Color.WhiteSmoke
+        Me.btnStaying.ForeColor = System.Drawing.SystemColors.ControlText
         Me.btnStaying.Location = New System.Drawing.Point(731, 51)
         Me.btnStaying.Name = "btnStaying"
         Me.btnStaying.Size = New System.Drawing.Size(70, 30)
@@ -186,9 +194,9 @@ Partial Class FrmRanking
         '
         'btnCopy
         '
-        Me.btnCopy.BackColor = System.Drawing.Color.Sienna
+        Me.btnCopy.BackColor = System.Drawing.Color.DeepSkyBlue
         Me.btnCopy.Font = New System.Drawing.Font("MS PGothic", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(134, Byte))
-        Me.btnCopy.ForeColor = System.Drawing.Color.WhiteSmoke
+        Me.btnCopy.ForeColor = System.Drawing.SystemColors.ControlText
         Me.btnCopy.Location = New System.Drawing.Point(810, 15)
         Me.btnCopy.Name = "btnCopy"
         Me.btnCopy.Size = New System.Drawing.Size(70, 30)
@@ -210,7 +218,7 @@ Partial Class FrmRanking
         'cmbTenpo
         '
         Me.cmbTenpo.FormattingEnabled = True
-        Me.cmbTenpo.Location = New System.Drawing.Point(292, 45)
+        Me.cmbTenpo.Location = New System.Drawing.Point(292, 44)
         Me.cmbTenpo.Name = "cmbTenpo"
         Me.cmbTenpo.Size = New System.Drawing.Size(143, 20)
         Me.cmbTenpo.TabIndex = 4
@@ -255,6 +263,48 @@ Partial Class FrmRanking
         Me.lblQty.Text = "販売数上限"
         Me.lblQty.Type = 0
         '
+        'chkExact
+        '
+        Me.chkExact.AutoSize = True
+        Me.chkExact.Location = New System.Drawing.Point(590, 40)
+        Me.chkExact.Name = "chkExact"
+        Me.chkExact.Size = New System.Drawing.Size(72, 16)
+        Me.chkExact.TabIndex = 43
+        Me.chkExact.Text = "完全一致"
+        Me.chkExact.Type = 0
+        Me.chkExact.UseVisualStyleBackColor = True
+        '
+        'rdoConfirm
+        '
+        Me.rdoConfirm.AutoSize = True
+        Me.rdoConfirm.Location = New System.Drawing.Point(6, 10)
+        Me.rdoConfirm.Name = "rdoConfirm"
+        Me.rdoConfirm.Size = New System.Drawing.Size(59, 16)
+        Me.rdoConfirm.TabIndex = 46
+        Me.rdoConfirm.Text = "販売日"
+        Me.rdoConfirm.UseVisualStyleBackColor = True
+        '
+        'grpDate
+        '
+        Me.grpDate.Controls.Add(Me.rdoShip)
+        Me.grpDate.Controls.Add(Me.rdoConfirm)
+        Me.grpDate.Location = New System.Drawing.Point(449, 7)
+        Me.grpDate.Name = "grpDate"
+        Me.grpDate.Size = New System.Drawing.Size(146, 32)
+        Me.grpDate.TabIndex = 47
+        Me.grpDate.TabStop = False
+        '
+        'rdoShip
+        '
+        Me.rdoShip.AutoSize = True
+        Me.rdoShip.Location = New System.Drawing.Point(76, 10)
+        Me.rdoShip.Name = "rdoShip"
+        Me.rdoShip.Size = New System.Drawing.Size(59, 16)
+        Me.rdoShip.TabIndex = 47
+        Me.rdoShip.TabStop = True
+        Me.rdoShip.Text = "発送日"
+        Me.rdoShip.UseVisualStyleBackColor = True
+        '
         'FrmRanking
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 12.0!)
@@ -271,6 +321,8 @@ Partial Class FrmRanking
         Me.pnlCondition.ResumeLayout(False)
         Me.pnlCondition.PerformLayout()
         CType(Me.grd, System.ComponentModel.ISupportInitialize).EndInit()
+        Me.grpDate.ResumeLayout(False)
+        Me.grpDate.PerformLayout()
         Me.ResumeLayout(False)
 
     End Sub
@@ -283,14 +335,18 @@ Partial Class FrmRanking
     Friend WithEvents btnStaying As ButtonBase
     Friend WithEvents bindingNavi As UBindingNavigator
     Friend WithEvents btnCopy As ButtonBase
-    Friend WithEvents ITEMCD As DataGridViewTextBoxColumn
-    Friend WithEvents 分類2 As DataGridViewTextBoxColumn
-    Friend WithEvents SumSumQTY As DataGridViewTextBoxColumn
-    Friend WithEvents SumQTY As DataGridViewTextBoxColumn
     Friend WithEvents txtQtyMax As TextBoxBase
     Friend WithEvents cmbTenpo As ComboBox
     Friend WithEvents LabelBase1 As LabelBase
     Friend WithEvents lblWavy As LabelBase
     Friend WithEvents lblTenpo As LabelBase
     Friend WithEvents lblQty As LabelBase
+    Friend WithEvents chkExact As CheckBoxBase
+    Friend WithEvents ITEMCD As DataGridViewTextBoxColumn
+    Friend WithEvents 分類2 As DataGridViewTextBoxColumn
+    Friend WithEvents SumSumQTY As DataGridViewTextBoxColumn
+    Friend WithEvents SumQTY As DataGridViewTextBoxColumn
+    Friend WithEvents grpDate As GroupBox
+    Friend WithEvents rdoShip As RadioButton
+    Friend WithEvents rdoConfirm As RadioButton
 End Class

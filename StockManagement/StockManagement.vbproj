@@ -15,7 +15,7 @@
     <AutoGenerateBindingRedirects>false</AutoGenerateBindingRedirects>
     <Deterministic>true</Deterministic>
     <IsWebBootstrapper>true</IsWebBootstrapper>
-    <PublishUrl>publish\</PublishUrl>
+    <PublishUrl>D:\dev\ProjectDocument\在庫管理\publish\</PublishUrl>
     <Install>true</Install>
     <InstallFrom>Web</InstallFrom>
     <UpdateEnabled>true</UpdateEnabled>
@@ -25,15 +25,15 @@
     <UpdatePeriodically>false</UpdatePeriodically>
     <UpdateRequired>false</UpdateRequired>
     <MapFileExtensions>true</MapFileExtensions>
-    <InstallUrl>http://www.bpoint-nouki.com/public/publish/</InstallUrl>
+    <InstallUrl>http://coloretto.jp/public/publish/</InstallUrl>
     <TargetCulture>ja-JP</TargetCulture>
     <ProductName>承天在庫管理システム</ProductName>
     <PublisherName>B-POINT</PublisherName>
     <CreateWebPageOnPublish>true</CreateWebPageOnPublish>
     <WebPage>publish.htm</WebPage>
     <TrustUrlParameters>true</TrustUrlParameters>
-    <ApplicationRevision>0</ApplicationRevision>
-    <ApplicationVersion>1.0.3.0</ApplicationVersion>
+    <ApplicationRevision>3</ApplicationRevision>
+    <ApplicationVersion>1.0.4.3</ApplicationVersion>
     <UseApplicationTrust>false</UseApplicationTrust>
     <CreateDesktopShortcut>true</CreateDesktopShortcut>
     <PublishWizardCompleted>true</PublishWizardCompleted>
@@ -179,6 +179,7 @@
     <Compile Include="common\control\LabelBase.vb">
       <SubType>Component</SubType>
     </Compile>
+    <Compile Include="common\db\ViewManager.vb" />
     <Compile Include="common\entity\Info.vb" />
     <Compile Include="common\service\CommonService.vb" />
     <Compile Include="common\service\Session.vb" />
@@ -204,6 +205,12 @@
       <DependentUpon>FrmItemSearch.vb</DependentUpon>
     </Compile>
     <Compile Include="FrmItemSearch.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FrmConvItemCheck.Designer.vb">
+      <DependentUpon>FrmConvItemCheck.vb</DependentUpon>
+    </Compile>
+    <Compile Include="FrmConvItemCheck.vb">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="FrmStockListHistory.Designer.vb">
@@ -290,6 +297,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="FrmItemSearch.resx">
       <DependentUpon>FrmItemSearch.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FrmConvItemCheck.resx">
+      <DependentUpon>FrmConvItemCheck.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="FrmStockListHistory.resx">
       <DependentUpon>FrmStockListHistory.vb</DependentUpon>
